@@ -56,6 +56,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CreateReminderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateReminderForm.Designer.cs">
+      <DependentUpon>CreateReminderForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="EventsDataSet.cs">
       <DependentUpon>EventsDataSet.xsd</DependentUpon>
     </Compile>
@@ -66,16 +72,46 @@
     </Compile>
     <Compile Include="LoggerInitializer.cs" />
     <Compile Include="HotKeyListener.cs" />
-    <Compile Include="SettignsForm.cs">
+    <Compile Include="MainMenuForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SettignsForm.Designer.cs">
-      <DependentUpon>SettignsForm.cs</DependentUpon>
+    <Compile Include="MainMenuForm.Designer.cs">
+      <DependentUpon>MainMenuForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReminderRingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReminderRingForm.Designer.cs">
+      <DependentUpon>ReminderRingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReminderListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReminderListForm.Designer.cs">
+      <DependentUpon>ReminderListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingsForm.Designer.cs">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="SettignsForm.resx">
-      <DependentUpon>SettignsForm.cs</DependentUpon>
+    <EmbeddedResource Include="CreateReminderForm.resx">
+      <DependentUpon>CreateReminderForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainMenuForm.resx">
+      <DependentUpon>MainMenuForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReminderRingForm.resx">
+      <DependentUpon>ReminderRingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReminderListForm.resx">
+      <DependentUpon>ReminderListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SettingsForm.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -16,7 +16,7 @@ namespace AudioUserInterface
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new SettignsForm());
+            Application.Run(new MainMenuForm());
         }
     }
 }

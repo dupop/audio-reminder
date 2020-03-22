@@ -34,5 +34,17 @@ namespace AudioUserInterface.Properties {
                 this["RemindInterval"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("60")]
+        public string BeepInterval {
+            get {
+                return ((string)(this["BeepInterval"]));
+            }
+            set {
+                this["BeepInterval"] = value;
+            }
+        }
     }
 }

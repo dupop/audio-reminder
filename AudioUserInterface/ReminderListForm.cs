@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace AudioUserInterface
 {
-    public partial class SettignsForm : Form
+    public partial class ReminderListForm : Form
     {
-        public SettignsForm()
+        public ReminderListForm()
         {
             InitializeComponent();
         }
