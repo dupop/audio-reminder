@@ -1,4 +1,6 @@
 ﻿using GlobalHotKey;
+using Serilog;
+using Serilog.Core;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,7 +18,8 @@ namespace AudioReminder
 {
     public partial class AudioReminderService : ServiceBase
     {
-        HotKeyListener hotKeyListener;
+        //HotKeyListener hotKeyListener;
+
         public AudioReminderService()
         {
             InitializeComponent();
@@ -24,12 +27,21 @@ namespace AudioReminder
 
         protected override void OnStart(string[] args)
         {
-            hotKeyListener = new HotKeyListener();
+            Log.Logger.Information("Service starting");
+            
+            //hotKeyListener = new HotKeyListener();
+
+            Log.Logger.Information("Service started");
         }
 
        
         protected override void OnStop()
         {
+            Log.Logger.Information("Service stopping");
+
+
+
+            Log.Logger.Information("Service stopped");
         }
 
        
