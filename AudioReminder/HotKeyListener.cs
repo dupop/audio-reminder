@@ -1,4 +1,5 @@
 ﻿using GlobalHotKey;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,8 @@ using System.Windows.Input;
 
 namespace AudioReminder
 {
-    class HotKeyListener
+    public class HotKeyListener
     {
-
         Thread hotKeyListeningThread;
 
         HotKeyManager hotKeyManager;
@@ -20,28 +20,45 @@ namespace AudioReminder
 
         public HotKeyListener()
         {
+            Log.Logger.Information("Creating HotKeyListener ");
+
             hotKeyListeningThread = new Thread(new ThreadStart(StartHotKeyListener));
             hotKeyListeningThread.SetApartmentState(ApartmentState.STA);
             hotKeyListeningThread.Start();
         }
 
-        private void StartHotKeyListener()
+        protected virtual void StartHotKeyListener()
         {
+            Log.Logger.Information("Registering the hotkey");
+
             hotKeyManager = new HotKeyManager();
             hotKeyManager.KeyPressed += HotKeyManagerPressed;
             hotKey = hotKeyManager.Register(Key.D2, ModifierKeys.Control);
+
+            Log.Logger.Information("Registering the hotkey done");
         }
 
-        private void StopListener()
+        protected virtual void StopListener()
         {
+            Log.Logger.Information("Unregistering the hotkey");
+
             hotKeyManager.Unregister(hotKey);
             hotKeyManager.Dispose();
+
+            Log.Logger.Information("Unregistering the hotkey");
         }
 
-        private void HotKeyManagerPressed(object sender, KeyPressedEventArgs e)
+        protected virtual void HotKeyManagerPressed(object sender, KeyPressedEventArgs e)
         {
-            if (e.HotKey.Key == Key.F5)
-                MessageBox.Show("Hot key pressed!");
+            if (IsThisTheHotKey(e))
+            {
+                Log.Logger.Information("Hotkey pressed");
+            }
+        }
+
+        private static bool IsThisTheHotKey(KeyPressedEventArgs e)
+        {
+            return e.HotKey.Key == Key.D2 && e.HotKey.Modifiers == ModifierKeys.Control;
         }
     }
 }
