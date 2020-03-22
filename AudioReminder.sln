@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29911.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioReminder", "AudioReminder\AudioReminder.csproj", "{041E9405-7C2B-4156-BDC8-586F5E8A044A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioUserInterface", "AudioUserInterface\AudioUserInterface.csproj", "{28CD2815-61BE-4EB9-965F-1DD2385BF251}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +17,15 @@ Global
 		{041E9405-7C2B-4156-BDC8-586F5E8A044A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{041E9405-7C2B-4156-BDC8-586F5E8A044A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{041E9405-7C2B-4156-BDC8-586F5E8A044A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28CD2815-61BE-4EB9-965F-1DD2385BF251}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28CD2815-61BE-4EB9-965F-1DD2385BF251}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28CD2815-61BE-4EB9-965F-1DD2385BF251}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28CD2815-61BE-4EB9-965F-1DD2385BF251}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CC87ECBD-B5F1-46EF-BA69-6C0F6548E900}
 	EndGlobalSection
 EndGlobal

@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="EventsDataSet" targetNamespace="http://tempuri.org/EventsDataSet.xsd" xmlns:mstns="http://tempuri.org/EventsDataSet.xsd" xmlns="http://tempuri.org/EventsDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="EventsDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="EventsDataSet" msprop:Generator_UserDSName="EventsDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="EventsTable" msprop:Generator_TableClassName="EventsTableDataTable" msprop:Generator_TableVarName="tableEventsTable" msprop:Generator_TablePropName="EventsTable" msprop:Generator_RowDeletingName="EventsTableRowDeleting" msprop:Generator_RowChangingName="EventsTableRowChanging" msprop:Generator_RowEvHandlerName="EventsTableRowChangeEventHandler" msprop:Generator_RowDeletedName="EventsTableRowDeleted" msprop:Generator_UserTableName="EventsTable" msprop:Generator_RowChangedName="EventsTableRowChanged" msprop:Generator_RowEvArgName="EventsTableRowChangeEvent" msprop:Generator_RowClassName="EventsTableRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Name" msprop:Generator_ColumnVarNameInTable="columnName" msprop:Generator_ColumnPropNameInRow="Name" msprop:Generator_ColumnPropNameInTable="NameColumn" msprop:Generator_UserColumnName="Name" type="xs:string" />
+              <xs:element name="ScheduledTime" msprop:Generator_ColumnVarNameInTable="columnScheduledTime" msprop:Generator_ColumnPropNameInRow="ScheduledTime" msprop:Generator_ColumnPropNameInTable="ScheduledTimeColumn" msprop:Generator_UserColumnName="ScheduledTime" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="RepeatWeekly" msprop:Generator_ColumnVarNameInTable="columnRepeatWeekly" msprop:Generator_ColumnPropNameInRow="RepeatWeekly" msprop:Generator_ColumnPropNameInTable="RepeatWeeklyColumn" msprop:Generator_UserColumnName="RepeatWeekly" type="xs:boolean" minOccurs="0" />
+              <xs:element name="RepeatYearly" msprop:Generator_ColumnVarNameInTable="columnRepeatYearly" msprop:Generator_ColumnPropNameInRow="RepeatYearly" msprop:Generator_ColumnPropNameInTable="RepeatYearlyColumn" msprop:Generator_UserColumnName="RepeatYearly" type="xs:boolean" minOccurs="0" />
+              <xs:element name="RepeatWeeklyDays" msprop:Generator_ColumnVarNameInTable="columnRepeatWeeklyDays" msprop:Generator_ColumnPropNameInRow="RepeatWeeklyDays" msprop:Generator_ColumnPropNameInTable="RepeatWeeklyDaysColumn" msprop:Generator_UserColumnName="RepeatWeeklyDays" type="xs:string" minOccurs="0" />
+              <xs:element name="SheduledDay" msprop:Generator_ColumnVarNameInTable="columnSheduledDay" msprop:Generator_ColumnPropNameInRow="SheduledDay" msprop:Generator_ColumnPropNameInTable="SheduledDayColumn" msprop:Generator_UserColumnName="SheduledDay" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1">
+      <xs:selector xpath=".//mstns:EventsTable" />
+      <xs:field xpath="mstns:Name" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

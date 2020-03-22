@@ -1,4 +1,4 @@
-/AudioReminder/obj/
-/AudioReminder/bin/
 /.vs/
 /packages/
+*/obj/
+*/bin/

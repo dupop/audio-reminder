@@ -39,4 +39,9 @@ namespace AudioReminder
             ServiceBase.Run(ServicesToRun);
         }
     }
+
+    //TODO: 
+    //add all copyrights...
+    //align namespace
+
 }

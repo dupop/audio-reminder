@@ -9,8 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
 
-namespace AudioReminder
+namespace AudioUserInterface
 {
+
     public class HotKeyListener
     {
         Thread hotKeyListeningThread;

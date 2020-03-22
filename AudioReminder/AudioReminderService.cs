@@ -18,8 +18,6 @@ namespace AudioReminder
 {
     public partial class AudioReminderService : ServiceBase
     {
-        HotKeyListener hotKeyListener;
-
         public AudioReminderService()
         {
             InitializeComponent();
@@ -29,7 +27,7 @@ namespace AudioReminder
         {
             Log.Logger.Information("Service starting");
             
-            //hotKeyListener = new HotKeyListener();
+            //TODO: service implementation
 
             Log.Logger.Information("Service started");
         }
