@@ -17,7 +17,7 @@ namespace AudioReminder
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {
-                new Service1()
+                new AudioReminderService()
             };
             ServiceBase.Run(ServicesToRun);
         }

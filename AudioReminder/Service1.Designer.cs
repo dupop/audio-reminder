@@ -1,6 +1,6 @@
 ﻿namespace AudioReminder
 {
-    partial class Service1
+    partial class AudioReminderService
     {
         /// <summary> 
         /// Required designer variable.
@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             // 
-            // Service1
+            // AudioReminderService
             // 
-            this.ServiceName = "Service1";
+            this.ServiceName = "AudioReminder";
 
         }
 

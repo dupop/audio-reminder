@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace AudioReminder
 {
-    public partial class Service1 : ServiceBase
+    public partial class AudioReminderService : ServiceBase
     {
-        public Service1()
+        public AudioReminderService()
         {
             InitializeComponent();
         }
