@@ -17,7 +17,7 @@ namespace AudioReminder
         static void Main()
         {
 #if DEBUG
-            //Thread.Sleep(5000);
+            Thread.Sleep(5000);
 #endif
 
             new LoggerInitializer().CreateLogger();

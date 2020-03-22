@@ -22,14 +22,14 @@ namespace AudioReminder
         {
             hotKeyListeningThread = new Thread(new ThreadStart(StartHotKeyListener));
             hotKeyListeningThread.SetApartmentState(ApartmentState.STA);
-            StartHotKeyListener();
+            hotKeyListeningThread.Start();
         }
 
         private void StartHotKeyListener()
         {
-            HotKeyManager hotKeyManager = new HotKeyManager();
+            hotKeyManager = new HotKeyManager();
             hotKeyManager.KeyPressed += HotKeyManagerPressed;
-            hotKey = hotKeyManager.Register(Key.F5, ModifierKeys.Control);
+            hotKey = hotKeyManager.Register(Key.D2, ModifierKeys.Control);
         }
 
         private void StopListener()

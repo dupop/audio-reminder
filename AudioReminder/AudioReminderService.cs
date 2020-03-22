@@ -18,7 +18,7 @@ namespace AudioReminder
 {
     public partial class AudioReminderService : ServiceBase
     {
-        //HotKeyListener hotKeyListener;
+        HotKeyListener hotKeyListener;
 
         public AudioReminderService()
         {
