@@ -28,90 +28,108 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.deleteButton = new System.Windows.Forms.Button();
+            this.editButton = new System.Windows.Forms.Button();
+            this.cloneButton = new System.Windows.Forms.Button();
+            this.remindersListBox = new System.Windows.Forms.ListBox();
             this.backButton = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // button1
+            // deleteButton
             // 
-            this.button1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button1.Location = new System.Drawing.Point(77, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(102, 69);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Delete reminder";
-            this.button1.UseVisualStyleBackColor = true;
+            this.deleteButton.Location = new System.Drawing.Point(51, 8);
+            this.deleteButton.Margin = new System.Windows.Forms.Padding(2);
+            this.deleteButton.Name = "deleteButton";
+            this.deleteButton.Size = new System.Drawing.Size(68, 45);
+            this.deleteButton.TabIndex = 0;
+            this.deleteButton.TabStop = false;
+            this.deleteButton.Text = "Delete reminder";
+            this.deleteButton.UseVisualStyleBackColor = true;
+            this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
             // 
-            // button2
+            // editButton
             // 
-            this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button2.Location = new System.Drawing.Point(264, 12);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(102, 69);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Edit reminder";
-            this.button2.UseVisualStyleBackColor = true;
+            this.editButton.Location = new System.Drawing.Point(176, 8);
+            this.editButton.Margin = new System.Windows.Forms.Padding(2);
+            this.editButton.Name = "editButton";
+            this.editButton.Size = new System.Drawing.Size(68, 45);
+            this.editButton.TabIndex = 1;
+            this.editButton.TabStop = false;
+            this.editButton.Text = "Edit reminder";
+            this.editButton.UseVisualStyleBackColor = true;
+            this.editButton.Click += new System.EventHandler(this.editButton_Click);
             // 
-            // button3
+            // cloneButton
             // 
-            this.button3.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button3.Location = new System.Drawing.Point(428, 12);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(102, 69);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "Clone reminder";
-            this.button3.UseVisualStyleBackColor = true;
+            this.cloneButton.Location = new System.Drawing.Point(285, 8);
+            this.cloneButton.Margin = new System.Windows.Forms.Padding(2);
+            this.cloneButton.Name = "cloneButton";
+            this.cloneButton.Size = new System.Drawing.Size(68, 45);
+            this.cloneButton.TabIndex = 2;
+            this.cloneButton.TabStop = false;
+            this.cloneButton.Text = "Clone reminder";
+            this.cloneButton.UseVisualStyleBackColor = true;
+            this.cloneButton.Click += new System.EventHandler(this.cloneButton_Click);
             // 
-            // listBox1
+            // remindersListBox
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 20;
-            this.listBox1.Items.AddRange(new object[] {
-            "test1",
-            "2",
-            "3",
-            "4"});
-            this.listBox1.Location = new System.Drawing.Point(40, 216);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(841, 184);
-            this.listBox1.TabIndex = 0;
+            this.remindersListBox.FormattingEnabled = true;
+            this.remindersListBox.Location = new System.Drawing.Point(51, 115);
+            this.remindersListBox.Margin = new System.Windows.Forms.Padding(2);
+            this.remindersListBox.Name = "remindersListBox";
+            this.remindersListBox.Size = new System.Drawing.Size(738, 212);
+            this.remindersListBox.TabIndex = 3;
             // 
             // backButton
             // 
-            this.backButton.Location = new System.Drawing.Point(520, 558);
+            this.backButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.backButton.Location = new System.Drawing.Point(320, 333);
+            this.backButton.Margin = new System.Windows.Forms.Padding(2);
             this.backButton.Name = "backButton";
-            this.backButton.Size = new System.Drawing.Size(75, 23);
-            this.backButton.TabIndex = 8;
+            this.backButton.Size = new System.Drawing.Size(60, 63);
+            this.backButton.TabIndex = 4;
             this.backButton.TabStop = false;
             this.backButton.Text = "Back";
             this.backButton.UseVisualStyleBackColor = true;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(48, 87);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(446, 26);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Press Delete key to remove selected reminder, Enter key to modify it, or space ke" +
+    "y to clone it.\r\nPress Exit key to go back.";
+            // 
             // ReminderListForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.backButton;
-            this.ClientSize = new System.Drawing.Size(1200, 692);
+            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.backButton);
-            this.Controls.Add(this.listBox1);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Controls.Add(this.remindersListBox);
+            this.Controls.Add(this.cloneButton);
+            this.Controls.Add(this.editButton);
+            this.Controls.Add(this.deleteButton);
+            this.KeyPreview = true;
             this.Name = "ReminderListForm";
             this.Text = "ReminderListForm";
+            this.Load += new System.EventHandler(this.ReminderListForm_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Button cloneButton;
+        private System.Windows.Forms.Button editButton;
+        private System.Windows.Forms.Button deleteButton;
+        private System.Windows.Forms.ListBox remindersListBox;
         private System.Windows.Forms.Button backButton;
+        private System.Windows.Forms.Label label1;
     }
 }

@@ -29,42 +29,31 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.beepInterval = new System.Windows.Forms.TextBox();
             this.eventsTableBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.eventsDataSet = new AudioUserInterface.EventsDataSet();
             this.eventsDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.okButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
-            this.autostartCheckbox = new System.Windows.Forms.CheckBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.autostartEnabledCheckbox = new System.Windows.Forms.CheckBox();
+            this.serviceEnabledcheckBox = new System.Windows.Forms.CheckBox();
+            this.snoozeIntervalNumbericBox = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.snoozeEnabledcheckBox = new System.Windows.Forms.CheckBox();
+            this.beeperEnabledcheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.beepIntervalNumbericBox = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.eventsTableBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eventsDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eventsDataSetBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.snoozeIntervalNumbericBox)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.beepIntervalNumbericBox)).BeginInit();
             this.SuspendLayout();
-            // 
-            // beepInterval
-            // 
-            this.beepInterval.AccessibleName = "Beep interval";
-            this.beepInterval.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AudioUserInterface.Properties.Settings.Default, "BeepInterval", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.beepInterval.Location = new System.Drawing.Point(6, 82);
-            this.beepInterval.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.beepInterval.Name = "beepInterval";
-            this.beepInterval.Size = new System.Drawing.Size(148, 26);
-            this.beepInterval.TabIndex = 3;
-            this.beepInterval.Text = global::AudioUserInterface.Properties.Settings.Default.BeepInterval;
-            this.beepInterval.TextChanged += new System.EventHandler(this.beepInterval_TextChanged);
             // 
             // eventsTableBindingSource
             // 
@@ -85,172 +74,207 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 47);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(4, 31);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(101, 20);
+            this.label1.Size = new System.Drawing.Size(114, 13);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Beep interval";
+            this.label1.Text = "Beep interval [minutes]";
             // 
             // okButton
             // 
-            this.okButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.okButton.Location = new System.Drawing.Point(195, 464);
+            this.okButton.Location = new System.Drawing.Point(118, 299);
+            this.okButton.Margin = new System.Windows.Forms.Padding(2);
             this.okButton.Name = "okButton";
-            this.okButton.Size = new System.Drawing.Size(79, 53);
+            this.okButton.Size = new System.Drawing.Size(53, 34);
             this.okButton.TabIndex = 6;
             this.okButton.Text = "Ok";
             this.okButton.UseVisualStyleBackColor = true;
+            this.okButton.Click += new System.EventHandler(this.okButton_Click);
             // 
             // cancelButton
             // 
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(289, 464);
+            this.cancelButton.Location = new System.Drawing.Point(181, 299);
+            this.cancelButton.Margin = new System.Windows.Forms.Padding(2);
             this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(92, 53);
+            this.cancelButton.Size = new System.Drawing.Size(53, 34);
             this.cancelButton.TabIndex = 7;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
             // 
-            // autostartCheckbox
+            // autostartEnabledCheckbox
             // 
-            this.autostartCheckbox.AutoSize = true;
-            this.autostartCheckbox.Location = new System.Drawing.Point(6, 25);
-            this.autostartCheckbox.Name = "autostartCheckbox";
-            this.autostartCheckbox.Size = new System.Drawing.Size(99, 24);
-            this.autostartCheckbox.TabIndex = 0;
-            this.autostartCheckbox.Text = "autostart";
-            this.autostartCheckbox.UseVisualStyleBackColor = true;
+            this.autostartEnabledCheckbox.AutoSize = true;
+            this.autostartEnabledCheckbox.Location = new System.Drawing.Point(4, 16);
+            this.autostartEnabledCheckbox.Margin = new System.Windows.Forms.Padding(2);
+            this.autostartEnabledCheckbox.Name = "autostartEnabledCheckbox";
+            this.autostartEnabledCheckbox.Size = new System.Drawing.Size(105, 17);
+            this.autostartEnabledCheckbox.TabIndex = 0;
+            this.autostartEnabledCheckbox.Text = "Autostart service";
+            this.autostartEnabledCheckbox.UseVisualStyleBackColor = true;
             // 
-            // checkBox1
+            // serviceEnabledcheckBox
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(6, 55);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(203, 24);
-            this.checkBox1.TabIndex = 1;
-            this.checkBox1.Text = "reminders enabled at all";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.serviceEnabledcheckBox.AutoSize = true;
+            this.serviceEnabledcheckBox.Location = new System.Drawing.Point(4, 36);
+            this.serviceEnabledcheckBox.Margin = new System.Windows.Forms.Padding(2);
+            this.serviceEnabledcheckBox.Name = "serviceEnabledcheckBox";
+            this.serviceEnabledcheckBox.Size = new System.Drawing.Size(103, 17);
+            this.serviceEnabledcheckBox.TabIndex = 1;
+            this.serviceEnabledcheckBox.Text = "Service enabled";
+            this.serviceEnabledcheckBox.UseVisualStyleBackColor = true;
             // 
-            // numericUpDown1
+            // snoozeIntervalNumbericBox
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(17, 68);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(120, 26);
-            this.numericUpDown1.TabIndex = 5;
+            this.snoozeIntervalNumbericBox.AccessibleName = "Snooze interval minutes";
+            this.snoozeIntervalNumbericBox.Location = new System.Drawing.Point(11, 44);
+            this.snoozeIntervalNumbericBox.Margin = new System.Windows.Forms.Padding(2);
+            this.snoozeIntervalNumbericBox.Maximum = new decimal(new int[] {
+            86400,
+            0,
+            0,
+            0});
+            this.snoozeIntervalNumbericBox.Name = "snoozeIntervalNumbericBox";
+            this.snoozeIntervalNumbericBox.Size = new System.Drawing.Size(80, 20);
+            this.snoozeIntervalNumbericBox.TabIndex = 5;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(19, 45);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Location = new System.Drawing.Point(13, 29);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(118, 20);
+            this.label3.Size = new System.Drawing.Size(125, 13);
             this.label3.TabIndex = 9;
-            this.label3.Text = "Snooze interval";
+            this.label3.Text = "Snooze interval [minutes]";
             // 
-            // checkBox2
+            // snoozeEnabledcheckBox
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(11, 18);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(151, 24);
-            this.checkBox2.TabIndex = 4;
-            this.checkBox2.Text = "Snooze enabled";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.snoozeEnabledcheckBox.AutoSize = true;
+            this.snoozeEnabledcheckBox.Location = new System.Drawing.Point(7, 12);
+            this.snoozeEnabledcheckBox.Margin = new System.Windows.Forms.Padding(2);
+            this.snoozeEnabledcheckBox.Name = "snoozeEnabledcheckBox";
+            this.snoozeEnabledcheckBox.Size = new System.Drawing.Size(103, 17);
+            this.snoozeEnabledcheckBox.TabIndex = 4;
+            this.snoozeEnabledcheckBox.Text = "Snooze enabled";
+            this.snoozeEnabledcheckBox.UseVisualStyleBackColor = true;
             // 
-            // checkBox3
+            // beeperEnabledcheckBox
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(6, 25);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(148, 24);
-            this.checkBox3.TabIndex = 2;
-            this.checkBox3.Text = "Beeper enabled";
-            this.checkBox3.UseVisualStyleBackColor = true;
+            this.beeperEnabledcheckBox.AutoSize = true;
+            this.beeperEnabledcheckBox.Location = new System.Drawing.Point(4, 16);
+            this.beeperEnabledcheckBox.Margin = new System.Windows.Forms.Padding(2);
+            this.beeperEnabledcheckBox.Name = "beeperEnabledcheckBox";
+            this.beeperEnabledcheckBox.Size = new System.Drawing.Size(101, 17);
+            this.beeperEnabledcheckBox.TabIndex = 2;
+            this.beeperEnabledcheckBox.Text = "Beeper enabled";
+            this.beeperEnabledcheckBox.UseVisualStyleBackColor = true;
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.autostartCheckbox);
-            this.groupBox1.Controls.Add(this.checkBox1);
-            this.groupBox1.Location = new System.Drawing.Point(24, 16);
+            this.groupBox1.Controls.Add(this.autostartEnabledCheckbox);
+            this.groupBox1.Controls.Add(this.serviceEnabledcheckBox);
+            this.groupBox1.Location = new System.Drawing.Point(16, 10);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(277, 100);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox1.Size = new System.Drawing.Size(185, 65);
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Service status";
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.checkBox3);
-            this.groupBox2.Controls.Add(this.beepInterval);
+            this.groupBox2.Controls.Add(this.beepIntervalNumbericBox);
+            this.groupBox2.Controls.Add(this.beeperEnabledcheckBox);
             this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Location = new System.Drawing.Point(24, 128);
+            this.groupBox2.Location = new System.Drawing.Point(16, 83);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(277, 127);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox2.Size = new System.Drawing.Size(185, 83);
             this.groupBox2.TabIndex = 13;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Beeper";
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.numericUpDown1);
+            this.groupBox3.Controls.Add(this.snoozeIntervalNumbericBox);
             this.groupBox3.Controls.Add(this.label3);
-            this.groupBox3.Controls.Add(this.checkBox2);
-            this.groupBox3.Location = new System.Drawing.Point(24, 261);
+            this.groupBox3.Controls.Add(this.snoozeEnabledcheckBox);
+            this.groupBox3.Location = new System.Drawing.Point(16, 170);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(277, 114);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox3.Size = new System.Drawing.Size(185, 74);
             this.groupBox3.TabIndex = 13;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Snooze";
             // 
+            // beepIntervalNumbericBox
+            // 
+            this.beepIntervalNumbericBox.AccessibleName = "Beep interval minutes";
+            this.beepIntervalNumbericBox.Location = new System.Drawing.Point(7, 46);
+            this.beepIntervalNumbericBox.Margin = new System.Windows.Forms.Padding(2);
+            this.beepIntervalNumbericBox.Maximum = new decimal(new int[] {
+            86400,
+            0,
+            0,
+            0});
+            this.beepIntervalNumbericBox.Name = "beepIntervalNumbericBox";
+            this.beepIntervalNumbericBox.Size = new System.Drawing.Size(80, 20);
+            this.beepIntervalNumbericBox.TabIndex = 3;
+            this.beepIntervalNumbericBox.Value = new decimal(new int[] {
+            60,
+            0,
+            0,
+            0});
+            // 
             // SettingsForm
             // 
-            this.AcceptButton = this.okButton;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(514, 529);
+            this.ClientSize = new System.Drawing.Size(343, 344);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.okButton);
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "SettingsForm";
             this.Text = "Audio Reminder - Settings";
+            this.Load += new System.EventHandler(this.SettingsForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.eventsTableBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eventsDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eventsDataSetBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.snoozeIntervalNumbericBox)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.beepIntervalNumbericBox)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox beepInterval;
         private System.Windows.Forms.BindingSource eventsTableBindingSource;
         private EventsDataSet eventsDataSet;
         private System.Windows.Forms.BindingSource eventsDataSetBindingSource;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Button cancelButton;
-        private System.Windows.Forms.CheckBox autostartCheckbox;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.CheckBox autostartEnabledCheckbox;
+        private System.Windows.Forms.CheckBox serviceEnabledcheckBox;
+        private System.Windows.Forms.NumericUpDown snoozeIntervalNumbericBox;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.CheckBox snoozeEnabledcheckBox;
+        private System.Windows.Forms.CheckBox beeperEnabledcheckBox;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.NumericUpDown beepIntervalNumbericBox;
     }
 }
 

@@ -1,0 +1,7 @@
+﻿[*.cs]
+
+# RCS1062: Avoid interpolated string with no interpolation.
+dotnet_diagnostic.RCS1062.severity = silent
+
+# RCS1124: Inline local variable.
+dotnet_diagnostic.RCS1124.severity = silent

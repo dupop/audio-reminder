@@ -62,6 +62,7 @@
     <Compile Include="CreateReminderForm.Designer.cs">
       <DependentUpon>CreateReminderForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ErrorDialogUtility.cs" />
     <Compile Include="EventsDataSet.cs">
       <DependentUpon>EventsDataSet.xsd</DependentUpon>
     </Compile>
@@ -70,6 +71,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EventsDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="PersistenceAdapter.cs" />
+    <Compile Include="ServiceSettings.cs" />
+    <Compile Include="ReminderEntity.cs" />
     <Compile Include="LoggerInitializer.cs" />
     <Compile Include="HotKeyListener.cs" />
     <Compile Include="MainMenuForm.cs">
@@ -78,6 +82,7 @@
     <Compile Include="MainMenuForm.Designer.cs">
       <DependentUpon>MainMenuForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ReminderNameAvailabilityChecker.cs" />
     <Compile Include="ReminderRingForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,28 +13,41 @@ namespace AudioUserInterface
 {
     public partial class MainMenuForm : Form
     {
+        private PersistenceAdapter PersistenceAdapter;
         public MainMenuForm()
         {
             InitializeComponent();
+
+            PersistenceAdapter = new PersistenceAdapter();
         }
 
         private void createReminderButton_Click(object sender, EventArgs e)
         {
-            CreateReminderForm createReminderForm = new CreateReminderForm();
+            CreateAndUpdateReminderForm createReminderForm = new CreateAndUpdateReminderForm(PersistenceAdapter);
             createReminderForm.ShowDialog();
+
+            if (createReminderForm.DialogResult != DialogResult.OK)
+            {
+                Log.Logger.Information($"CreateReminderForm closed with result NotOk.");
+                return;
+            }
+
+            var createdReminder = createReminderForm.CreateOrUpdatedReminder;
+            PersistenceAdapter.Save(createdReminder);
         }
 
         private void remindersButton_Click(object sender, EventArgs e)
         {
-            ReminderListForm form = new ReminderListForm();
+            ReminderListForm form = new ReminderListForm(PersistenceAdapter);
             form.ShowDialog();
         }
 
         private void Settings_Click(object sender, EventArgs e)
         {
 
-            SettingsForm form = new SettingsForm();
-            form.ShowDialog();
+            SettingsForm settingsForm = new SettingsForm(PersistenceAdapter);
+            settingsForm.ShowDialog();
         }
+
     }
 }
