@@ -15,23 +15,20 @@ namespace AudioUserInterface
     {
         public ReminderEntity CreateOrUpdatedReminder { get; set; }
         private ReminderEntity oldValueOfReminderToBeUpdated;
-        private ReminderNameAvailabilityChecker nameChecker;
-        private bool isUpdating;
+        private IReminderNameAvailabilityChecker nameChecker;
 
-        public CreateAndUpdateReminderForm(ReminderNameAvailabilityChecker nameChecker)
+        public CreateAndUpdateReminderForm(IReminderNameAvailabilityChecker nameChecker)
         {
             InitializeComponent();
             this.nameChecker = nameChecker;
             Text = "Create reminder";
-            isUpdating = false;
         }
-        public CreateAndUpdateReminderForm(ReminderNameAvailabilityChecker nameChecker, ReminderEntity reminderToUpdate)
+        public CreateAndUpdateReminderForm(IReminderNameAvailabilityChecker nameChecker, ReminderEntity reminderToUpdate)
         {
             InitializeComponent();
             this.nameChecker = nameChecker;
             Text = "Update reminder";
             DisplayReminderToUpdate(reminderToUpdate);
-            isUpdating = true;
             oldValueOfReminderToBeUpdated = reminderToUpdate;
         }
 
@@ -98,7 +95,6 @@ namespace AudioUserInterface
         {
             string reminderName = reminderNameStringBox.Text;
             bool reminderNameEmpty =  string.IsNullOrWhiteSpace(reminderName);
-            //TODO: validation of duplicate reminder name
 
             if (reminderNameEmpty)
             {

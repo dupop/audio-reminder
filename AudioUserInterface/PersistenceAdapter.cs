@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AudioUserInterface
 {
-    public class PersistenceAdapter : ReminderNameAvailabilityChecker
+    public class PersistenceAdapter : IPersistenceAdapter
     {
         public virtual void Save(ReminderEntity createdReminder)
         {
@@ -19,7 +19,7 @@ namespace AudioUserInterface
             }
 
             Log.Logger.Information($"Persisting reminder '{createdReminder.Name}' ");
-            
+
             SaveImplementation(createdReminder);
 
             Log.Logger.Information($"Persisting reminder '{createdReminder.Name}' done");
@@ -45,7 +45,7 @@ namespace AudioUserInterface
             Log.Logger.Information($"Loading reminders ");
 
             ReminderEntity[] reminders = LoadImplementation();
-            
+
             Log.Logger.Information($"Loading reminders done");
             return reminders;
         }

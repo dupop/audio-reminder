@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AudioUserInterface
 {
-    public interface ReminderNameAvailabilityChecker
+    public interface IReminderNameAvailabilityChecker
     {
         /// <summary>
         /// Check if reminder with this name already exists

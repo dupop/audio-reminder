@@ -1,6 +1,6 @@
-﻿namespace AudioUserInterface
+﻿namespace ReminerRinging
 {
-    partial class ReminderRingForm
+    partial class ReminderRingingForm
     {
         /// <summary>
         /// Required designer variable.
@@ -34,31 +34,37 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(140, 75);
+            this.button1.DialogResult = System.Windows.Forms.DialogResult.Retry;
+            this.button1.Location = new System.Drawing.Point(93, 49);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(102, 53);
+            this.button1.Size = new System.Drawing.Size(68, 34);
             this.button1.TabIndex = 0;
             this.button1.Text = "Snooze";
             this.button1.UseVisualStyleBackColor = true;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(140, 160);
+            this.button2.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.button2.Location = new System.Drawing.Point(93, 104);
+            this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(102, 56);
+            this.button2.Size = new System.Drawing.Size(68, 36);
             this.button2.TabIndex = 2;
             this.button2.Text = "Dismiss";
             this.button2.UseVisualStyleBackColor = true;
             // 
             // ReminderRingForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(497, 351);
+            this.ClientSize = new System.Drawing.Size(331, 228);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ReminderRingForm";
             this.Text = "Reminder ring";
+            this.Load += new System.EventHandler(this.ReminderRingForm_Load);
             this.ResumeLayout(false);
 
         }

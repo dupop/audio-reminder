@@ -71,6 +71,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EventsDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="IAudioReminderService.cs" />
+    <Compile Include="IReminderCallBack.cs" />
+    <Compile Include="IReminderEntityProvider.cs" />
+    <Compile Include="IServiceSettingsEntityProvider.cs" />
+    <Compile Include="IPersistenceAdapter.cs" />
     <Compile Include="PersistenceAdapter.cs" />
     <Compile Include="ServiceSettings.cs" />
     <Compile Include="ReminderEntity.cs" />
@@ -82,13 +87,7 @@
     <Compile Include="MainMenuForm.Designer.cs">
       <DependentUpon>MainMenuForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ReminderNameAvailabilityChecker.cs" />
-    <Compile Include="ReminderRingForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ReminderRingForm.Designer.cs">
-      <DependentUpon>ReminderRingForm.cs</DependentUpon>
-    </Compile>
+    <Compile Include="IReminderNameAvailabilityChecker.cs" />
     <Compile Include="ReminderListForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -108,9 +107,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainMenuForm.resx">
       <DependentUpon>MainMenuForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReminderRingForm.resx">
-      <DependentUpon>ReminderRingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ReminderListForm.resx">
       <DependentUpon>ReminderListForm.cs</DependentUpon>

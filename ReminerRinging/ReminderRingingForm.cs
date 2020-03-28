@@ -8,13 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace AudioUserInterface
+namespace ReminerRinging
 {
-    public partial class ReminderRingForm : Form
+    public partial class ReminderRingingForm : Form
     {
-        public ReminderRingForm()
+        public ReminderRingingForm()
         {
             InitializeComponent();
+        }
+
+        private void ReminderRingForm_Load(object sender, EventArgs e)
+        {
+            Console.Beep();
         }
     }
 }
