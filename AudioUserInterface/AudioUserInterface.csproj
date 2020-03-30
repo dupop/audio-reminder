@@ -71,15 +71,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EventsDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="IAudioReminderService.cs" />
-    <Compile Include="IReminderCallBack.cs" />
-    <Compile Include="IReminderEntityProvider.cs" />
-    <Compile Include="IServiceSettingsEntityProvider.cs" />
-    <Compile Include="IPersistenceAdapter.cs" />
     <Compile Include="PersistenceAdapter.cs" />
-    <Compile Include="ServiceSettings.cs" />
-    <Compile Include="ReminderEntity.cs" />
-    <Compile Include="LoggerInitializer.cs" />
     <Compile Include="HotKeyListener.cs" />
     <Compile Include="MainMenuForm.cs">
       <SubType>Form</SubType>
@@ -87,7 +79,6 @@
     <Compile Include="MainMenuForm.Designer.cs">
       <DependentUpon>MainMenuForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="IReminderNameAvailabilityChecker.cs" />
     <Compile Include="ReminderListForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -147,6 +138,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AudioReminderCore\AudioReminderCore.csproj">
+      <Project>{a1ef04fc-26dd-4511-88df-1839edfe5902}</Project>
+      <Name>AudioReminderCore</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,6 +1,8 @@
-﻿namespace AudioUserInterface
+﻿using AudioReminderCore.Model;
+
+namespace AudioReminderCore.Interfaces
 {
-    public interface IReminderEntityProvider: IReminderNameAvailabilityChecker
+    public interface IReminderEntityProvider : IReminderNameAvailabilityChecker
     {
         void Save(ReminderEntity createdReminder);
         ReminderEntity[] Load();

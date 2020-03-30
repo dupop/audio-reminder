@@ -1,7 +1,7 @@
-﻿namespace AudioUserInterface
+﻿namespace AudioReminderCore.Interfaces
 {
     public interface IAudioReminderService :
-        IPersistenceAdapter, 
+        IPersistenceAdapter,
         IReminderCallBack
     {
     }

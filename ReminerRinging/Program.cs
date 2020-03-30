@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AudioReminderCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,6 +15,8 @@ namespace ReminerRinging
         [STAThread]
         static void Main()
         {
+            new LoggerInitializer().CreateLogger();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new ReminderRingingForm());

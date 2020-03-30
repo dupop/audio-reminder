@@ -5,14 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AudioUserInterface
+namespace AudioReminderCore
 {
-    //TODO: extract this udplicate class to a common project
-
     /// <summary>
     /// Provides global logger configuration and creating functionallity
     /// </summary>
-    class LoggerInitializer
+    public class LoggerInitializer
     {
         #region Properties and contants
         public string LoggingFilenameFormat { get; set; }

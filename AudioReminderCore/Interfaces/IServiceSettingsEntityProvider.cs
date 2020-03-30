@@ -1,4 +1,6 @@
-﻿namespace AudioUserInterface
+﻿using AudioReminderCore.Model;
+
+namespace AudioReminderCore.Interfaces
 {
     public interface IServiceSettingsEntityProvider
     {

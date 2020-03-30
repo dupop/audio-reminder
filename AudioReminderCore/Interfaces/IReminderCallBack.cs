@@ -1,4 +1,4 @@
-﻿namespace AudioUserInterface
+﻿namespace AudioReminderCore.Interfaces
 {
     public interface IReminderCallBack
     {

@@ -67,9 +67,9 @@
     <Compile Include="AudioReminderService.Designer.cs">
       <DependentUpon>AudioReminderService.cs</DependentUpon>
     </Compile>
-    <Compile Include="LoggerInitializer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserInterfaceCommunication.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.editorconfig">
@@ -82,6 +82,12 @@
     <EmbeddedResource Include="AudioReminderService.resx">
       <DependentUpon>AudioReminderService.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AudioReminderCore\AudioReminderCore.csproj">
+      <Project>{a1ef04fc-26dd-4511-88df-1839edfe5902}</Project>
+      <Name>AudioReminderCore</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

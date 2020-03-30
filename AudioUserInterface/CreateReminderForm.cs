@@ -1,4 +1,6 @@
-﻿using Serilog;
+﻿using AudioReminderCore.Interfaces;
+using AudioReminderCore.Model;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
