@@ -11,6 +11,7 @@ namespace AudioReminder
 {
     public class FilePersistenceAdapter<TEntity>
     {
+        
         //sinelgton code
 
         //private static FilePersistanceAdapter singleton;
@@ -66,12 +67,15 @@ namespace AudioReminder
 
         protected string GetFilePath()
         {
-            string servicePath = AppDomain.CurrentDomain.BaseDirectory; //TODO: extract both occuranecs of this
+            string serviceDir = AppDomain.CurrentDomain.BaseDirectory; //TODO: extract both occuranecs of this
+            string persistenceSubDir = "persistence";
+            string peristenceDir = Path.Combine(serviceDir, persistenceSubDir);
+
             string fileExtension = ".xml";
             string fileName = typeof(TEntity).ToString(); //this prevents multiple lists of same type, but do we need that
             string nameNameWithExtension = fileName + fileExtension; //storageFilName; 
 
-            string fullPath = Path.Combine(servicePath, nameNameWithExtension);
+            string fullPath = Path.Combine(peristenceDir, nameNameWithExtension);
             string fullPathNonRelative = Path.GetFullPath(fullPath);
 
             return fullPathNonRelative;

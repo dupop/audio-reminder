@@ -107,8 +107,9 @@ namespace AudioUserInterface
             ErrorDialogUtility.ErrorDialog("Not yet implemented");
             ReminderEntity clone = SelectedReminder;
 
-            PersistenceAdapter.Save(clone);
-            remindersListBox.Items.Add(clone);
+            //TODO: missing validation of backend causes creating duplicate name
+            //PersistenceAdapter.Save(clone);
+            //remindersListBox.Items.Add(clone);
         }
 
 
