@@ -42,14 +42,14 @@ namespace AudioReminderCore.ClientProxies
             Channel.Delete(reminderName);
         }
 
-        public bool IsNameAvailable(string reminderName)
+        public ReminderEntity Load(string reminderName)
         {
-            return Channel.IsNameAvailable(reminderName);
+            return Channel.Load(reminderName);
         }
 
-        public ReminderEntity[] Load()
+        public ReminderEntity[] LoadAll()
         {
-            return Channel.Load();
+            return Channel.LoadAll();
         }
 
         public ServiceSettingsDto LoadSettings()
@@ -57,9 +57,14 @@ namespace AudioReminderCore.ClientProxies
             return Channel.LoadSettings();
         }
 
-        public void RegsiterForReminderCallBack()
+        public void SnoozeReminder(string reminderName)
         {
-            Channel.RegsiterForReminderCallBack();
+            Channel.SnoozeReminder(reminderName);
+        }
+
+        public void DismissReminder(string reminderName)
+        {
+            Channel.DismissReminder(reminderName);
         }
 
         public void Save(ReminderEntity createdReminder)

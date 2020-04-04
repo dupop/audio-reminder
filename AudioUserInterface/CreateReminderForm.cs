@@ -17,15 +17,15 @@ namespace AudioUserInterface
     {
         public ReminderEntity CreateOrUpdatedReminder { get; set; }
         private ReminderEntity oldValueOfReminderToBeUpdated;
-        private IReminderNameAvailabilityChecker nameChecker;
+        private PersistenceAdapter nameChecker;
 
-        public CreateAndUpdateReminderForm(IReminderNameAvailabilityChecker nameChecker)
+        public CreateAndUpdateReminderForm(PersistenceAdapter nameChecker)
         {
             InitializeComponent();
             this.nameChecker = nameChecker;
             Text = "Create reminder";
         }
-        public CreateAndUpdateReminderForm(IReminderNameAvailabilityChecker nameChecker, ReminderEntity reminderToUpdate)
+        public CreateAndUpdateReminderForm(PersistenceAdapter nameChecker, ReminderEntity reminderToUpdate)
         {
             InitializeComponent();
             this.nameChecker = nameChecker;
@@ -96,16 +96,16 @@ namespace AudioUserInterface
         protected virtual bool ValidateInput()
         {
             string reminderName = reminderNameStringBox.Text;
-            bool reminderNameEmpty =  string.IsNullOrWhiteSpace(reminderName);
+            bool reminderNameIsEmpty =  string.IsNullOrWhiteSpace(reminderName);
 
-            if (reminderNameEmpty)
+            if (reminderNameIsEmpty)
             {
                 ErrorDialogUtility.ErrorDialog("Reminder name is missing");
                 return false;
             }
 
             bool nameSameAsBefore = oldValueOfReminderToBeUpdated?.Name == reminderName;
-            if(!nameSameAsBefore && !nameChecker.IsNameAvailable(reminderName))
+            if(!nameSameAsBefore && IsNameAvialable(reminderName))
             {
                 ErrorDialogUtility.ErrorDialog("Reminder name already exists");
                 return false;
@@ -113,6 +113,15 @@ namespace AudioUserInterface
 
             Log.Logger.Information($"Reminder '{reminderName}' valid.");
             return true;
+        }
+
+        protected virtual bool IsNameAvialable(string reminderName)
+        {
+
+            bool nameAvialable = nameChecker.Load(reminderName) == null;
+            
+            Log.Logger.Information($"Checking if reminder name '{reminderName}' is avialable done. Result is {nameAvialable}");
+            return nameAvialable;
         }
 
     }

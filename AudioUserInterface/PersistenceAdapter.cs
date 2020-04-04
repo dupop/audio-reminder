@@ -68,11 +68,11 @@ namespace AudioUserInterface
             Log.Logger.Information($"Updating reminder '{reminder.Name}' done");
         }
 
-        public virtual ReminderEntity[] Load()
+        public virtual ReminderEntity[] LoadAll()
         {
             Log.Logger.Information($"Loading reminders ");
 
-            ReminderEntity[] reminders = LoadImplementation();
+            ReminderEntity[] reminders = LoadAllImplementation();
 
             Log.Logger.Information($"Loading reminders done");
             return reminders;
@@ -87,15 +87,13 @@ namespace AudioUserInterface
             Log.Logger.Information($"Delting reminder '{reminderName}' done");
         }
 
-        public virtual bool IsNameAvailable(string reminderName)
+        public virtual ReminderEntity Load(string reminderName)
         {
-            Log.Logger.Information($"Checking if reminder name '{reminderName}' is avialable");
+            Log.Logger.Information($"Loading reminder with name '{reminderName}'");
 
-            //TODO: implmwnt
-            bool nameAvialable = IsNameAvailableImplementation(reminderName);
+            var reminder = LoadImplementation(reminderName);
 
-            Log.Logger.Information($"Checking reminder name '{reminderName}' done. Result is {nameAvialable}");
-            return nameAvialable;
+            return reminder;
         }
 
         public virtual void UpdateSettings(ServiceSettingsDto settings)
@@ -134,9 +132,9 @@ namespace AudioUserInterface
             Proxy.Update(reminderOldName, reminder);
         }
 
-        protected virtual ReminderEntity[] LoadImplementation()
+        protected virtual ReminderEntity[] LoadAllImplementation()
         {
-            return Proxy.Load();
+            return Proxy.LoadAll();
         }
 
         protected virtual void DeleteImplementation(string reminderName)
@@ -144,9 +142,9 @@ namespace AudioUserInterface
             Proxy.Delete(reminderName);
         }
 
-        protected virtual bool IsNameAvailableImplementation(string reminderName)
+        protected virtual ReminderEntity LoadImplementation(string reminderName)
         {
-            return Proxy.IsNameAvailable(reminderName);
+            return Proxy.Load(reminderName);
         }
 
         protected virtual ServiceSettingsDto LoadSettingsImplementation()

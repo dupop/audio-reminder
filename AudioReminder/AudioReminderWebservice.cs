@@ -13,15 +13,6 @@ namespace AudioReminder
 {
     class AudioReminderWebservice : IAudioReminderService
     {
-        
-        
-
-        public AudioReminderWebservice()
-        {
-        }
-
-        
-
         public void Delete(string reminderName)
         {
             Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called [reminderName = {reminderName}]");
@@ -29,16 +20,16 @@ namespace AudioReminder
             FilePersistenceAdapters.RemiderFilePersistence.Entities.RemoveAll(reminder => reminder.Name == reminderName);
         }
 
-        public bool IsNameAvailable(string reminderName)
+        public ReminderEntity Load(string reminderName)
         {
             Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called [reminderName = {reminderName}]");
 
-            bool nameTaken = FilePersistenceAdapters.RemiderFilePersistence.Entities.Any(r => r.Name == reminderName);
+            ReminderEntity reminderWithThisName = FilePersistenceAdapters.RemiderFilePersistence.Entities.FirstOrDefault(r => r.Name == reminderName);
 
-            return !nameTaken;
+            return reminderWithThisName;
         }
 
-        public ReminderEntity[] Load()
+        public ReminderEntity[] LoadAll()
         {
             Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called");
 
@@ -52,7 +43,7 @@ namespace AudioReminder
             return FilePersistenceAdapters.SettingsFilePersistence.Entities.First();
         }
 
-        public void RegsiterForReminderCallBack()
+        public void SnoozeReminder()
         {
             Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called");
 
@@ -83,5 +74,22 @@ namespace AudioReminder
             FilePersistenceAdapters.SettingsFilePersistence.Entities.Add(settings);
         }
 
+        public void DismissReminder(string reminderName)
+        {
+            Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called [reminderName = {reminderName}]");
+
+            ReminderEntity reminderWithThisName = FilePersistenceAdapters.RemiderFilePersistence.Entities.FirstOrDefault(r => r.Name == reminderName);
+
+            //TODO: implementation relate to quartz probably
+        }
+
+        public void SnoozeReminder(string reminderName)
+        {
+            Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called [reminderName = {reminderName}]");
+
+            ReminderEntity reminderWithThisName = FilePersistenceAdapters.RemiderFilePersistence.Entities.FirstOrDefault(r => r.Name == reminderName);
+
+            //TODO: implementation relate to quartz probably
+        }
     }
 }

@@ -5,7 +5,7 @@ namespace AudioReminderCore.Interfaces
     [ServiceContract]
     public interface IAudioReminderService :
         IPersistenceAdapter,
-        IReminderCallBack
+        IReminderRinging
     {
     }
 }

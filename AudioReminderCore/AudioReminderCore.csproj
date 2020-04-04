@@ -52,7 +52,7 @@
     <Compile Include="ClientProxies\AudioReminderWebServiceClient.cs" />
     <Compile Include="Interfaces\IAudioReminderService.cs" />
     <Compile Include="Interfaces\IPersistenceAdapter.cs" />
-    <Compile Include="Interfaces\IReminderCallBack.cs" />
+    <Compile Include="Interfaces\IReminderRinging.cs" />
     <Compile Include="Interfaces\IReminderEntityProvider.cs" />
     <Compile Include="Interfaces\IReminderNameAvailabilityChecker.cs" />
     <Compile Include="Interfaces\IServiceSettingsEntityProvider.cs" />

@@ -72,7 +72,7 @@ namespace AudioUserInterface
         #region Logic
         protected virtual void LoadData()
         {
-            ReminderEntity[] loadedReminders = PersistenceAdapter.Load();
+            ReminderEntity[] loadedReminders = PersistenceAdapter.LoadAll();
             remindersListBox.Items.AddRange(loadedReminders);
         }
 
