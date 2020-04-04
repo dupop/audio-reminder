@@ -24,11 +24,12 @@ namespace AudioReminder
             new LoggerInitializer().CreateLogger();
 
             Log.Logger.Information("Program started");
-
-            RunService();
+            LoggingHelper.RunWithTryCatch(RunService);
 
             Log.Logger.Information("Program ended");
         }
+
+        
 
         private static void RunService()
         {

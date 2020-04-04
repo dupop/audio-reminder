@@ -1,4 +1,5 @@
-﻿using GlobalHotKey;
+﻿using AudioReminderCore;
+using GlobalHotKey;
 using Serilog;
 using Serilog.Core;
 using System;
@@ -18,18 +19,23 @@ namespace AudioReminder
 {
     public partial class AudioReminderService : ServiceBase
     {
+        AudioReminderWebserviceHost webServiceHost;
+
         public AudioReminderService()
         {
             InitializeComponent();
+            webServiceHost = new AudioReminderWebserviceHost();
         }
 
         protected override void OnStart(string[] args)
         {
             Log.Logger.Information("Service starting");
             
+            webServiceHost.Start();
+
             //TODO: service implementation
 
-            Log.Logger.Information("Service started");
+            Log.Logger.Information("Service starting done");
         }
 
        
@@ -37,11 +43,15 @@ namespace AudioReminder
         {
             Log.Logger.Information("Service stopping");
 
+            StopService();
 
-
-            Log.Logger.Information("Service stopped");
+            Log.Logger.Information("Service stopping done");
         }
 
-       
+        private void StopService()
+        {
+            webServiceHost.Stop();
+        }
+
     }
 }

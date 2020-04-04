@@ -39,6 +39,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,6 +55,7 @@
     <Compile Include="Interfaces\IReminderEntityProvider.cs" />
     <Compile Include="Interfaces\IReminderNameAvailabilityChecker.cs" />
     <Compile Include="Interfaces\IServiceSettingsEntityProvider.cs" />
+    <Compile Include="LoggingHelper.cs" />
     <Compile Include="LoggerInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\ReminderEntity.cs" />
