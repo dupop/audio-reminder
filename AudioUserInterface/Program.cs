@@ -21,6 +21,11 @@ namespace AudioUserInterface
         {
             new LoggerInitializer().CreateLogger();
 
+            LoggingHelper.RunWithExceptionLogging(RunApplication);
+        }
+
+        private static void RunApplication()
+        {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainMenuForm());

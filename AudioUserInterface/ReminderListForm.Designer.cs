@@ -80,6 +80,7 @@
             this.remindersListBox.Name = "remindersListBox";
             this.remindersListBox.Size = new System.Drawing.Size(738, 212);
             this.remindersListBox.TabIndex = 3;
+            this.remindersListBox.Leave += new System.EventHandler(this.remindersListBox_Leave);
             // 
             // backButton
             // 

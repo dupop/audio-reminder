@@ -14,11 +14,18 @@ namespace AudioUserInterface
 {
     public partial class ReminderListForm : Form
     {
+        #region Properties
+        const Keys DeleteActionKey = Keys.Delete;
+        const Keys EditActionKey = Keys.Enter;
+        const Keys CloneActionKey = Keys.Space;
+        
         PersistenceAdapter PersistenceAdapter;
-        //TODO: BUG - space may trigger focused button, change sortcut and description
-
+        
         protected ReminderEntity SelectedReminder => remindersListBox.SelectedItem as ReminderEntity;
+        #endregion
 
+
+        #region Constructor and events
         public ReminderListForm(PersistenceAdapter persistenceAdapter)
         {
             InitializeComponent();
@@ -27,8 +34,7 @@ namespace AudioUserInterface
 
         private void ReminderListForm_Load(object sender, EventArgs e)
         {
-            ReminderEntity[] loadedReminders = PersistenceAdapter.Load();
-            remindersListBox.Items.AddRange(loadedReminders);
+            LoadData();
         }
 
         private void deleteButton_Click(object sender, EventArgs e)
@@ -36,30 +42,54 @@ namespace AudioUserInterface
             DeleteAction();
         }
 
+        private void editButton_Click(object sender, EventArgs e)
+        {
+            EditAction();
+        }
+
+        private void cloneButton_Click(object sender, EventArgs e)
+        {
+            CloneAction();
+        }
+
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            if(remindersListBox.Focused)
+            if (remindersListBox.Focused)
             {
-                if (keyData == Keys.Delete)
-                {
-                    DeleteAction();
-                }
-                else if (keyData == Keys.Enter)
-                {
-                    EditAction();
-                }
-                else if (keyData == Keys.Space)
-                {
-                    CloneAction();
-                }
+                ProcessKeyPressedOnListBox(keyData);
             }
 
             return base.ProcessCmdKey(ref msg, keyData);
         }
-
-        private void editButton_Click(object sender, EventArgs e)
+        
+        private void remindersListBox_Leave(object sender, EventArgs e)
         {
-            EditAction();
+            ReturnFocusToListBox();
+        }
+        #endregion
+
+
+        #region Logic
+        protected virtual void LoadData()
+        {
+            ReminderEntity[] loadedReminders = PersistenceAdapter.Load();
+            remindersListBox.Items.AddRange(loadedReminders);
+        }
+
+        protected virtual void ProcessKeyPressedOnListBox(Keys keyData)
+        {
+            switch (keyData)
+            {
+                case DeleteActionKey:
+                    DeleteAction();
+                    break;
+                case EditActionKey:
+                    EditAction();
+                    break;
+                case CloneActionKey:
+                    CloneAction();
+                    break;
+            }
         }
 
         protected virtual void EditAction()
@@ -89,12 +119,7 @@ namespace AudioUserInterface
             remindersListBox.Items[remindersListBox.SelectedIndex] = updatedReminder;
         }
 
-        private void cloneButton_Click(object sender, EventArgs e)
-        {
-            CloneAction();
-        }
-
-        private void CloneAction()
+        protected virtual void CloneAction()
         {
             if (SelectedReminder == null)
             {
@@ -111,8 +136,6 @@ namespace AudioUserInterface
             //PersistenceAdapter.Save(clone);
             //remindersListBox.Items.Add(clone);
         }
-
-
 
         protected virtual void DeleteAction()
         {
@@ -134,7 +157,6 @@ namespace AudioUserInterface
             PersistenceAdapter.Delete(reminderToDelete.Name);
             HandleRemovingFromListBox(reminderToDelete);
         }
-
 
         /// <summary>
         /// Removes row and selects other appropiate row
@@ -162,6 +184,14 @@ namespace AudioUserInterface
             }
 
         }
+
+        protected virtual void ReturnFocusToListBox()
+        {
+            Log.Logger.Information($"Forsing focus back to ListBox. Control that have stolen the focus from listbox: {ActiveControl.Name}");
+            remindersListBox.Focus();
+        }
+        #endregion
+
 
     }
 }

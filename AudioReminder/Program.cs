@@ -24,7 +24,7 @@ namespace AudioReminder
             new LoggerInitializer().CreateLogger();
 
             Log.Logger.Information("Program started");
-            LoggingHelper.RunWithTryCatch(RunService);
+            LoggingHelper.RunWithExceptionLogging(RunService);
 
             Log.Logger.Information("Program ended");
         }
