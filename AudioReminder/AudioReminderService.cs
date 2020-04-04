@@ -1,4 +1,5 @@
 ﻿using AudioReminderCore;
+using AudioReminderCore.Model;
 using GlobalHotKey;
 using Serilog;
 using Serilog.Core;
@@ -21,6 +22,9 @@ namespace AudioReminder
     {
         AudioReminderWebserviceHost webServiceHost;
 
+        public static FilePersistanceAdapter<ReminderEntity> RemiderFilePersistence { get; set; } //TODO: extract theese singletons somewhere
+        public static FilePersistanceAdapter<ServiceSettingsDto> SettingsFilePersistence { get; set; }
+
         public AudioReminderService()
         {
             InitializeComponent();
@@ -31,7 +35,9 @@ namespace AudioReminder
         {
             Log.Logger.Information("Service starting");
 
-            FilePersistanceAdapter.InitializeSingleton();
+            RemiderFilePersistence = new FilePersistanceAdapter<ReminderEntity>(GetDefaultReminderList());
+            SettingsFilePersistence = new FilePersistanceAdapter<ServiceSettingsDto>(GetDefaultSettings());
+
             webServiceHost.Start();
 
             //TODO: service implementation
@@ -39,13 +45,25 @@ namespace AudioReminder
             Log.Logger.Information("Service starting done");
         }
 
-       
+        //TODO: to be removed after rtesting?
+        private static List<ReminderEntity> GetDefaultReminderList()
+        {
+            return MockData.MockReminders.ToList();
+        }
+
+        //TODO: to be removed after rtesting?
+        private static List<ServiceSettingsDto> GetDefaultSettings()
+        {
+            return new List<ServiceSettingsDto> {MockData.DefaultServiceSettings };
+        }
+
         protected override void OnStop()
         {
             Log.Logger.Information("Service stopping");
 
             StopService();
-            FilePersistanceAdapter.Singleton.SaveRemindersToFile();
+            RemiderFilePersistence.SaveRemindersToFile();
+            SettingsFilePersistence.SaveRemindersToFile();
 
             Log.Logger.Information("Service stopping done");
         }
