@@ -26,14 +26,14 @@ namespace AudioReminder
         {
             Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called [reminderName = {reminderName}]");
 
-            AudioReminderService.RemiderFilePersistence.Entities.RemoveAll(reminder => reminder.Name == reminderName);
+            FilePersistenceAdapters.RemiderFilePersistence.Entities.RemoveAll(reminder => reminder.Name == reminderName);
         }
 
         public bool IsNameAvailable(string reminderName)
         {
             Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called [reminderName = {reminderName}]");
 
-            bool nameTaken = AudioReminderService.RemiderFilePersistence.Entities.Any(r => r.Name == reminderName);
+            bool nameTaken = FilePersistenceAdapters.RemiderFilePersistence.Entities.Any(r => r.Name == reminderName);
 
             return !nameTaken;
         }
@@ -42,14 +42,14 @@ namespace AudioReminder
         {
             Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called");
 
-            return AudioReminderService.RemiderFilePersistence.Entities.ToArray();
+            return FilePersistenceAdapters.RemiderFilePersistence.Entities.ToArray();
         }
 
         public ServiceSettingsDto LoadSettings()
         {
             Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called");
 
-            return AudioReminderService.SettingsFilePersistence.Entities.First();
+            return FilePersistenceAdapters.SettingsFilePersistence.Entities.First();
         }
 
         public void RegsiterForReminderCallBack()
@@ -63,7 +63,7 @@ namespace AudioReminder
         {
             Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called [Name = {createdReminder?.Name}]");
 
-            AudioReminderService.RemiderFilePersistence.Entities.Add(createdReminder);
+            FilePersistenceAdapters.RemiderFilePersistence.Entities.Add(createdReminder);
         }
 
         public void Update(string reminderOldName, ReminderEntity reminder)
@@ -71,16 +71,16 @@ namespace AudioReminder
             Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called [reminderOldName = {reminderOldName}]");
 
             //remove old reminder and add updated one
-            AudioReminderService.RemiderFilePersistence.Entities.RemoveAll(r => r.Name == reminderOldName);
-            AudioReminderService.RemiderFilePersistence.Entities.Add(reminder);
+            FilePersistenceAdapters.RemiderFilePersistence.Entities.RemoveAll(r => r.Name == reminderOldName);
+            FilePersistenceAdapters.RemiderFilePersistence.Entities.Add(reminder);
         }
 
         public void UpdateSettings(ServiceSettingsDto settings)
         {
             Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called");
 
-            AudioReminderService.SettingsFilePersistence.Entities.Clear();
-            AudioReminderService.SettingsFilePersistence.Entities.Add(settings);
+            FilePersistenceAdapters.SettingsFilePersistence.Entities.Clear();
+            FilePersistenceAdapters.SettingsFilePersistence.Entities.Add(settings);
         }
 
     }

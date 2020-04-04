@@ -22,9 +22,7 @@ namespace AudioReminder
     {
         AudioReminderWebserviceHost webServiceHost;
 
-        public static FilePersistanceAdapter<ReminderEntity> RemiderFilePersistence { get; set; } //TODO: extract theese singletons somewhere
-        public static FilePersistanceAdapter<ServiceSettingsDto> SettingsFilePersistence { get; set; }
-
+        
         public AudioReminderService()
         {
             InitializeComponent();
@@ -35,26 +33,13 @@ namespace AudioReminder
         {
             Log.Logger.Information("Service starting");
 
-            RemiderFilePersistence = new FilePersistanceAdapter<ReminderEntity>(GetDefaultReminderList());
-            SettingsFilePersistence = new FilePersistanceAdapter<ServiceSettingsDto>(GetDefaultSettings());
-
+            FilePersistenceAdapters.Start();
             webServiceHost.Start();
 
-            //TODO: service implementation
+            //TODO: use quartz, update it after each change
+            //TODO: really use settings given from UI
 
             Log.Logger.Information("Service starting done");
-        }
-
-        //TODO: to be removed after rtesting?
-        private static List<ReminderEntity> GetDefaultReminderList()
-        {
-            return MockData.MockReminders.ToList();
-        }
-
-        //TODO: to be removed after rtesting?
-        private static List<ServiceSettingsDto> GetDefaultSettings()
-        {
-            return new List<ServiceSettingsDto> {MockData.DefaultServiceSettings };
         }
 
         protected override void OnStop()
@@ -62,8 +47,7 @@ namespace AudioReminder
             Log.Logger.Information("Service stopping");
 
             StopService();
-            RemiderFilePersistence.SaveRemindersToFile();
-            SettingsFilePersistence.SaveRemindersToFile();
+            FilePersistenceAdapters.Stop();
 
             Log.Logger.Information("Service stopping done");
         }

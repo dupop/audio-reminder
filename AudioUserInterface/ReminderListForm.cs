@@ -15,6 +15,7 @@ namespace AudioUserInterface
     public partial class ReminderListForm : Form
     {
         PersistenceAdapter PersistenceAdapter;
+        //TODO: BUG - space may trigger focused button, change sortcut and description
 
         protected ReminderEntity SelectedReminder => remindersListBox.SelectedItem as ReminderEntity;
 

@@ -9,8 +9,10 @@ using System.Threading.Tasks;
 
 namespace AudioReminder
 {
-    public class FilePersistanceAdapter<TEntity>
+    public class FilePersistenceAdapter<TEntity>
     {
+        //sinelgton code
+
         //private static FilePersistanceAdapter singleton;
 
         //public static FilePersistanceAdapter Singleton => singleton ?? InitializeSingleton();
@@ -30,7 +32,7 @@ namespace AudioReminder
         public List<TEntity> Entities;
         public ServiceSettingsDto[] settingsDtos;
 
-        public FilePersistanceAdapter(List<TEntity> defaultValues = null)
+        public FilePersistenceAdapter(List<TEntity> defaultValues = null)
         {
             LoadDataFromStorage(defaultValues);
         }
@@ -85,12 +87,6 @@ namespace AudioReminder
 
             Log.Logger.Information($"Loading reminders from file done");
         }
-
-        ////TODO: also move to persistency handler
-        //~FilePersistanceAdapter()
-        //{
-        //    SaveRemindersToFile();
-        //}
 
         public void SaveRemindersToFile()
         {

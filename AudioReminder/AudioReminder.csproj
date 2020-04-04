@@ -71,6 +71,7 @@
     <Compile Include="AudioReminderWebserviceHost.cs" />
     <Compile Include="AudioReminderWebservice.cs" />
     <Compile Include="FilePersistanceAdapter.cs" />
+    <Compile Include="FilePersistenceAdapters.cs" />
     <Compile Include="MockData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
