@@ -19,6 +19,8 @@ namespace AudioUserInterface
             InitializeComponent();
 
             PersistenceAdapter = new PersistenceAdapter();
+
+            
         }
 
         private void createReminderButton_Click(object sender, EventArgs e)

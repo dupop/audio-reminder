@@ -1,17 +1,43 @@
-﻿using AudioReminderCore.Interfaces;
+﻿using AudioReminderCore;
+using AudioReminderCore.ClientProxies;
+using AudioReminderCore.Interfaces;
 using AudioReminderCore.Model;
 using AudioUserInterface;
 using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace AudioUserInterface
 {
+    //TODO: Is this proxying of proxy too much redudant? Where should validations be placed, and should we used AudioReminderWebServiceClient directly? Maybe handle this by some response value or code?
     public class PersistenceAdapter : IPersistenceAdapter
     {
+        AudioReminderWebServiceClient Proxy { get; set; }
+
+        #region Proxy setup
+        public PersistenceAdapter()
+        {
+            SetProxy();
+        }
+
+        protected void SetProxy()
+        {
+            //Specify the binding to be used for the client.
+            BasicHttpBinding binding = new BasicHttpBinding();
+
+            //Specify the address to be used for the client.
+            EndpointAddress address =
+               new EndpointAddress(WebserviceAdressHelper.CreateUriAdress());
+
+            Proxy = new AudioReminderWebServiceClient(binding, address);
+        }
+        #endregion
+
         public virtual void Save(ReminderEntity createdReminder)
         {
             if (createdReminder == null)
@@ -66,7 +92,7 @@ namespace AudioUserInterface
             Log.Logger.Information($"Checking if reminder name '{reminderName}' is avialable");
 
             //TODO: implmwnt
-            bool nameAvialable = IsNameAvailableImplementation();
+            bool nameAvialable = IsNameAvailableImplementation(reminderName);
 
             Log.Logger.Information($"Checking reminder name '{reminderName}' done. Result is {nameAvialable}");
             return nameAvialable;
@@ -100,77 +126,38 @@ namespace AudioUserInterface
 
         protected virtual void SaveImplementation(ReminderEntity createdReminder)
         {
-            //TODO: implement
+            Proxy.Save(createdReminder);
         }
 
         protected virtual void UpdateImplementation(string reminderOldName, ReminderEntity reminder)
         {
-            //TODO: implement
+            Proxy.Update(reminderOldName, reminder);
         }
 
         protected virtual ReminderEntity[] LoadImplementation()
         {
-            return MockReminders;
-            //TODO: implement
+            return Proxy.Load();
         }
 
         protected virtual void DeleteImplementation(string reminderName)
         {
-            //TODO: implement
+            Proxy.Delete(reminderName);
         }
 
-        protected virtual bool IsNameAvailableImplementation()
+        protected virtual bool IsNameAvailableImplementation(string reminderName)
         {
-            //TODO: implement
-            return true;
+            return Proxy.IsNameAvailable(reminderName);
         }
 
         protected virtual ServiceSettingsDto LoadSettingsImplementation()
         {
-            return DefaultServiceSettings;
-            //TODO: implement
+            return Proxy.LoadSettings();
         }
 
         protected virtual void UpdateSettingsImplementation(ServiceSettingsDto settings)
         {
-            //TODO: implement
+            Proxy.UpdateSettings(settings);
         }
 
-        #region Mock data
-        private static readonly ReminderEntity[] MockReminders = new ReminderEntity[]
-        {
-            new ReminderEntity()
-            {
-                Name = "Some event on workdays",
-                ScheduledTime = DateTime.Now,
-                RepeatWeekly = true,
-                RepeatWeeklyDays = new bool[]{true, true, true, true, true, false, false }
-            },
-            new ReminderEntity()
-            {
-                Name = "Some non-recuring once",
-                ScheduledTime = DateTime.Now + new TimeSpan(6,0,0),
-                RepeatWeekly = false,
-                RepeatWeeklyDays = new bool[] { false, false, false, false, false, false, false }
-            },
-            new ReminderEntity()
-            {
-                Name = "Some non-recuring once2",
-                ScheduledTime = DateTime.Now + new TimeSpan(7,0,0),
-                RepeatWeekly = false,
-                RepeatWeeklyDays = new bool[] { false, false, false, false, false, false, false }
-            }
-        };
-
-        private static readonly ServiceSettingsDto DefaultServiceSettings = new ServiceSettingsDto
-        {
-            AutoStartService = true,
-            ServiceEnabled = true,
-            BeeperEnabled = false,
-            BeeperIntervalMinutes = 60,
-            SnoozeEnabled = true,
-            SnoozeIntervalMinutes = 5
-        };
-        #endregion
     }
 }

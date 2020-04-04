@@ -30,7 +30,8 @@ namespace AudioReminder
         protected override void OnStart(string[] args)
         {
             Log.Logger.Information("Service starting");
-            
+
+            FilePersistanceAdapter.InitializeSingleton();
             webServiceHost.Start();
 
             //TODO: service implementation
@@ -44,6 +45,7 @@ namespace AudioReminder
             Log.Logger.Information("Service stopping");
 
             StopService();
+            FilePersistanceAdapter.Singleton.SaveRemindersToFile();
 
             Log.Logger.Information("Service stopping done");
         }

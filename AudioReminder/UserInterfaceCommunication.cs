@@ -24,7 +24,7 @@ namespace AudioReminder
 
         }
 
-        private static string ToXmlString(object obj)
+        public static string ToXmlString(object obj)
         {
             XmlSerializer serializer = new XmlSerializer(obj.GetType());
             StringBuilder stringBuilder = new StringBuilder();
@@ -35,7 +35,7 @@ namespace AudioReminder
             return stringBuilder.ToString();
         }
 
-        private static TObjectType FromXmlString<TObjectType>(string xmlString)
+        public static TObjectType FromXmlString<TObjectType>(string xmlString)
         {
             var deserializer = new XmlSerializer(typeof(TObjectType));
             TObjectType objectFromXmlString;

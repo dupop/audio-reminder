@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AudioReminderCore
 {
-    public class LoggingHelper
+    public static class LoggingHelper
     {
         public static void RunWithTryCatch(Action methodToRun)
         {

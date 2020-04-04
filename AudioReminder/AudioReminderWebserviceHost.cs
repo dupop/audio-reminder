@@ -1,4 +1,5 @@
-﻿using AudioReminderCore.Interfaces;
+﻿using AudioReminderCore;
+using AudioReminderCore.Interfaces;
 using AudioReminderCore.Model;
 using Serilog;
 using System;
@@ -20,7 +21,7 @@ namespace AudioReminder
 
         public AudioReminderWebserviceHost()
         {
-            string uriString = CreateUriAdress();
+            string uriString = WebserviceAdressHelper.CreateUriAdress();
             Uri uri = new Uri(uriString);
             
             serviceHost = new ServiceHost(typeof(AudioReminderWebservice), uri);
@@ -47,15 +48,6 @@ namespace AudioReminder
             Log.Logger.Information("Stopping webservice done");
         }
 
-
-
-        protected virtual string CreateUriAdress()
-        {
-            string uriAdress = $"http://localhost:{AudioReminderPort}/{AudioReminderUriPath}";
-
-            return uriAdress;
-        }
-
         protected virtual ServiceMetadataBehavior CreateServiceBehveior()
         {
             ServiceMetadataBehavior behaveior = new ServiceMetadataBehavior();
@@ -63,6 +55,8 @@ namespace AudioReminder
             // Enable metadata publishing
             behaveior.HttpGetEnabled = true; //TODO: remobe this
             
+            //behaveior.ExternalMetadataLocation //todo:explore this
+
             // ?
             behaveior.MetadataExporter.PolicyVersion = PolicyVersion.Policy15;
             

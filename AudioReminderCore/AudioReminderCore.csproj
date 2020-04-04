@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClientProxies\AudioReminderWebServiceClient.cs" />
     <Compile Include="Interfaces\IAudioReminderService.cs" />
     <Compile Include="Interfaces\IPersistenceAdapter.cs" />
     <Compile Include="Interfaces\IReminderCallBack.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\ReminderEntity.cs" />
     <Compile Include="Model\ServiceSettingsDto.cs" />
+    <Compile Include="WebserviceAdressHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
