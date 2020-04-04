@@ -27,14 +27,7 @@ namespace AudioUserInterface
 
         protected void SetProxy()
         {
-            //Specify the binding to be used for the client.
-            BasicHttpBinding binding = new BasicHttpBinding();
-
-            //Specify the address to be used for the client.
-            EndpointAddress address =
-               new EndpointAddress(WebserviceAdressHelper.CreateUriAdress());
-
-            Proxy = new AudioReminderWebServiceClient(binding, address);
+            Proxy = new AudioReminderWebServiceClient();
         }
         #endregion
 

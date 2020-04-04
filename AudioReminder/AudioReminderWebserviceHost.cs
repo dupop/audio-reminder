@@ -21,7 +21,7 @@ namespace AudioReminder
 
         public AudioReminderWebserviceHost()
         {
-            string uriString = WebserviceAdressHelper.CreateUriAdress();
+            string uriString = WebserviceAdressHelper.GetAudioReminderUri();
             Uri uri = new Uri(uriString);
             
             serviceHost = new ServiceHost(typeof(AudioReminderWebservice), uri);

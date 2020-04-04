@@ -7,6 +7,8 @@ namespace AudioReminderCore.Interfaces
     {
         [OperationContract]
         void SnoozeReminder(string reminderName);
+        
+        [OperationContract]
         void DismissReminder(string reminderName);
     }
 }

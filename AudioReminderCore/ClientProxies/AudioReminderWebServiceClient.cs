@@ -33,6 +33,14 @@ namespace AudioReminderCore.ClientProxies
                 base(binding, remoteAddress)
         {
         }
+
+        /// <summary>
+        /// Creates the client with default binding and endpoint of AudioReminder service
+        /// </summary>
+        public AudioReminderWebServiceClient() :
+                base(WebserviceAdressHelper.GetAudioReminderBinding(), WebserviceAdressHelper.GetAudioReminderEndpoint())
+        {
+        }
         #endregion
 
 

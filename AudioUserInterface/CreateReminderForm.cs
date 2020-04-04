@@ -105,7 +105,7 @@ namespace AudioUserInterface
             }
 
             bool nameSameAsBefore = oldValueOfReminderToBeUpdated?.Name == reminderName;
-            if(!nameSameAsBefore && IsNameAvialable(reminderName))
+            if(!nameSameAsBefore && !IsNameAvialable(reminderName))
             {
                 ErrorDialogUtility.ErrorDialog("Reminder name already exists");
                 return false;
