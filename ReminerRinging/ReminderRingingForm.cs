@@ -1,5 +1,6 @@
 ﻿using AudioReminderCore.ClientProxies;
 using AudioReminderCore.Model;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,6 +13,7 @@ using System.Windows.Forms;
 
 namespace ReminerRinging
 {
+    //TODO: fix project name typo: Remin*er + in paths referncing that exe + add 'Audio' prefix so that they are sorted togeter in taskmgr an other tools
     public partial class ReminderRingingForm : Form
     {
         protected virtual AudioReminderWebServiceClient Proxy { get; set; }
@@ -26,6 +28,8 @@ namespace ReminerRinging
 
         private void ReminderRingForm_Load(object sender, EventArgs e)
         {
+            Log.Logger.Information($"ReminderRinger form loading");
+
             //TODO: Should this be async?
             bool success = InitializeState();
             if(!success)
@@ -63,7 +67,7 @@ namespace ReminerRinging
             LoadReminderFromProxy(reminderName);
             if (Reminder == null)
             {
-                //TODO: fatal error log
+                Log.Logger.Fatal($"Reminder with given name could not be found. Closing application. ");
                 return false;
             }
 
@@ -74,15 +78,14 @@ namespace ReminerRinging
         {
             List<string> args = Environment.GetCommandLineArgs().ToList();
 
-            //args.RemoveAt(0); //remove program name from args
-
             if (args.Count < 2)
             {
-                //TODO: fatal error log
+                Log.Logger.Fatal($"Less than 2 arguments. Closing application. ");
                 return string.Empty;
             }
 
             string reminderNameArgument = args[1];
+            Log.Logger.Information($"Argument at index 1 is [value = {reminderNameArgument}]");
 
             return reminderNameArgument;
         }
@@ -94,6 +97,7 @@ namespace ReminerRinging
 
         protected virtual void LoadReminderFromProxy(string reminderName)
         {
+            Log.Logger.Information($"Fetching reminder data [reminder name = {reminderName}]");
             Reminder = Proxy.Load(reminderName);//TODO: change to ID e.g. guid because spaces and unicode may become problem here
         }
 
@@ -104,24 +108,37 @@ namespace ReminerRinging
         #region
         protected virtual void RingAsync()
         {
+            Log.Logger.Information($"Making noise");
+
             //TODO: ringing
             Console.Beep();
+            //sound.
+
+            Log.Logger.Information($"Making noise done");
         }
 
         protected virtual void SnoozeRdminder()
         {
+            Log.Logger.Information($"Snoozing reminder [reminder name = {Reminder.Name}]");
+
             Proxy.SnoozeReminder(Reminder.Name);
 
             //TODO: why is not form automatically closed because we have dialog reuslt in both button properties? maybe because its not called with RunDialog?
             Close();
+
+            Log.Logger.Information($"Snoozing reminder [reminder name = {Reminder.Name}] done");
         }
 
         protected virtual void DismissReminder()
         {
+            Log.Logger.Information($"Dismissing reminder [reminder name = {Reminder.Name}]");
+
             Proxy.DismissReminder(Reminder.Name);
 
             //TODO: why is not form automatically closed because we have dialog reuslt in both button properties? maybe because its not called with RunDialog?
             Close();
+
+            Log.Logger.Information($"Dismissing reminder [reminder name = {Reminder.Name}] done");
         }
         #endregion
 

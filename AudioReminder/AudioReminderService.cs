@@ -46,16 +46,12 @@ namespace AudioReminder
         {
             Log.Logger.Information("Service stopping");
 
-            StopService();
+            webServiceHost.Stop();
             FilePersistenceAdapters.Stop();
 
             Log.Logger.Information("Service stopping done");
         }
 
-        private void StopService()
-        {
-            webServiceHost.Stop();
-        }
-
+        
     }
 }
