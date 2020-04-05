@@ -3,30 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Pipes;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AudioReminder.RingingCaller
+namespace AudioReminderRingerListener
 {
-    class ReminderRingingCaller
+    class RingerAppRunner
     {
-        public virtual void CallReminderRinging(string reminderName)
-        {
-            string ringerApplicationFullPath = GetRingerFullFilePath();
-
-            //new WinAPiHelper().TriggerRinging(reminderName, ringerApplicationFullPath);
-            SimpleProcessStartApporach(reminderName, ringerApplicationFullPath);
-            //new RingingTriggeringPipeHandler().TriggerRinging(reminderName, ringerApplicationFullPath);
-        }
-
-        private void SimpleProcessStartApporach(string reminderName, string ringerApplicationFullPath)
-        {
-            Log.Logger.Information($"Calling ReminderRinger app as simple process [path = {ringerApplicationFullPath}, arg = {reminderName}]");
-            Process.Start(ringerApplicationFullPath, reminderName); //TODO: handle file not exist and other starting issues
-        }
-
         protected virtual string GetRingerFullFilePath()
         {
             string serviceDir = AppDomain.CurrentDomain.BaseDirectory; //TODO: extract both occuranecs of this
@@ -42,5 +27,19 @@ namespace AudioReminder.RingingCaller
             string ringerApplicationFullPath = Path.Combine(ringerDir, ringingApplicationName);
             return ringerApplicationFullPath;
         }
+
+        private void SimpleProcessStartApporach(string reminderName, string ringerApplicationFullPath)
+        {
+            Log.Logger.Information($"Calling ReminderRinger app as simple process [path = {ringerApplicationFullPath}, arg = {reminderName}]");
+            Process.Start(ringerApplicationFullPath, reminderName); //TODO: handle file not exist and other starting issues
+        }
+
+        public void Run(string reminderName)
+        {
+            string ringerPath = GetRingerFullFilePath();
+
+            SimpleProcessStartApporach(reminderName, ringerPath);
+        }
+
     }
 }

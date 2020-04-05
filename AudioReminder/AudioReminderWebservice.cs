@@ -97,7 +97,7 @@ namespace AudioReminder
         {
             Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called");
 
-            new ReminderRingingCaller().CallReminderRinging("test3"); //TODO: use some special name for ringer testing by user
+            new RingingClinetPipeHandler().TriggerRinging("test3");//TODO: use some special name for ringer testing by user
         }
 
         public void TestBeeper()
@@ -105,7 +105,7 @@ namespace AudioReminder
             Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called");
 
             //TODO: call beeper instead of ringing
-            new ReminderRingingCaller().CallReminderRinging("test3");
+            new RingingClinetPipeHandler().TriggerRinging("test3");
         }
     }
 }
