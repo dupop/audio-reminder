@@ -19,8 +19,8 @@ namespace AudioReminderRingerListener
 
             //TODO: extract harcoded part somwhere
             //string threeForldersUp = @"\.\.\.\";
-            string ringingAppplicationSubDir = @"ReminerRinging\bin\Debug"; //TODO: fix after rename
-            string ringingApplicationName = "ReminerRinging.exe"; //TODO fix after rename
+            string ringingAppplicationSubDir = @"AudioReminderRinging\bin\Debug"; //TODO: fix after rename
+            string ringingApplicationName = "AudioReminderRinging.exe"; //TODO fix after rename
 
             //string productDir = Path.Combine(threeForldersUp, serviceDir);
             string ringerDir = Path.Combine(productDir, ringingAppplicationSubDir);
