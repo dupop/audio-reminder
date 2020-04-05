@@ -115,6 +115,24 @@ namespace AudioUserInterface
             return settings;
         }
 
+        public virtual void TestRinging()
+        {
+            Log.Logger.Information($"Starting ringing example");
+
+            Proxy.TestRinging();
+
+            Log.Logger.Information($"Starting ringing example done");
+        }
+
+        public virtual void TestBeeper()
+        {
+            Log.Logger.Information($"Starting beeper example");
+
+            Proxy.TestBeeper();
+
+            Log.Logger.Information($"tarting beeper done");
+        }
+
         protected virtual void SaveImplementation(ReminderEntity createdReminder)
         {
             Proxy.Save(createdReminder);

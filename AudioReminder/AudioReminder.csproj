@@ -75,7 +75,10 @@
     <Compile Include="MockData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserInterfaceCommunication.cs" />
+    <Compile Include="RingingCaller\ReminderRingingCaller.cs" />
+    <Compile Include="SerializationHelper.cs" />
+    <Compile Include="RingingCaller\RingingTriggeringPipeHandler.cs" />
+    <Compile Include="RingingCaller\WinAPiHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.editorconfig">

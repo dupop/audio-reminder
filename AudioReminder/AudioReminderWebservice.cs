@@ -1,4 +1,5 @@
-﻿using AudioReminderCore.Interfaces;
+﻿using AudioReminder.RingingCaller;
+using AudioReminderCore.Interfaces;
 using AudioReminderCore.Model;
 using Serilog;
 using System;
@@ -90,6 +91,21 @@ namespace AudioReminder
             ReminderEntity reminderWithThisName = FilePersistenceAdapters.RemiderFilePersistence.Entities.FirstOrDefault(r => r.Name == reminderName);
 
             //TODO: implementation relate to quartz probably
+        }
+
+        public void TestRinging()
+        {
+            Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called");
+
+            new ReminderRingingCaller().CallReminderRinging("test3"); //TODO: use some special name for ringer testing by user
+        }
+
+        public void TestBeeper()
+        {
+            Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called");
+
+            //TODO: call beeper instead of ringing
+            new ReminderRingingCaller().CallReminderRinging("test3");
         }
     }
 }

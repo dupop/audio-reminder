@@ -86,7 +86,7 @@ namespace AudioReminder
 
             Log.Logger.Information($"Loading reminders from file [filename = {filePath}]");
             string xmlString = File.ReadAllText(filePath);
-            Entities = UserInterfaceCommunication.FromXmlString<List<TEntity>>(xmlString);
+            Entities = SerializationHelper.FromXmlString<List<TEntity>>(xmlString);
             //reminderEntities = reminderEntitiesArray.ToList();
 
             Log.Logger.Information($"Loading reminders from file done");
@@ -99,7 +99,7 @@ namespace AudioReminder
             Log.Logger.Information($"Saving reminders to file [filename = {filePath}]");
             //ReminderEntity[] remindersArray = reminderEntities.ToArray();
 
-            string xmlString = UserInterfaceCommunication.ToXmlString(Entities);
+            string xmlString = SerializationHelper.ToXmlString(Entities);
 
             File.WriteAllText(filePath, xmlString);
 

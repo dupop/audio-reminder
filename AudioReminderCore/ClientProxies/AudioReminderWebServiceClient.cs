@@ -89,6 +89,16 @@ namespace AudioReminderCore.ClientProxies
         {
             Channel.UpdateSettings(settings);
         }
+
+        public void TestRinging()
+        {
+            Channel.TestRinging();
+        }
+
+        public void TestBeeper()
+        {
+            Channel.TestBeeper();
+        }
         #endregion
 
     }

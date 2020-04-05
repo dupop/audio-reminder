@@ -11,5 +11,11 @@ namespace AudioReminderCore.Interfaces
         
         [OperationContract]
         ServiceSettingsDto LoadSettings();
+
+        [OperationContract]
+        void TestRinging();
+
+        [OperationContract]
+        void TestBeeper();
     }
 }

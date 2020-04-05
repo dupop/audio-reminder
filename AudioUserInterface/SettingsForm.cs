@@ -64,5 +64,14 @@ namespace AudioUserInterface
             snoozeIntervalNumbericBox.Value = settings.SnoozeIntervalMinutes;
         }
 
+        private void testRinging_Click(object sender, EventArgs e)
+        {
+            PersistenceAdapter.TestRinging();
+        }
+
+        private void testBeeper_Click(object sender, EventArgs e)
+        {
+            PersistenceAdapter.TestBeeper();
+        }
     }
 }

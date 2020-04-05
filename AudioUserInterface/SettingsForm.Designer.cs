@@ -43,16 +43,18 @@
             this.beeperEnabledcheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.beepIntervalNumbericBox = new System.Windows.Forms.NumericUpDown();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.testRinging = new System.Windows.Forms.Button();
+            this.testBeeper = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.eventsTableBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eventsDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eventsDataSetBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.snoozeIntervalNumbericBox)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.beepIntervalNumbericBox)).BeginInit();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // eventsTableBindingSource
@@ -86,7 +88,7 @@
             this.okButton.Margin = new System.Windows.Forms.Padding(2);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(53, 34);
-            this.okButton.TabIndex = 6;
+            this.okButton.TabIndex = 8;
             this.okButton.Text = "Ok";
             this.okButton.UseVisualStyleBackColor = true;
             this.okButton.Click += new System.EventHandler(this.okButton_Click);
@@ -98,7 +100,7 @@
             this.cancelButton.Margin = new System.Windows.Forms.Padding(2);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(53, 34);
-            this.cancelButton.TabIndex = 7;
+            this.cancelButton.TabIndex = 9;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
             // 
@@ -196,20 +198,6 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Beeper";
             // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.snoozeIntervalNumbericBox);
-            this.groupBox3.Controls.Add(this.label3);
-            this.groupBox3.Controls.Add(this.snoozeEnabledcheckBox);
-            this.groupBox3.Location = new System.Drawing.Point(16, 170);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox3.Size = new System.Drawing.Size(185, 74);
-            this.groupBox3.TabIndex = 13;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Snooze";
-            // 
             // beepIntervalNumbericBox
             // 
             this.beepIntervalNumbericBox.AccessibleName = "Beep interval minutes";
@@ -229,12 +217,48 @@
             0,
             0});
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.snoozeIntervalNumbericBox);
+            this.groupBox3.Controls.Add(this.label3);
+            this.groupBox3.Controls.Add(this.snoozeEnabledcheckBox);
+            this.groupBox3.Location = new System.Drawing.Point(16, 170);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox3.Size = new System.Drawing.Size(185, 74);
+            this.groupBox3.TabIndex = 13;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Snooze";
+            // 
+            // testRinging
+            // 
+            this.testRinging.Location = new System.Drawing.Point(16, 249);
+            this.testRinging.Name = "testRinging";
+            this.testRinging.Size = new System.Drawing.Size(75, 23);
+            this.testRinging.TabIndex = 6;
+            this.testRinging.Text = "Test ringing";
+            this.testRinging.UseVisualStyleBackColor = true;
+            this.testRinging.Click += new System.EventHandler(this.testRinging_Click);
+            // 
+            // testBeeper
+            // 
+            this.testBeeper.Location = new System.Drawing.Point(97, 249);
+            this.testBeeper.Name = "testBeeper";
+            this.testBeeper.Size = new System.Drawing.Size(75, 23);
+            this.testBeeper.TabIndex = 7;
+            this.testBeeper.Text = "Test beeper";
+            this.testBeeper.UseVisualStyleBackColor = true;
+            this.testBeeper.Click += new System.EventHandler(this.testBeeper_Click);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
             this.ClientSize = new System.Drawing.Size(343, 344);
+            this.Controls.Add(this.testBeeper);
+            this.Controls.Add(this.testRinging);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox1);
@@ -251,9 +275,9 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.beepIntervalNumbericBox)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.beepIntervalNumbericBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -275,6 +299,8 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.NumericUpDown beepIntervalNumbericBox;
+        private System.Windows.Forms.Button testRinging;
+        private System.Windows.Forms.Button testBeeper;
     }
 }
 

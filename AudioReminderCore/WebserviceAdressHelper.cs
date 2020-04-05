@@ -20,6 +20,8 @@ namespace AudioReminderCore
             return uriAdress;
         }
 
+
+        #region Client side only code
         public static Binding GetAudioReminderBinding()
         {
             //Specify the binding to be used for the client.
@@ -37,8 +39,8 @@ namespace AudioReminderCore
 
             return endpoint;
         }
-        
+        #endregion
 
-       
+
     }
 }

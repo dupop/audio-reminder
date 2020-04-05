@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Pipes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,20 +9,8 @@ using System.Xml.Serialization;
 
 namespace AudioReminder
 {
-    class UserInterfaceCommunication
+    public static class SerializationHelper
     {
-        const string NamedPipeName = @"AudioReminder-3D7C1DE8-2DFB-4291-9396-8E0CA4E8AD10";
-
-
-        NamedPipeServerStream pipeServer = new NamedPipeServerStream(NamedPipeName, PipeDirection.InOut, 1, PipeTransmissionMode.Message);
-        
-        public void test()
-        {
-            // Wait for a client to connect
-            pipeServer.WaitForConnection();
-
-        }
-
         public static string ToXmlString(object obj)
         {
             XmlSerializer serializer = new XmlSerializer(obj.GetType());
