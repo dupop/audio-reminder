@@ -20,6 +20,8 @@ namespace AudioReminder.RingingCaller
 
         public void TriggerRinging(string reminderName, string ringerApplicationFullPath)
         {
+            Log.Logger.Information($"Calling ReminderRinger app through WinApi [path = {ringerApplicationFullPath}, arg = {reminderName}]");
+
             uint desktopWindowSessionId = WTSGetActiveConsoleSessionId();
             uint winlogonProcessId = GetWinLogonProcessId(desktopWindowSessionId); //TODO:appropriate handle returnes error codes
 

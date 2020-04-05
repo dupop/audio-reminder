@@ -16,26 +16,18 @@ namespace AudioReminder.RingingCaller
         {
             string ringerApplicationFullPath = GetRingerFullFilePath();
 
-            //Win32ApiApproach(reminderName, ringerApplicationFullPath);
+            //new WinAPiHelper().TriggerRinging(reminderName, ringerApplicationFullPath);
             SimpleProcessStartApporach(reminderName, ringerApplicationFullPath);
-            //NamedPipeApproach(reminderName, ringerApplicationFullPath);
+            //new RingingTriggeringPipeHandler().TriggerRinging(reminderName, ringerApplicationFullPath);
         }
 
         private void SimpleProcessStartApporach(string reminderName, string ringerApplicationFullPath)
         {
-            Log.Logger.Information($"Calling ReminderRinger app [path = {ringerApplicationFullPath}, arg = {reminderName}]");
+            Log.Logger.Information($"Calling ReminderRinger app as simple process [path = {ringerApplicationFullPath}, arg = {reminderName}]");
             Process.Start(ringerApplicationFullPath, reminderName); //TODO: handle file not exist and other starting issues
         }
 
-        private static void NamedPipeApproach(string reminderName, string ringerApplicationFullPath)
-        {
-            Log.Logger.Information($"Contacting ringer application thorugh a named pipe");
-
-            RingingTriggeringPipeHandler pipeHandler = new RingingTriggeringPipeHandler();
-            pipeHandler.triggerRinging();
-        }
-
-        private static string GetRingerFullFilePath()
+        protected virtual string GetRingerFullFilePath()
         {
             string serviceDir = AppDomain.CurrentDomain.BaseDirectory; //TODO: extract both occuranecs of this
             string productDir = new DirectoryInfo(serviceDir).Parent.Parent.Parent.FullName; // TODO: possible no rights execption + null exceptions + etc

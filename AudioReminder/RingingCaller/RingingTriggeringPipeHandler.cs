@@ -1,4 +1,5 @@
 ﻿using AudioReminderCore;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,8 +16,10 @@ namespace AudioReminder.RingingCaller
     {
         NamedPipeServerStream pipe = NamedPipeHelper.CreateRingingTriggerNamedPipe();
 
-        public void triggerRinging()
+        public void TriggerRinging(string reminderName, string ringerApplicationFullPath)
         {
+            Log.Logger.Information($"Calling ReminderRinger app through a named pipe [path = {ringerApplicationFullPath}, arg = {reminderName}]");
+            
             // Wait for a client to connect
             pipe.WaitForConnection();
         }
