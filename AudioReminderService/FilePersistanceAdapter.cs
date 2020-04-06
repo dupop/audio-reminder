@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AudioReminderService
+namespace AudioReminderService.Persistence
 {
     public class FilePersistenceAdapter<TEntity>
     {

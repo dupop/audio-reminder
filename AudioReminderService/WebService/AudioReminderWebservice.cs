@@ -1,6 +1,6 @@
-﻿using AudioReminderService.RingingCaller;
-using AudioReminderCore.Interfaces;
+﻿using AudioReminderCore.Interfaces;
 using AudioReminderCore.Model;
+using AudioReminderService.Persistence;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AudioReminderService
+namespace AudioReminderService.WebService
 {
     class AudioReminderWebservice : IAudioReminderService
     {
@@ -96,14 +96,14 @@ namespace AudioReminderService
         {
             Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called");
 
-            new RingingClinetPipeHandler().RingReminderTest();
+            RingingCaller.RingReminderTest();
         }
 
         public void TestBeeper()
         {
             Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called");
 
-            new RingingClinetPipeHandler().RingBeep();
+            RingingCaller.RingBeep();
         }
     }
 }

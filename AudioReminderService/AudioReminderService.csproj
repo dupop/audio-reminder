@@ -68,16 +68,19 @@
     <Compile Include="AudioReminderService.Designer.cs">
       <DependentUpon>AudioReminderService.cs</DependentUpon>
     </Compile>
-    <Compile Include="AudioReminderWebserviceHost.cs" />
-    <Compile Include="AudioReminderWebservice.cs" />
-    <Compile Include="FilePersistanceAdapter.cs" />
-    <Compile Include="FilePersistenceAdapters.cs" />
+    <Compile Include="ReminderScheduler\TimerReminderScheduler.cs" />
+    <Compile Include="WebService\AudioReminderWebserviceHost.cs" />
+    <Compile Include="WebService\AudioReminderWebservice.cs" />
+    <Compile Include="Persistence\FilePersistanceAdapter.cs" />
+    <Compile Include="Persistence\FilePersistenceAdapters.cs" />
+    <Compile Include="ReminderScheduler\IReminderScheduler.cs" />
     <Compile Include="MockData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QuartzWrapper.cs" />
+    <Compile Include="ReminderScheduler\QuartzReminderScheduler.cs" />
+    <Compile Include="RingerCalling\RingingCaller.cs" />
     <Compile Include="SerializationHelper.cs" />
-    <Compile Include="RingingCaller\RingingClinetPipeHandler.cs" />
+    <Compile Include="RingerCalling\RingingClinetPipeHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.editorconfig">
@@ -97,6 +100,7 @@
       <Name>AudioReminderCore</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -5,9 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AudioReminderService
+namespace AudioReminderService.Persistence
 {
-    //TODO: maybe make non-static and place somwhere nice? or not?
     static class FilePersistenceAdapters
     {
         public static FilePersistenceAdapter<ReminderEntity> RemiderFilePersistence { get; set; }

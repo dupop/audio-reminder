@@ -10,30 +10,11 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace AudioReminderService.RingingCaller
+namespace AudioReminderService.RingerCalling
 {
     class RingingClinetPipeHandler
     {
-        //TODO: handle this conflict with client names, maybe use guid... or we will use IDs intead of names anyway;we could use another line to signal that this is just a beep if needed; use separate name for beep; implement the beep on other side, and detection of beep request
-        const string BeepReminderName = "test3";
-        const string TestReminderName = "test3";
-        
-        public void RingReminder(string reminderName)
-        {
-            TriggerRinging(reminderName);
-        }
-
-        public void RingReminderTest()
-        {
-            TriggerRinging(TestReminderName);
-        }
-
-        public void RingBeep()
-        {
-            TriggerRinging(BeepReminderName);
-        }
-
-        protected void TriggerRinging(string reminderName)
+        public void TriggerRinging(string reminderName)
         {
             Log.Logger.Information($"Calling ReminderRinger app through a named pipe [arg = {reminderName}]");
 

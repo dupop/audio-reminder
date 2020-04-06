@@ -14,6 +14,8 @@ namespace AudioReminderUI
         //TODO: how should provider work when service is not running?
         //TODO: rolling file sink instead of normal file sink to prrevent HDD overflow
         //TODO: why do i have differnet version of serilog in projects..
+        //TODO: create installer for complete product. find some good template for all this
+        //TODO: synchronization in service regarding scheduler and elsewhere
 
         /// <summary>
         /// The main entry point for the application.

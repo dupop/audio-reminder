@@ -1,5 +1,4 @@
 ﻿using AudioReminderCore.Model;
-using AudioReminderService.RingingCaller;
 using Quartz;
 using Quartz.Impl;
 using Serilog;
@@ -8,33 +7,38 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
-namespace AudioReminderService
+namespace AudioReminderService.ReminderScheduler
 {
-    class QuartzWrapper
+    class QuartzReminderScheduler : IReminderScheduler
     {
         #region Singleton
-        private static QuartzWrapper singleton;
+        //private static QuartzWrapper singleton;
 
-        public static QuartzWrapper Singleton => singleton ?? InitializeSingleton();
+        //public static QuartzWrapper Singleton => singleton ?? InitializeSingleton();
 
-        /// <summary>
-        /// Provides eager singleton initialization
-        /// </summary>
-        /// <returns></returns>
-        public static QuartzWrapper InitializeSingleton()
-        {
-            singleton = new QuartzWrapper();
+        ///// <summary>
+        ///// Provides eager singleton initialization
+        ///// </summary>
+        ///// <returns></returns>
+        //public static QuartzWrapper InitializeSingleton()
+        //{
+        //    singleton = new QuartzWrapper();
 
-            return singleton;
-        }
+        //    return singleton;
+        //}
         #endregion
 
+        public event Action<string> OnReminderTimeup;
+        public event Action OnBeeperTimeUp;
 
+        #region Interface for controling Quartz
         public void Start()
         {
             Log.Logger.Information("Starting QuartzWrapper");
 
+            //Quartz.
             //Quartz.
             //TODO: implement whole this class
             //ISchedulerFactory sf = new StdSchedulerFactory();
@@ -60,14 +64,16 @@ namespace AudioReminderService
 
             Log.Logger.Information("Updating list of reminders in QuartzWrapper done");
         }
+        #endregion
+
 
         #region Callbacks for Quartz jobs
         protected void RingReminder(string reminderName)
         {
             Log.Logger.Information("QuartzWrapper triggering a ring");
-            
-            new RingingClinetPipeHandler().RingReminder(reminderName);
-            
+
+            OnReminderTimeup?.Invoke(reminderName);
+
             Log.Logger.Information("QuartzWrapper triggering a ring done");
         }
 
@@ -75,7 +81,7 @@ namespace AudioReminderService
         {
             Log.Logger.Information("QuartzWrapper triggering a beep");
 
-            new RingingClinetPipeHandler().RingBeep();
+            OnBeeperTimeUp?.Invoke();
 
             Log.Logger.Information("QuartzWrapper triggering a beep done");
         }

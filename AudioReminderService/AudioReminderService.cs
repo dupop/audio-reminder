@@ -1,5 +1,9 @@
 ﻿using AudioReminderCore;
 using AudioReminderCore.Model;
+using AudioReminderService.Persistence;
+using AudioReminderService.RingerCalling;
+using AudioReminderService.ReminderScheduler;
+using AudioReminderService.WebService;
 using GlobalHotKey;
 using Serilog;
 using Serilog.Core;
@@ -21,12 +25,13 @@ namespace AudioReminderService
     public partial class AudioReminderService : ServiceBase
     {
         AudioReminderWebserviceHost webServiceHost;
+        IReminderScheduler scheduler;
 
-        
         public AudioReminderService()
         {
             InitializeComponent();
             webServiceHost = new AudioReminderWebserviceHost();
+            scheduler = new QuartzReminderScheduler();
         }
 
         protected override void OnStart(string[] args)
@@ -37,16 +42,18 @@ namespace AudioReminderService
             FilePersistenceAdapters.Start();
 
             Log.Logger.Information("QuartzWrapper will start listening to changes of reminder entities");
-            FilePersistenceAdapters.RemiderFilePersistence.EntitiesChanged += () => QuartzWrapper.Singleton.UpdateReminderList(FilePersistenceAdapters.RemiderFilePersistence.Entities);
+            FilePersistenceAdapters.RemiderFilePersistence.EntitiesChanged += () => scheduler.UpdateReminderList(FilePersistenceAdapters.RemiderFilePersistence.Entities);
 
-            Log.Logger.Information("Updating list of reminder in QuartzWrapper");
-            QuartzWrapper.Singleton.UpdateReminderList(FilePersistenceAdapters.RemiderFilePersistence.Entities);
+            Log.Logger.Information("Updating list of reminders in QuartzWrapper");
+            scheduler.UpdateReminderList(FilePersistenceAdapters.RemiderFilePersistence.Entities);
+            scheduler.OnReminderTimeup += RingingCaller.RingReminder;
+            scheduler.OnBeeperTimeUp += RingingCaller.RingBeep;
 
             Log.Logger.Information("Starting webservice");
             webServiceHost.Start();
 
             Log.Logger.Information("Starting QuartzWrapper");
-            QuartzWrapper.Singleton.Start();
+            scheduler.Start();
             
             //TODO: really use settings given from UI
 
@@ -58,7 +65,7 @@ namespace AudioReminderService
             Log.Logger.Information("Service stopping");
 
             Log.Logger.Information("Stopping QuartzWrapper");
-            QuartzWrapper.Singleton.Stop();
+            scheduler.Stop();
 
             Log.Logger.Information("Stopping webservice");
             webServiceHost.Stop();
