@@ -19,6 +19,7 @@ namespace AudioReminderService
             Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called [reminderName = {reminderName}]");
 
             FilePersistenceAdapters.RemiderFilePersistence.Entities.RemoveAll(reminder => reminder.Name == reminderName);
+            FilePersistenceAdapters.RemiderFilePersistence.TriggerEntitesChangedEvent();
         }
 
         public ReminderEntity Load(string reminderName)
@@ -56,6 +57,7 @@ namespace AudioReminderService
             Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called [Name = {createdReminder?.Name}]");
 
             FilePersistenceAdapters.RemiderFilePersistence.Entities.Add(createdReminder);
+            FilePersistenceAdapters.RemiderFilePersistence.TriggerEntitesChangedEvent();
         }
 
         public void Update(string reminderOldName, ReminderEntity reminder)
@@ -65,6 +67,8 @@ namespace AudioReminderService
             //remove old reminder and add updated one
             FilePersistenceAdapters.RemiderFilePersistence.Entities.RemoveAll(r => r.Name == reminderOldName);
             FilePersistenceAdapters.RemiderFilePersistence.Entities.Add(reminder);
+
+            FilePersistenceAdapters.RemiderFilePersistence.TriggerEntitesChangedEvent();
         }
 
         public void UpdateSettings(ServiceSettingsDto settings)
@@ -81,7 +85,8 @@ namespace AudioReminderService
 
             ReminderEntity reminderWithThisName = FilePersistenceAdapters.RemiderFilePersistence.Entities.FirstOrDefault(r => r.Name == reminderName);
 
-            //TODO: implementation relate to quartz probably
+            reminderWithThisName.Dismissed = true;
+            FilePersistenceAdapters.RemiderFilePersistence.TriggerEntitesChangedEvent();
         }
 
         public void SnoozeReminder(string reminderName)
@@ -90,7 +95,8 @@ namespace AudioReminderService
 
             ReminderEntity reminderWithThisName = FilePersistenceAdapters.RemiderFilePersistence.Entities.FirstOrDefault(r => r.Name == reminderName);
 
-            //TODO: implementation relate to quartz probably
+            //TODO: do we need any implementation regarding this at all, should we maybe keep status DialogShown, and not show again for some time if there is no (at least) snooze response?
+            FilePersistenceAdapters.RemiderFilePersistence.TriggerEntitesChangedEvent();
         }
 
         public void TestRinging()

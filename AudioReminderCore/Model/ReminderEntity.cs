@@ -29,6 +29,10 @@ namespace AudioReminderCore.Model
         [DataMember]
         public bool RepeatYearly { get; set; }
 
+        [DataMember]
+        public bool Dismissed { get; set; }
+
+
         //TODO: add custom sound path, which can be choosen from configured list which can be managed
 
         public override string ToString()

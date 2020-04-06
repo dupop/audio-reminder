@@ -36,7 +36,15 @@ namespace AudioReminderService
         public FilePersistenceAdapter(List<TEntity> defaultValues = null)
         {
             LoadDataFromStorage(defaultValues);
+
+            EntitiesChanged += PersistEntityChanges;
         }
+
+        protected virtual void PersistEntityChanges()
+        {
+            SaveRemindersToFile();
+        }
+
         protected void LoadDataFromStorage(List<TEntity> defaultValues)
         {
             if (File.Exists(GetFilePath()))
@@ -104,6 +112,16 @@ namespace AudioReminderService
             File.WriteAllText(filePath, xmlString);
 
             Log.Logger.Information($"Saving reminders to file done");
+        }
+
+        /// <summary>
+        /// Fire this event every time when list of entities is modified. Initial loading of data does not fire this event.
+        /// </summary>
+        public event Action EntitiesChanged;
+
+        public void TriggerEntitesChangedEvent()
+        {
+            EntitiesChanged?.Invoke();
         }
     }
 }
