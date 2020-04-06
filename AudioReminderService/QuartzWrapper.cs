@@ -1,4 +1,7 @@
 ﻿using AudioReminderCore.Model;
+using AudioReminderService.RingingCaller;
+using Quartz;
+using Quartz.Impl;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -34,6 +37,8 @@ namespace AudioReminderService
 
             //Quartz.
             //TODO: implement whole this class
+            //ISchedulerFactory sf = new StdSchedulerFactory();
+            //Task<IScheduler> sched = sf.getScheduler();
 
             Log.Logger.Information("Starting QuartzWrapper done");
         }
@@ -55,5 +60,25 @@ namespace AudioReminderService
 
             Log.Logger.Information("Updating list of reminders in QuartzWrapper done");
         }
+
+        #region Callbacks for Quartz jobs
+        protected void RingReminder(string reminderName)
+        {
+            Log.Logger.Information("QuartzWrapper triggering a ring");
+            
+            new RingingClinetPipeHandler().RingReminder(reminderName);
+            
+            Log.Logger.Information("QuartzWrapper triggering a ring done");
+        }
+
+        protected void RingBeep()
+        {
+            Log.Logger.Information("QuartzWrapper triggering a beep");
+
+            new RingingClinetPipeHandler().RingBeep();
+
+            Log.Logger.Information("QuartzWrapper triggering a beep done");
+        }
+        #endregion
     }
 }

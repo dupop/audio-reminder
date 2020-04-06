@@ -45,13 +45,6 @@ namespace AudioReminderService
             return FilePersistenceAdapters.SettingsFilePersistence.Entities.First();
         }
 
-        public void SnoozeReminder()
-        {
-            Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called");
-
-            //TODO: implement
-        }
-
         public void Save(ReminderEntity createdReminder)
         {
             Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called [Name = {createdReminder?.Name}]");
@@ -103,15 +96,14 @@ namespace AudioReminderService
         {
             Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called");
 
-            new RingingClinetPipeHandler().TriggerRinging("test3");//TODO: use some special name for ringer testing by user
+            new RingingClinetPipeHandler().RingReminderTest();
         }
 
         public void TestBeeper()
         {
             Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called");
 
-            //TODO: call beeper instead of ringing
-            new RingingClinetPipeHandler().TriggerRinging("test3");
+            new RingingClinetPipeHandler().RingBeep();
         }
     }
 }
