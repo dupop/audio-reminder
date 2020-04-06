@@ -13,7 +13,6 @@ using System.Windows.Forms;
 
 namespace AudioReminderRinging
 {
-    //TODO: fix project name typo: Remin*er + in paths referncing that exe + add 'Audio' prefix so that they are sorted togeter in taskmgr an other tools
     public partial class ReminderRingingForm : Form
     {
         protected virtual AudioReminderWebServiceClient Proxy { get; set; }
@@ -98,7 +97,7 @@ namespace AudioReminderRinging
         protected virtual void LoadReminderFromProxy(string reminderName)
         {
             Log.Logger.Information($"Fetching reminder data [reminder name = {reminderName}]");
-            Reminder = Proxy.Load(reminderName);//TODO: change to ID e.g. guid because spaces and unicode may become problem here
+            Reminder = Proxy.Load(reminderName);
         }
 
         
@@ -110,9 +109,7 @@ namespace AudioReminderRinging
         {
             Log.Logger.Information($"Making noise");
 
-            //TODO: ringing
             Console.Beep();
-            //sound.
 
             Log.Logger.Information($"Making noise done");
         }

@@ -9,7 +9,7 @@ namespace AudioReminderCore.Model
 {
     //todo: rename to reminder dto
     [DataContract]
-    public class ReminderEntity
+    public class ReminderEntity: ICloneable
     {
         [DataMember]
         public string Name { get; set; }
@@ -20,6 +20,10 @@ namespace AudioReminderCore.Model
         [DataMember]
         public bool RepeatWeekly { get; set; }
 
+        /// <summary>
+        /// At least one day is selected if RepeatWeekly falg is set.
+        /// No day is selected if the flag is not set.
+        /// </summary>
         [DataMember]
         public bool[] RepeatWeeklyDays { get; set; }
 
@@ -32,8 +36,25 @@ namespace AudioReminderCore.Model
         [DataMember]
         public bool Dismissed { get; set; }
 
+        /// <summary>
+        /// Deep copy
+        /// </summary>
+        public object Clone()
+        {
+            ReminderEntity clone = (ReminderEntity)this.MemberwiseClone();
 
-        //TODO: add custom sound path, which can be choosen from configured list which can be managed
+            if (RepeatWeeklyDays != null)
+            {
+                clone.RepeatWeeklyDays = (bool[])RepeatWeeklyDays.Clone();
+            }
+
+            return clone;
+        }
+
+        public bool IsRepeatable()
+        {
+            return RepeatWeekly || RepeatMonthly || RepeatYearly;
+        }
 
         public override string ToString()
         {

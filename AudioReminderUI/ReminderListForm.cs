@@ -101,7 +101,6 @@ namespace AudioReminderUI
                 return;
             }
 
-            //TODO: add Edit dialog
             CreateAndUpdateReminderForm createReminderForm = new CreateAndUpdateReminderForm(PersistenceAdapter, reminderToUpdate);
             createReminderForm.ShowDialog();
 
@@ -130,7 +129,7 @@ namespace AudioReminderUI
 
             //TODO: add clone dialog
             ErrorDialogUtility.ErrorDialog("Not yet implemented");
-            ReminderEntity clone = SelectedReminder;
+            ReminderEntity clone = (ReminderEntity) SelectedReminder.Clone();
 
             //TODO: missing validation of backend causes creating duplicate name
             //PersistenceAdapter.Save(clone);
@@ -146,7 +145,6 @@ namespace AudioReminderUI
                 return;
             }
 
-            //TODO: enable this via Del key
             DialogResult confirmationResult = MessageBox.Show($"Confirm deleting: {reminderToDelete.Name}.", "", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
             if (confirmationResult != DialogResult.OK)
             {

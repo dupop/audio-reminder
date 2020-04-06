@@ -14,13 +14,13 @@ namespace AudioReminderRingerListener
     {
         protected virtual string GetRingerFullFilePath()
         {
-            string serviceDir = AppDomain.CurrentDomain.BaseDirectory; //TODO: extract both occuranecs of this
+            string serviceDir = AppDomain.CurrentDomain.BaseDirectory; //TODO: extract both occuranecs of this to PathHelper
             string productDir = new DirectoryInfo(serviceDir).Parent.Parent.Parent.FullName; // TODO: possible no rights execption + null exceptions + etc
 
             //TODO: extract harcoded part somwhere
             //string threeForldersUp = @"\.\.\.\";
-            string ringingAppplicationSubDir = @"AudioReminderRinging\bin\Debug"; //TODO: fix after rename
-            string ringingApplicationName = "AudioReminderRinging.exe"; //TODO fix after rename
+            string ringingAppplicationSubDir = @"AudioReminderRinging\bin\Debug"; 
+            string ringingApplicationName = "AudioReminderRinging.exe";
 
             //string productDir = Path.Combine(threeForldersUp, serviceDir);
             string ringerDir = Path.Combine(productDir, ringingAppplicationSubDir);

@@ -70,9 +70,11 @@ namespace AudioReminderUI
         protected virtual ReminderEntity CreateReminderEntity()
         {
             DateTime scheduledDateTime = scheduledTimePicker.Value + new TimeSpan((int)hoursNumericBox.Value, (int)minuteNumbericBox.Value, 0);
-            
+
+            //create bool array from the checkbox list
+            bool repeatWeekly = repeatWeeklyCheckBox.Checked;
             bool[] repeatWeeklyDays = new bool[7];
-            if (repeatWeeklyCheckBox.Checked)
+            if (repeatWeekly)
             {
                 foreach (int checkedIndex in repeatWeeklyCheckedListBox.CheckedIndices)
                 {
@@ -80,11 +82,17 @@ namespace AudioReminderUI
                 }
             }
 
+            //disable weekly flag if 0 days are selected
+            if(!repeatWeeklyDays.Any())
+            {
+                repeatWeekly = false;
+            }
+
             var reminderEntity = new ReminderEntity()
             {
                 Name = reminderNameStringBox.Text,
                 ScheduledTime = scheduledDateTime,
-                RepeatWeekly = repeatWeeklyCheckBox.Checked,
+                RepeatWeekly = repeatWeekly,
                 RepeatWeeklyDays = repeatWeeklyDays,
                 RepeatMonthly = repeatMonthlyCheckBox.Checked,
                 RepeatYearly = repeatYearlyCheckBox.Checked

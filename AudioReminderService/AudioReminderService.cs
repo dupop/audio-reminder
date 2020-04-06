@@ -31,7 +31,7 @@ namespace AudioReminderService
         {
             InitializeComponent();
             webServiceHost = new AudioReminderWebserviceHost();
-            scheduler = new QuartzReminderScheduler();
+            scheduler = new TimerReminderScheduler();
         }
 
         protected override void OnStart(string[] args)

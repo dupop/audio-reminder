@@ -11,10 +11,12 @@ using System.Timers;
 
 namespace AudioReminderService.ReminderScheduler
 {
+    //TODO: optimize later so that one dismiss does not cause recreating of all timers
+
     class TimerReminderScheduler : IReminderScheduler
     {
-        Timer reminderTimer;
-        IList<ReminderEntity> reminders;
+        protected Timer reminderTimer { get; set; }
+        protected List<ReminderEntity> activeSortedReminders { get; set; }
 
         public event Action<string> OnReminderTimeup;
         public event Action OnBeeperTimeUp;
@@ -29,7 +31,7 @@ namespace AudioReminderService.ReminderScheduler
         {
             Log.Logger.Information("Starting QuartzWrapper");
 
-            if(reminders == null)
+            if(activeSortedReminders == null)
             {
 
             }
@@ -55,7 +57,12 @@ namespace AudioReminderService.ReminderScheduler
             //ReminderEntity e;
             //ReminderEntity v = e.Mem;
 
-            //reminders = upToDateReminders.clon
+            //TODO: maybe not do this now but when needed, we can just find 1 first
+            activeSortedReminders = upToDateReminders
+                .Where(r => !r.Dismissed)
+                .Select(r => (ReminderEntity)r.Clone())
+                .OrderBy(r => r.ScheduledTime)
+                .ToList();
 
             Log.Logger.Information("Updating list of reminders in QuartzWrapper done");
         }
