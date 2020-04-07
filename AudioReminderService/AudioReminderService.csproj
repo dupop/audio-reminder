@@ -68,6 +68,7 @@
     <Compile Include="AudioReminderService.Designer.cs">
       <DependentUpon>AudioReminderService.cs</DependentUpon>
     </Compile>
+    <Compile Include="ReminderDissmisingHelper.cs" />
     <Compile Include="ReminderScheduler\TimerReminderScheduler.cs" />
     <Compile Include="WebService\AudioReminderWebserviceHost.cs" />
     <Compile Include="WebService\AudioReminderWebservice.cs" />

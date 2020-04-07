@@ -1,4 +1,5 @@
 ﻿using AudioReminderCore.Model;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +15,12 @@ namespace AudioReminderService.Persistence
 
         public static void Start()
         {
+            Log.Logger.Information("Starting file persistence");
+
             RemiderFilePersistence = new FilePersistenceAdapter<ReminderEntity>(GetDefaultReminderList());
             SettingsFilePersistence = new FilePersistenceAdapter<ServiceSettingsDto>(GetDefaultSettings());
+
+            Log.Logger.Information("Starting file persistence done");
         }
 
 
@@ -33,8 +38,12 @@ namespace AudioReminderService.Persistence
 
         public static void Stop()
         {
+            Log.Logger.Information("Stopping file persistence");
+
             RemiderFilePersistence.SaveRemindersToFile();
             SettingsFilePersistence.SaveRemindersToFile();
+
+            Log.Logger.Information("Stopping file persistence done");
         }
     }
 }

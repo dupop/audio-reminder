@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace AudioReminderCore.Model
 {
+    //TODO rename to ServiceSettingsEntity
     public class ServiceSettingsDto
     {
         public bool AutoStartService { get; set; }

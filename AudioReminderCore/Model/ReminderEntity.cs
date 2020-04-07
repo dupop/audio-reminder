@@ -7,16 +7,22 @@ using System.Threading.Tasks;
 
 namespace AudioReminderCore.Model
 {
-    //todo: rename to reminder dto
     [DataContract]
     public class ReminderEntity: ICloneable
     {
+        /// <summary>
+        /// Must always be defined for a reminder.
+        /// </summary>
         [DataMember]
         public string Name { get; set; }
 
+        /// <summary>
+        /// Must always be defined for a reminder.
+        /// </summary>
         [DataMember]
         public DateTime ScheduledTime { get; set; }
 
+        //TODO: prevent on UI repeatable by multiple periods
         [DataMember]
         public bool RepeatWeekly { get; set; }
 
@@ -34,7 +40,10 @@ namespace AudioReminderCore.Model
         public bool RepeatYearly { get; set; }
 
         [DataMember]
-        public bool Dismissed { get; set; }
+        public DateTime? LastDismissedOccurence { get; set; }
+
+        [DataMember]
+        public DateTime? LastRang { get; set; }
 
         /// <summary>
         /// Deep copy
@@ -54,6 +63,20 @@ namespace AudioReminderCore.Model
         public bool IsRepeatable()
         {
             return RepeatWeekly || RepeatMonthly || RepeatYearly;
+        }
+
+        public bool IsDone()
+        {
+            //repetable reminder is never done, it will always ring again
+            if (IsRepeatable())
+            {
+                return false;
+            }
+
+            //single-firing event is done if its only occurence is dismissed
+            bool dismissed = ScheduledTime == LastDismissedOccurence;
+
+            return dismissed;
         }
 
         public override string ToString()
