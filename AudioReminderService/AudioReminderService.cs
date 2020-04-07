@@ -25,13 +25,13 @@ namespace AudioReminderService
     public partial class AudioReminderService : ServiceBase
     {
         AudioReminderWebserviceHost webServiceHost;
-        IReminderScheduler scheduler;
+        public static IReminderScheduler ReminderScheduler; //make non-static if possible, persistence also
 
         public AudioReminderService()
         {
             InitializeComponent();
             webServiceHost = new AudioReminderWebserviceHost();
-            scheduler = new TimerReminderScheduler();
+            ReminderScheduler = new TimerReminderScheduler();
         }
 
         protected override void OnStart(string[] args)
@@ -41,16 +41,16 @@ namespace AudioReminderService
             FilePersistenceAdapters.Start();
 
             Log.Logger.Information("Scheduler will start listening to changes of reminder entities");
-            FilePersistenceAdapters.RemiderFilePersistence.EntitiesChanged += () => scheduler.UpdateReminderList(FilePersistenceAdapters.RemiderFilePersistence.Entities);
+            FilePersistenceAdapters.RemiderFilePersistence.EntitiesChanged += () => ReminderScheduler.UpdateReminderList(FilePersistenceAdapters.RemiderFilePersistence.Entities);
 
             Log.Logger.Information("Updating list of reminders in scheduler");
-            scheduler.UpdateReminderList(FilePersistenceAdapters.RemiderFilePersistence.Entities);
-            scheduler.OnReminderTimeup += RingingCaller.RingReminder;
-            scheduler.OnBeeperTimeUp += RingingCaller.RingBeep;
+            ReminderScheduler.UpdateReminderList(FilePersistenceAdapters.RemiderFilePersistence.Entities);
+            ReminderScheduler.ReminderTimeUp += RingingCaller.RingReminder;
+            ReminderScheduler.BeeperTimeUp += RingingCaller.RingBeep;
 
             webServiceHost.Start();
 
-            scheduler.Start();
+            ReminderScheduler.Start();
             
             //TODO: really use settings given from UI
 
@@ -61,7 +61,7 @@ namespace AudioReminderService
         {
             Log.Logger.Information("Service stopping");
 
-            scheduler.Stop();
+            ReminderScheduler.Stop();
 
             webServiceHost.Stop();
 

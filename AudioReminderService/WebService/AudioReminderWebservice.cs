@@ -20,7 +20,7 @@ namespace AudioReminderService.WebService
             Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\" operation [reminderName = {reminderName}]");
 
             FilePersistenceAdapters.RemiderFilePersistence.Entities.RemoveAll(reminder => reminder.Name == reminderName);
-            FilePersistenceAdapters.RemiderFilePersistence.TriggerEntitesChangedEvent();
+            FilePersistenceAdapters.RemiderFilePersistence.OnEntitesChanged();
         }
 
         public ReminderEntity Load(string reminderName)
@@ -51,7 +51,7 @@ namespace AudioReminderService.WebService
             Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\" operation [Name = {createdReminder?.Name}]");
 
             FilePersistenceAdapters.RemiderFilePersistence.Entities.Add(createdReminder);
-            FilePersistenceAdapters.RemiderFilePersistence.TriggerEntitesChangedEvent();
+            FilePersistenceAdapters.RemiderFilePersistence.OnEntitesChanged();
         }
 
         public void Update(string reminderOldName, ReminderEntity reminder)
@@ -62,7 +62,7 @@ namespace AudioReminderService.WebService
             FilePersistenceAdapters.RemiderFilePersistence.Entities.RemoveAll(r => r.Name == reminderOldName);
             FilePersistenceAdapters.RemiderFilePersistence.Entities.Add(reminder);
 
-            FilePersistenceAdapters.RemiderFilePersistence.TriggerEntitesChangedEvent();
+            FilePersistenceAdapters.RemiderFilePersistence.OnEntitesChanged();
         }
 
         public void UpdateSettings(ServiceSettingsDto settings)
@@ -78,8 +78,8 @@ namespace AudioReminderService.WebService
             Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\" operation [reminderName = {reminderName}]");
 
             ReminderEntity reminderWithThisName = FilePersistenceAdapters.RemiderFilePersistence.Entities.FirstOrDefault(r => r.Name == reminderName);
-            
-            ReminderDissmisingHelper.DismissReminder(reminderWithThisName);
+
+            AudioReminderService.ReminderScheduler.DismissReminder(reminderWithThisName);
         }
 
         public void SnoozeReminder(string reminderName)
@@ -88,7 +88,7 @@ namespace AudioReminderService.WebService
 
             ReminderEntity reminderWithThisName = FilePersistenceAdapters.RemiderFilePersistence.Entities.FirstOrDefault(r => r.Name == reminderName);
 
-            ReminderDissmisingHelper.SnoozeReminder(reminderWithThisName);
+            AudioReminderService.ReminderScheduler.SnoozeReminder(reminderWithThisName);
         }
 
         public void TestRinging()

@@ -119,7 +119,11 @@ namespace AudioReminderService.Persistence
         /// </summary>
         public event Action EntitiesChanged;
 
-        public void TriggerEntitesChangedEvent()
+
+        /// <summary>
+        /// Causes flushing entites to file and rising EntitiesChanged event.
+        /// </summary>
+        public void OnEntitesChanged()
         {
             EntitiesChanged?.Invoke();
         }

@@ -42,8 +42,8 @@ namespace AudioReminderCore.Model
         [DataMember]
         public DateTime? LastDismissedOccurence { get; set; }
 
-        [DataMember]
-        public DateTime? LastRang { get; set; }
+        //[DataMember]
+        //public DateTime? LastRang { get; set; }
 
         /// <summary>
         /// Deep copy
@@ -65,6 +65,10 @@ namespace AudioReminderCore.Model
             return RepeatWeekly || RepeatMonthly || RepeatYearly;
         }
 
+        /// <summary>
+        /// Returns true if there is nothing more to be done regarding this reminder.
+        /// </summary>
+        /// <returns></returns>
         public bool IsDone()
         {
             //repetable reminder is never done, it will always ring again
