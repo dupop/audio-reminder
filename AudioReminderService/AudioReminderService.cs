@@ -42,8 +42,10 @@ namespace AudioReminderService
 
             Log.Logger.Information("Scheduler will start listening to changes of reminder entities");
             FilePersistenceAdapters.RemiderFilePersistence.EntitiesChanged += () => ReminderScheduler.UpdateReminderList(FilePersistenceAdapters.RemiderFilePersistence.Entities);
+            FilePersistenceAdapters.SettingsFilePersistence.EntitiesChanged += () => ReminderScheduler.UpdateSettings(FilePersistenceAdapters.SettingsFilePersistence.Entities[0]);
 
             Log.Logger.Information("Updating list of reminders in scheduler");
+            ReminderScheduler.UpdateSettings(FilePersistenceAdapters.SettingsFilePersistence.Entities[0]);
             ReminderScheduler.UpdateReminderList(FilePersistenceAdapters.RemiderFilePersistence.Entities);
             ReminderScheduler.ReminderTimeUp += RingingCaller.RingReminder;
             ReminderScheduler.BeeperTimeUp += RingingCaller.RingBeep;

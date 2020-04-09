@@ -29,6 +29,7 @@ namespace AudioReminderCore.Model
         /// <summary>
         /// At least one day is selected if RepeatWeekly falg is set.
         /// No day is selected if the flag is not set.
+        /// First value represents Monday and so on.
         /// </summary>
         [DataMember]
         public bool[] RepeatWeeklyDays { get; set; }

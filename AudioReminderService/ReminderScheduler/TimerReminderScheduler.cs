@@ -1,5 +1,6 @@
 ﻿using AudioReminderCore.Model;
 using AudioReminderService.Persistence;
+using AudioReminderService.ReminderScheduler.Utils;
 using Quartz;
 using Quartz.Impl;
 using Serilog;
@@ -20,6 +21,7 @@ namespace AudioReminderService.ReminderScheduler
         bool IsRunning { get; set; }
         protected Timer nextReminderTimer { get; set; }
         protected List<ReminderEntity> ActiveSortedReminders { get; set; }
+        protected ServiceSettingsDto ServiceSettings { get; set; }
 
         public event Action<string> ReminderTimeUp;
         public event Action BeeperTimeUp;
@@ -145,7 +147,7 @@ namespace AudioReminderService.ReminderScheduler
         {
             ReminderEntity nextReminder = ActiveSortedReminders.First();
 
-            TimeSpan snoozeIntervalMs = new TimeSpan(0, 1, 0);//TODO: instead of harcoded 1min, use value from settings
+            TimeSpan snoozeInterval = new TimeSpan(0, ServiceSettings.SnoozeIntervalMinutes, 0);
             int minTimerLength = 1;//Timer can't handle 0 ms, but that could be result of rounding from ticks to miliseconds
 
             //good to be constant in a variable during this analysis in method so that it doesn't change during analysis. It could make some kind of timer deadlock where timer would never ring.
@@ -154,7 +156,7 @@ namespace AudioReminderService.ReminderScheduler
 #warning //TODO: just a mock alogirhtm, a correct one is neede here! implement this from LastReminderRinging,LastReminderDismissing,
             //LastReminderSnoozing. We sould probably not ring again at all until we get at least snooze response, but on the other
             //hand some sanity check would be good because ringer maybe got stuck so we should try another ring so that next important events are not missed?
-            bool isUserAlreadyAnnoyedTooMuchRecently = LastReminderRinging != null && now - LastReminderRinging < snoozeIntervalMs; 
+            bool isUserAlreadyAnnoyedTooMuchRecently = LastReminderRinging != null && now - LastReminderRinging < snoozeInterval; 
 
             bool reminderAlreadyReadyForRinging = nextReminder.ScheduledTime >= now;
 
@@ -171,7 +173,7 @@ namespace AudioReminderService.ReminderScheduler
             {
                 //TODO: handle this scneario properly, adding a stub algorithm
                 
-                int timeMsUntilNextRinging = (int)(LastReminderRinging.Value /*not null?*/ + snoozeIntervalMs - now).TotalMilliseconds;
+                int timeMsUntilNextRinging = (int)(LastReminderRinging.Value /*not null?*/ + snoozeInterval - now).TotalMilliseconds;
                 int intervalForTimer = Math.Max(timeMsUntilNextRinging, minTimerLength);
 
                 return intervalForTimer;
@@ -182,24 +184,6 @@ namespace AudioReminderService.ReminderScheduler
             return minTimerLength;
         }
         #endregion
-
-
-
-        //protected DateTime? x()
-        //{
-        //    IEnumerable<DateTime> allDismissingDateTimes = ActiveSortedReminders?
-        //        .Where(r => r.LastDismissedOccurence != null)
-        //        .Select(r => r.LastDismissedOccurence.Value);
-
-        //    if(allDismissingDateTimes?.Any() == true)
-        //    {
-        //        return null;
-        //    }
-
-        //    DateTime? lastReminderDismissing = allDismissingDateTimes.Max();
-
-        //    return lastReminderDismissing;
-        //} 
 
 
         #region Timer Callbacks
@@ -222,29 +206,20 @@ namespace AudioReminderService.ReminderScheduler
             Log.Logger.Information("TimerScheduler triggering a beep done");
         }
         #endregion
-        
-        //public void OnReminderDismissed(ReminderEntity reminder)
-        //{
-        //    LastReminderDismissing = DateTime.UtcNow;
-        //}
 
-        //public void OnReminderSnoozed(ReminderEntity reminder)
-        //{
-        //    LastReminderSnoozing = DateTime.UtcNow;
-        //}
-
+        //TODO: convert from local used on UI to UTC in list and vice versa..
         public void DismissReminder(ReminderEntity reminderEntity)
         {
-            if (!ValidateReminderShouldBeRining(reminderEntity))
+            if (!new ReminderDismissableValidator().ValidateReminderShouldBeRinging(reminderEntity))
             {
                 return;
             }
 
-            reminderEntity.LastDismissedOccurence = reminderEntity.ScheduledTime;
+            reminderEntity.LastDismissedOccurence = reminderEntity.ScheduledTime;//TODO: instead of this, last passed occureance of event should be dismissed, maybe 3 more times event occured until now
 
             if (reminderEntity.IsRepeatable())
             {
-                reminderEntity.ScheduledTime = GetNextReminderOccurence(reminderEntity);
+                reminderEntity.ScheduledTime = new NextReminderOccurenceCalculator().GetNextReminderOccurence(reminderEntity).Value;
             }
 
             //AudioReminderService.ReminderScheduler.OnReminderDismissed(reminderEntity);
@@ -263,32 +238,11 @@ namespace AudioReminderService.ReminderScheduler
         }
 
 
-#warning //TODO: this is just mock method - implement based on reminder repeat settings
-        protected DateTime GetNextReminderOccurence(ReminderEntity reminder)
+        public virtual void UpdateSettings(ServiceSettingsDto serviceSettingsDto)
         {
-            TimeSpan twoMinutes = new TimeSpan(0, 2, 0);
-            DateTime mockNextOccurence = DateTime.UtcNow + twoMinutes;
+            ServiceSettings = serviceSettingsDto;
 
-            return mockNextOccurence;
-        }
-
-        /// <summary>
-        /// Validates that this reminder should indeed be ringing now.
-        /// Protection of some kind of double dismis request (maybe by multiple ringing windows etc..) that would cause next occurance of reminder to be skipped
-        /// </summary>
-        protected bool ValidateReminderShouldBeRining(ReminderEntity reminderEntity)
-        {
-            DateTime now = DateTime.UtcNow;
-            bool reminderNotYetReady = reminderEntity.ScheduledTime > now;
-
-
-            if (reminderNotYetReady)
-            {
-                Log.Logger.Error($"Reminder to be dismissed [reminderName = {reminderEntity.Name}] is scheduled in the future [UtcNow = {now}, scheduled time = {reminderEntity.ScheduledTime}]. Ignorring dismiss request.");
-                return false;
-            }
-
-            return true;
+            //TODO: react on this change
         }
     }
 }
