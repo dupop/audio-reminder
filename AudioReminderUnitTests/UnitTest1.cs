@@ -16,7 +16,7 @@ namespace AudioReminderUnitTests
             {
                 Name = "Some event on workdays",
                 ScheduledTime = new DateTime(2020, 4, 10, 8, 0, 0),
-                RepeatWeekly = true,
+                RepeatPeriod = RepeatPeriod.Weekly,
                 RepeatWeeklyDays = new bool[] { true, true, true, true, true, false, false }
             };
 

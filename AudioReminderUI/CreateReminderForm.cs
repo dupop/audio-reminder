@@ -42,16 +42,16 @@ namespace AudioReminderUI
             hoursNumericBox.Value = reminderToUpdate.ScheduledTime.Hour;
             minuteNumbericBox.Value = reminderToUpdate.ScheduledTime.Minute;
 
-            repeatWeeklyCheckBox.Checked = reminderToUpdate.RepeatWeekly;
+            repeatWeeklyCheckBox.Checked = reminderToUpdate.RepeatPeriod == RepeatPeriod.Weekly;
 
             for (int i = 0; i < 7; i++)
             {
                 repeatWeeklyCheckedListBox.SetItemCheckState(i, reminderToUpdate.RepeatWeeklyDays[i] ? CheckState.Checked : CheckState.Unchecked);
             }
 
-            repeatMonthlyCheckBox.Checked = reminderToUpdate.RepeatMonthly;
+            repeatMonthlyCheckBox.Checked = reminderToUpdate.RepeatPeriod == RepeatPeriod.Monthly;
             
-            repeatYearlyCheckBox.Checked = reminderToUpdate.RepeatYearly;
+            repeatYearlyCheckBox.Checked = reminderToUpdate.RepeatPeriod == RepeatPeriod.Yearly;
         }
 
         private void okButton_Click(object sender, EventArgs e)
@@ -83,22 +83,47 @@ namespace AudioReminderUI
             }
 
             //disable weekly flag if 0 days are selected
-            if(!repeatWeeklyDays.Any())
+            if (!repeatWeeklyDays.Any())
             {
                 repeatWeekly = false;
             }
+
+            RepeatPeriod repeatPeriod = GetRepeatPeriod(repeatWeekly);
 
             var reminderEntity = new ReminderEntity()
             {
                 Name = reminderNameStringBox.Text,
                 ScheduledTime = scheduledDateTime,
-                RepeatWeekly = repeatWeekly,
-                RepeatWeeklyDays = repeatWeeklyDays,
-                RepeatMonthly = repeatMonthlyCheckBox.Checked,
-                RepeatYearly = repeatYearlyCheckBox.Checked
+                RepeatPeriod = repeatPeriod,
+                RepeatWeeklyDays = repeatWeeklyDays
             };
-            
+
             return reminderEntity;
+        }
+
+        //TODO: add validation or even better warning for multiple periods checked
+        protected virtual RepeatPeriod GetRepeatPeriod(bool repeatWeekly)
+        {
+            RepeatPeriod repeatPeriod;
+            
+            if (repeatYearlyCheckBox.Checked)
+            {
+                repeatPeriod = RepeatPeriod.Yearly;
+            }
+            else if (repeatMonthlyCheckBox.Checked)
+            {
+                repeatPeriod = RepeatPeriod.Monthly;
+            }
+            else if (repeatWeekly)
+            {
+                repeatPeriod = RepeatPeriod.Weekly;
+            }
+            else
+            {
+                repeatPeriod = RepeatPeriod.NoRepeat;
+            }
+
+            return repeatPeriod;
         }
 
         protected virtual bool ValidateInput()

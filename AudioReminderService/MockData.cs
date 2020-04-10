@@ -17,21 +17,21 @@ namespace AudioReminderService
             {
                 Name = "Some event on workdays",
                 ScheduledTime = DateTime.Now,
-                RepeatWeekly = true,
+                RepeatPeriod = RepeatPeriod.Weekly,
                 RepeatWeeklyDays = new bool[]{true, true, true, true, true, false, false }
             },
             new ReminderEntity()
             {
                 Name = "Some non-recuring once",
                 ScheduledTime = DateTime.Now + new TimeSpan(6,0,0),
-                RepeatWeekly = false,
+                RepeatPeriod = RepeatPeriod.NoRepeat,
                 RepeatWeeklyDays = new bool[] { false, false, false, false, false, false, false }
             },
             new ReminderEntity()
             {
                 Name = "Some non-recuring once2",
                 ScheduledTime = DateTime.Now + new TimeSpan(7,0,0),
-                RepeatWeekly = false,
+                RepeatPeriod = RepeatPeriod.NoRepeat,
                 RepeatWeeklyDays = new bool[] { false, false, false, false, false, false, false }
             }
         };

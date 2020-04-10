@@ -61,12 +61,12 @@ namespace AudioReminderService.ReminderScheduler.Utils
             {
                 //if scheduled time is in the future, that is the next occurence
                 nextReminderOccurence =  reminder.ScheduledTime;
-                Log.Logger.Information($"Next occurence of repeatable reminder [name = {reminder.Name}] scheduled in the future is [old scheduled = {reminder.ScheduledTime}, new scheduled = {nextReminderOccurence}, now = {now}, repeat = {""}, repeatDays = {reminder.GetRepeatWeekDays()}]."); //TODO: fill value when repat is changed to enum
+                Log.Logger.Information($"Next occurence of repeatable reminder [name = {reminder.Name}] scheduled in the future is [old scheduled = {reminder.ScheduledTime}, new scheduled = {nextReminderOccurence}, now = {now}, repeat = {reminder.RepeatPeriod}, repeatDays = {reminder.GetRepeatWeekDays()}].");
             }
             else
             {
                 nextReminderOccurence = GetNextOccurenceOfRepeatingReminderFromThePast(reminder, now);
-                Log.Logger.Information($"Next occurence of repeatable reminder [name = {reminder.Name}] scheduled in the past is [old scheduled = {reminder.ScheduledTime}, new scheduled = {nextReminderOccurence}, now = {now}, repeat = {""}, repeatDays = {reminder.GetRepeatWeekDays()}].");
+                Log.Logger.Information($"Next occurence of repeatable reminder [name = {reminder.Name}] scheduled in the past is [old scheduled = {reminder.ScheduledTime}, new scheduled = {nextReminderOccurence}, now = {now}, repeat = {reminder.RepeatPeriod}, repeatDays = {reminder.GetRepeatWeekDays()}].");
             }
 
             return nextReminderOccurence;
@@ -75,12 +75,12 @@ namespace AudioReminderService.ReminderScheduler.Utils
         //If scheduled time would be EXACTLY NOW we treat that as past also, and find the next occurence
         protected virtual DateTime GetNextOccurenceOfRepeatingReminderFromThePast(ReminderEntity reminder, DateTime now)
         {
-            if (reminder.RepeatYearly)
+            if (reminder.RepeatPeriod == RepeatPeriod.Yearly)
             {
                 return GetNextOccurenceOfYearlyRepeatingReminder(reminder.ScheduledTime, now);
             }
 
-            if (reminder.RepeatMonthly)
+            if (reminder.RepeatPeriod == RepeatPeriod.Monthly)
             {
                 return GetNextOccurenceOfMonthlyRepeatingReminder(reminder.ScheduledTime, now);
             }

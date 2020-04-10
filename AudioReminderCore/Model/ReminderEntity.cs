@@ -22,9 +22,8 @@ namespace AudioReminderCore.Model
         [DataMember]
         public DateTime ScheduledTime { get; set; }
 
-        //TODO: prevent on UI repeatable by multiple periods
         [DataMember]
-        public bool RepeatWeekly { get; set; }
+        public RepeatPeriod RepeatPeriod { get; set; }
 
         /// <summary>
         /// Monday based flag list which should on which days of week should reminder ring.
@@ -33,12 +32,6 @@ namespace AudioReminderCore.Model
         /// </summary>
         [DataMember]
         public bool[] RepeatWeeklyDays { get; set; }
-
-        [DataMember]
-        public bool RepeatMonthly { get; set; }
-
-        [DataMember]
-        public bool RepeatYearly { get; set; }
 
         [DataMember]
         public DateTime? LastDismissedOccurence { get; set; }
@@ -63,7 +56,7 @@ namespace AudioReminderCore.Model
 
         public bool IsRepeatable()
         {
-            return RepeatWeekly || RepeatMonthly || RepeatYearly;
+            return RepeatPeriod == RepeatPeriod.NoRepeat;
         }
 
         /// <summary>
