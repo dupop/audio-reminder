@@ -95,6 +95,11 @@ namespace AudioReminderService.ReminderScheduler
         {
             throw new NotImplementedException();
         }
+
+        public void UpdateSettings(ServiceSettingsDto serviceSettingsDto)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
     }
 }

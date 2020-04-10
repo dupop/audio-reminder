@@ -27,9 +27,9 @@ namespace AudioReminderCore.Model
         public bool RepeatWeekly { get; set; }
 
         /// <summary>
-        /// At least one day is selected if RepeatWeekly falg is set.
+        /// Monday based flag list which should on which days of week should reminder ring.
+        /// At least one day is selected if RepeatWeekly flag is set.
         /// No day is selected if the flag is not set.
-        /// First value represents Monday and so on.
         /// </summary>
         [DataMember]
         public bool[] RepeatWeeklyDays { get; set; }
@@ -87,6 +87,22 @@ namespace AudioReminderCore.Model
         public override string ToString()
         {
             return Name;
+        }
+
+        public string GetRepeatWeekDays()
+        {
+            string[] dayOfWeekInitials = new string[] { "Mo", "Tu", "Th", "Wd", "Fr", "St", "Sn" };
+
+            string daysOfWeekToRing = "";
+            for(int i = 0; i< 7; i++)
+            {
+                if(RepeatWeeklyDays[i])
+                {
+                    daysOfWeekToRing += dayOfWeekInitials[i];
+                }
+            }
+
+            return daysOfWeekToRing;
         }
     }
 }
