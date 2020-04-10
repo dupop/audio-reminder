@@ -208,6 +208,8 @@ namespace AudioReminderService.ReminderScheduler
         #endregion
 
         //TODO: convert from local used on UI to UTC in list and vice versa..
+        //TODO: prohibit on UI possibility that user adds weekly recuring event, but sets first occurence in 3 years...
+        //TODO: check if quartz or other dependency have time calculation library
         public void DismissReminder(ReminderEntity reminderEntity)
         {
             if (!new ReminderDismissableValidator().ValidateReminderShouldBeRinging(reminderEntity))
@@ -219,7 +221,9 @@ namespace AudioReminderService.ReminderScheduler
 
             if (reminderEntity.IsRepeatable())
             {
-                reminderEntity.ScheduledTime = new NextReminderOccurenceCalculator().GetNextReminderOccurence(reminderEntity).Value;
+                DateTime now = DateTime.UtcNow; //TODO: same timestamp should probably be passed and used in complete algorightm to prevent contraciting situations that some conditions are true and few lines later false
+
+                reminderEntity.ScheduledTime = new NextReminderOccurenceCalculator().GetNextReminderOccurence(reminderEntity, now).Value;
             }
 
             //AudioReminderService.ReminderScheduler.OnReminderDismissed(reminderEntity);

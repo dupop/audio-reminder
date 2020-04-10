@@ -12,32 +12,51 @@ namespace AudioReminderService.ReminderScheduler.Utils
 
         //TODO: always log results of theses caluclations, only final result of this class is enough
         /// <summary>
-        /// For a repeatable reminder finds the moment of its first occurence in the future.
+        /// Finds the moment of the first occurence of a reminder in the future. 
+        /// Null only for non-repeating reminders from the past.
         /// </summary>
-        public virtual DateTime? GetNextReminderOccurence(ReminderEntity reminder)
+        public virtual DateTime? GetNextReminderOccurence(ReminderEntity reminder, DateTime now)
         {
-            DateTime now = DateTime.UtcNow; //TODO: same timestamp should probably be passed and used in complete algorightm to prevent contraciting situations that some conditions are true and few lines later false
-
             if (!reminder.IsRepeatable())
             {
-                if (reminder.ScheduledTime > now)
-                {
-                    return reminder.ScheduledTime;
-                }
-                else
-                {
-                    return null;
-                }
+                return GetNextOccurenceOfNonRepeatingReminder(reminder, now);
             }
+            else
+            {
+                return GetNextOccurenceOfRepeatingReminder(reminder, now);
+            }
+        }
 
-            //TODO: prohibit on UI possibility that user adds weekly recuring event, but sets first occurence in 3 years...
-            if (reminder.ScheduledTime > now)
+        protected virtual DateTime? GetNextOccurenceOfNonRepeatingReminder(ReminderEntity reminder, DateTime now)
+        {
+            //if scheduled time is in the future, that is the next occurence
+            bool isReminderInTheFuture = reminder.ScheduledTime > now;
+
+            if (isReminderInTheFuture)
+            {
+                return reminder.ScheduledTime;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        protected virtual DateTime GetNextOccurenceOfRepeatingReminder(ReminderEntity reminder, DateTime now)
+        {
+            //if scheduled time is in the future, that is the next occurence
+            bool isReminderInTheFuture = reminder.ScheduledTime > now;
+
+            if (isReminderInTheFuture)
             {
                 return reminder.ScheduledTime;
             }
 
-            //scheduled time is in the past
+            return GetNextOccurenceOfRepeatingReminderFromThePast(reminder, now);
+        }
 
+        protected virtual DateTime GetNextOccurenceOfRepeatingReminderFromThePast(ReminderEntity reminder, DateTime now)
+        {
             if (reminder.RepeatYearly)
             {
                 return GetNextOccurenceOfYearlyRepeatingReminder(reminder.ScheduledTime, now);
@@ -52,7 +71,7 @@ namespace AudioReminderService.ReminderScheduler.Utils
             return GetNextOccurenceOfWeeklyRepeatingReminder(reminder.ScheduledTime, now, reminder.RepeatWeeklyDays);
         }
 
-        //TODO: check if quartz or other dependency have time calculation library
+
         //TODO: include current date in isNextOccurenceInThisYear; also in other 3 methods, also fix missing time component of dateim in these 3, and its impact on overflows
         /// <summary>
         /// For a yearlt repeatable reminder that is scheduled in the past, finds the moment of its first occurence in the future.
@@ -108,6 +127,12 @@ namespace AudioReminderService.ReminderScheduler.Utils
             int currentDayOfWeekSundayBased = (int)now.DayOfWeek;
             int currentDayOfWeekMondayBased = (currentDayOfWeekSundayBased + 6) % 7;
             int tommorowDayOfWeekMondayBased = (currentDayOfWeekMondayBased + 1) % 7;
+
+            //TODO: the algorithm starting point is wrong, it should start from NOW. scheduled time in past is irelevant!
+            //That is, calculation of days to add may be ok, but it should be added to today, so this is absurd...
+
+            #warning//TODO: this alogorithm can't work if scheduledTime is e.g. 10 days ago. Then, the new event would still be in the past; and even when event is just few days from now, it could return the next day which is still in the past
+            //handle that. Other methods maybe have same issue. Consider option of using sched + new TimeStamp, see datetime aritchmetic rulesS
 
             int dayOfWeekMondayBased = tommorowDayOfWeekMondayBased; //finding next day of week to ring, starting from tomorrow, as event already passed
             int i;
