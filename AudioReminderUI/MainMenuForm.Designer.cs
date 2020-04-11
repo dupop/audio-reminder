@@ -35,10 +35,10 @@
             // 
             // createReminderButton
             // 
-            this.createReminderButton.Location = new System.Drawing.Point(54, 189);
-            this.createReminderButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.createReminderButton.AutoSize = true;
+            this.createReminderButton.Location = new System.Drawing.Point(118, 99);
             this.createReminderButton.Name = "createReminderButton";
-            this.createReminderButton.Size = new System.Drawing.Size(112, 60);
+            this.createReminderButton.Size = new System.Drawing.Size(91, 23);
             this.createReminderButton.TabIndex = 0;
             this.createReminderButton.Text = "Create reminder";
             this.createReminderButton.UseVisualStyleBackColor = true;
@@ -46,10 +46,9 @@
             // 
             // remindersButton
             // 
-            this.remindersButton.Location = new System.Drawing.Point(196, 189);
-            this.remindersButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.remindersButton.Location = new System.Drawing.Point(118, 128);
             this.remindersButton.Name = "remindersButton";
-            this.remindersButton.Size = new System.Drawing.Size(112, 58);
+            this.remindersButton.Size = new System.Drawing.Size(91, 23);
             this.remindersButton.TabIndex = 1;
             this.remindersButton.Text = "Reminders";
             this.remindersButton.UseVisualStyleBackColor = true;
@@ -57,10 +56,9 @@
             // 
             // Settings
             // 
-            this.Settings.Location = new System.Drawing.Point(338, 189);
-            this.Settings.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Settings.Location = new System.Drawing.Point(118, 157);
             this.Settings.Name = "Settings";
-            this.Settings.Size = new System.Drawing.Size(112, 62);
+            this.Settings.Size = new System.Drawing.Size(91, 23);
             this.Settings.TabIndex = 2;
             this.Settings.Text = "Settings";
             this.Settings.UseVisualStyleBackColor = true;
@@ -68,16 +66,16 @@
             // 
             // MainMenuForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(502, 471);
+            this.ClientSize = new System.Drawing.Size(335, 306);
             this.Controls.Add(this.Settings);
             this.Controls.Add(this.remindersButton);
             this.Controls.Add(this.createReminderButton);
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "MainMenuForm";
             this.Text = "Audio Reminder Main Menu";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

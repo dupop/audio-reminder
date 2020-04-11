@@ -54,7 +54,7 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
         {
             Log.Logger.Information("Starting TimerScheduler");
 
-            BeeperScheduler.Start();
+            BeeperScheduler.ServiceEnabled = true;
             ReminderScheduler.Start();
 
             Log.Logger.Information("Starting TimerScheduler done");
@@ -64,7 +64,7 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
         {
             Log.Logger.Information("Stopping TimerScheduler");
 
-            BeeperScheduler.Stop();
+            BeeperScheduler.ServiceEnabled = false;
             ReminderScheduler.Stop();
 
             Log.Logger.Information("Stopping TimerScheduler done");
@@ -88,6 +88,8 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
         public void UpdateSettings(ServiceSettingsDto serviceSettingsDto)
         {
             ReminderScheduler.UpdateSettings(serviceSettingsDto);
+            BeeperScheduler.Interval = serviceSettingsDto.BeeperIntervalMinutes;
+            BeeperScheduler.BeeperEnabledInSettings = serviceSettingsDto.BeeperEnabled;
         }
         #endregion
 

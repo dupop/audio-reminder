@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.okButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
@@ -62,10 +61,11 @@
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(118, 299);
+            this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.okButton.Location = new System.Drawing.Point(173, 310);
             this.okButton.Margin = new System.Windows.Forms.Padding(2);
             this.okButton.Name = "okButton";
-            this.okButton.Size = new System.Drawing.Size(53, 34);
+            this.okButton.Size = new System.Drawing.Size(75, 23);
             this.okButton.TabIndex = 8;
             this.okButton.Text = "Ok";
             this.okButton.UseVisualStyleBackColor = true;
@@ -73,11 +73,12 @@
             // 
             // cancelButton
             // 
+            this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(181, 299);
+            this.cancelButton.Location = new System.Drawing.Point(257, 310);
             this.cancelButton.Margin = new System.Windows.Forms.Padding(2);
             this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(53, 34);
+            this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 9;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
@@ -114,9 +115,19 @@
             0,
             0,
             0});
+            this.snoozeIntervalNumbericBox.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.snoozeIntervalNumbericBox.Name = "snoozeIntervalNumbericBox";
             this.snoozeIntervalNumbericBox.Size = new System.Drawing.Size(80, 20);
             this.snoozeIntervalNumbericBox.TabIndex = 5;
+            this.snoozeIntervalNumbericBox.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
             // 
             // label3
             // 
@@ -130,6 +141,8 @@
             // snoozeEnabledcheckBox
             // 
             this.snoozeEnabledcheckBox.AutoSize = true;
+            this.snoozeEnabledcheckBox.Checked = true;
+            this.snoozeEnabledcheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.snoozeEnabledcheckBox.Location = new System.Drawing.Point(7, 12);
             this.snoozeEnabledcheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.snoozeEnabledcheckBox.Name = "snoozeEnabledcheckBox";

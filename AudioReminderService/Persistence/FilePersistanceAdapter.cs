@@ -11,7 +11,8 @@ namespace AudioReminderService.Persistence
 {
     public class FilePersistenceAdapter<TEntity>
     {
-        
+        //TODO: Add Valite method to TEntity so that we fix or remove incorrect entities after load from file
+
         //sinelgton code
 
         //private static FilePersistanceAdapter singleton;
