@@ -36,7 +36,7 @@ namespace AudioReminderService.Persistence
             }
         };
 
-        public static readonly ServiceSettingsDto DefaultServiceSettings = new ServiceSettingsDto
+        public static readonly ServiceSettingsEntity DefaultServiceSettings = new ServiceSettingsEntity
         {
             AutoStartService = true,
             ServiceEnabled = true,

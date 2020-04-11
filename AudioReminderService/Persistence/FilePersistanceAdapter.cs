@@ -32,7 +32,7 @@ namespace AudioReminderService.Persistence
 
         //private const string storageFilName = "reminders.xml";
         public List<TEntity> Entities;
-        public ServiceSettingsDto[] settingsDtos;
+        public ServiceSettingsEntity[] settingsDtos;
 
         /// <summary>
         /// Gets name of entity type (without namespace).

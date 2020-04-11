@@ -71,8 +71,6 @@ namespace AudioReminderService
 
             scheduler.Start();
 
-            //TODO: really use settings given from UI
-
             Log.Logger.Information("Service starting done");
         }
 

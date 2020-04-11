@@ -96,7 +96,7 @@ namespace AudioReminderService.ReminderScheduler.QuartzBased
             throw new NotImplementedException();
         }
 
-        public void UpdateSettings(ServiceSettingsDto serviceSettingsDto)
+        public void UpdateSettings(ServiceSettingsEntity serviceSettingsEntity)
         {
             throw new NotImplementedException();
         }

@@ -60,7 +60,7 @@ namespace AudioReminderCore.ClientProxies
             return Channel.LoadAll();
         }
 
-        public ServiceSettingsDto LoadSettings()
+        public ServiceSettingsEntity LoadSettings()
         {
             return Channel.LoadSettings();
         }
@@ -85,7 +85,7 @@ namespace AudioReminderCore.ClientProxies
             Channel.Update(reminderOldName, reminder);
         }
 
-        public void UpdateSettings(ServiceSettingsDto settings)
+        public void UpdateSettings(ServiceSettingsEntity settings)
         {
             Channel.UpdateSettings(settings);
         }

@@ -90,7 +90,7 @@ namespace AudioReminderUI
             return reminder;
         }
 
-        public virtual void UpdateSettings(ServiceSettingsDto settings)
+        public virtual void UpdateSettings(ServiceSettingsEntity settings)
         {
             if (settings == null)
             {
@@ -106,11 +106,11 @@ namespace AudioReminderUI
         }
 
 
-        public virtual ServiceSettingsDto LoadSettings()
+        public virtual ServiceSettingsEntity LoadSettings()
         {
             Log.Logger.Information($"Loading settings");
 
-            ServiceSettingsDto settings = LoadSettingsImplementation();
+            ServiceSettingsEntity settings = LoadSettingsImplementation();
 
             Log.Logger.Information($"Loading settings done");
             return settings;
@@ -159,12 +159,12 @@ namespace AudioReminderUI
             return Proxy.Load(reminderName);
         }
 
-        protected virtual ServiceSettingsDto LoadSettingsImplementation()
+        protected virtual ServiceSettingsEntity LoadSettingsImplementation()
         {
             return Proxy.LoadSettings();
         }
 
-        protected virtual void UpdateSettingsImplementation(ServiceSettingsDto settings)
+        protected virtual void UpdateSettingsImplementation(ServiceSettingsEntity settings)
         {
             Proxy.UpdateSettings(settings);
         }

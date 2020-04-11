@@ -7,10 +7,10 @@ namespace AudioReminderCore.Interfaces
     public interface IServiceSettingsEntityProvider
     {
         [OperationContract]
-        void UpdateSettings(ServiceSettingsDto settings);
+        void UpdateSettings(ServiceSettingsEntity settings);
         
         [OperationContract]
-        ServiceSettingsDto LoadSettings();
+        ServiceSettingsEntity LoadSettings();
 
         [OperationContract]
         void TestRinging();

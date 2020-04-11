@@ -156,17 +156,17 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
             ReminderScheduler.UpdateReminderList(upToDateReminders);
         }
 
-        public void UpdateSettings(ServiceSettingsDto serviceSettingsDto)
+        public void UpdateSettings(ServiceSettingsEntity serviceSettingsEntity)
         {
             //TODO: remove autostart from UI. Disabling service autostart would probably be feature for future (for never) as it is too complex and doesn't bring almost any value.
 
-            ReminderScheduler.ConfigureSnooze(serviceSettingsDto.SnoozeEnabled, serviceSettingsDto.SnoozeIntervalMinutes);
+            ReminderScheduler.ConfigureSnooze(serviceSettingsEntity.SnoozeEnabled, serviceSettingsEntity.SnoozeIntervalMinutes);
 
-            BeeperScheduler.Interval = serviceSettingsDto.BeeperIntervalMinutes;
-            BeeperScheduler.BeeperEnabledInSettings = serviceSettingsDto.BeeperEnabled;
+            BeeperScheduler.Interval = serviceSettingsEntity.BeeperIntervalMinutes;
+            BeeperScheduler.BeeperEnabledInSettings = serviceSettingsEntity.BeeperEnabled;
 
             //we are actually only disabling the scheduler, not complete service
-            SchedulerEnabledInSettings = serviceSettingsDto.ServiceEnabled;
+            SchedulerEnabledInSettings = serviceSettingsEntity.ServiceEnabled;
         }
         #endregion
 

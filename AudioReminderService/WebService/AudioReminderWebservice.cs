@@ -39,7 +39,7 @@ namespace AudioReminderService.WebService
             return FilePersistenceAdapters.RemiderFilePersistence.Entities.ToArray();
         }
 
-        public ServiceSettingsDto LoadSettings()
+        public ServiceSettingsEntity LoadSettings()
         {
             Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\"");
 
@@ -65,7 +65,7 @@ namespace AudioReminderService.WebService
             FilePersistenceAdapters.RemiderFilePersistence.OnEntitesChanged();
         }
 
-        public void UpdateSettings(ServiceSettingsDto settings)
+        public void UpdateSettings(ServiceSettingsEntity settings)
         {
             Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\"");
 
