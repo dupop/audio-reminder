@@ -78,7 +78,8 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
         {
             get
             {
-                int intervalInMinutes = CovertMilisecondsToMinutes(beeperTimer.Interval);
+                double timerIntervalMs = beeperTimer.Interval;
+                int intervalInMinutes = CovertMilisecondsToMinutes(timerIntervalMs);
 
                 return intervalInMinutes;
             }
@@ -97,6 +98,7 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
 
                 beeperTimer.Interval = intervalMs;
                 intervalValueSet = true;
+                Log.Logger.Information($"BeeperScheduler interval updated to {intervalInMinutes} min (i.e. {intervalMs:0.##}ms)");
             }
         }
 
@@ -109,7 +111,7 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
             beeperTimer = new Timer();
             beeperTimer.Enabled = false;
             beeperTimer.AutoReset = true; //TODO: check this again when handling conccurency
-            beeperTimer.Elapsed += NextBeeperTimer_Elapsed;
+            beeperTimer.Elapsed += BeeperTimer_Elapsed;
             
             serviceEnabled = false;
             beeperEnabledInSettings = false;
@@ -142,7 +144,7 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
             }
             else
             {
-                Log.Logger.Information($"BeeperScheduler already {(IsRunning ? "started" : "stopped")}");
+                Log.Logger.Information($"BeeperScheduler already {(IsRunning ? "started" : "stopped")} [serviceEnabled = {serviceEnabled}, beeperEnabledInSettings = {beeperEnabledInSettings}, interval = {Interval}]");
             }
         }
 
@@ -161,7 +163,7 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
             return intervalMs;
         }
 
-        private void NextBeeperTimer_Elapsed(object sender, ElapsedEventArgs e)
+        private void BeeperTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             OnBeeperTimeUp();
         }

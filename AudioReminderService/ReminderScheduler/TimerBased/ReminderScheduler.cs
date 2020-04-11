@@ -61,17 +61,17 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
             OnReminderTimeup(ActiveSortedReminders.First().Name);
         }
 
-        #region Interface for controling TimerScheduler
+        #region Interface for controling ReminderScheduler
         /// <summary>
         /// Initial list of reminders must be given to this object before it is started.
         /// </summary>
         public void Start()
         {
-            Log.Logger.Information("Starting TimerScheduler");
+            Log.Logger.Information("Starting ReminderScheduler");
 
             if (IsRunning)
             {
-                Log.Logger.Warning("TimerScheduler is already running.");
+                Log.Logger.Warning("ReminderScheduler is already running.");
                 return;
             }
 
@@ -84,28 +84,28 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
 
             //Time
 
-            Log.Logger.Information("Starting TimerScheduler done");
+            Log.Logger.Information("Starting ReminderScheduler done");
         }
 
         public void Stop()
         {
-            Log.Logger.Information("Stopping TimerScheduler");
+            Log.Logger.Information("Stopping ReminderScheduler");
 
             if (!IsRunning)
             {
-                Log.Logger.Warning("TimerScheduler is already stopped.");
+                Log.Logger.Warning("ReminderScheduler is already stopped.");
                 return;
             }
 
             IsRunning = false;
             nextReminderTimer.Stop();
 
-            Log.Logger.Information("Stopping TimerScheduler done");
+            Log.Logger.Information("Stopping ReminderScheduler done");
         }
 
         public void UpdateReminderList(IList<ReminderEntity> upToDateReminders)
         {
-            Log.Logger.Information("Updating list of reminders in TimerScheduler");
+            Log.Logger.Information("Updating list of reminders in ReminderScheduler");
 
             //pause timer util we decide when should it ring again
             if (IsRunning)
@@ -133,7 +133,7 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
                 nextReminderTimer.Start();
             }
 
-            Log.Logger.Information("Updating list of reminders in TimerScheduler done");
+            Log.Logger.Information("Updating list of reminders in ReminderScheduler done");
         }
 
         /// <summary>
@@ -187,12 +187,12 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
         #region Timer Callbacks
         protected void OnReminderTimeup(string reminderName)
         {
-            Log.Logger.Information("TimerScheduler triggering a ring");
+            Log.Logger.Information("ReminderScheduler triggering a ring");
 
             LastReminderRinging = DateTime.UtcNow;
             ReminderTimeUp?.Invoke(reminderName);
 
-            Log.Logger.Information("TimerScheduler triggering a ring done");
+            Log.Logger.Information("ReminderScheduler triggering a ring done");
         }
 
         #endregion

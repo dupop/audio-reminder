@@ -40,8 +40,8 @@ namespace AudioReminderService.Persistence
         {
             Log.Logger.Information("Stopping file persistence");
 
-            RemiderFilePersistence.SaveRemindersToFile();
-            SettingsFilePersistence.SaveRemindersToFile();
+            RemiderFilePersistence.SaveEntitiesToFile();
+            SettingsFilePersistence.SaveEntitiesToFile();
 
             Log.Logger.Information("Stopping file persistence done");
         }

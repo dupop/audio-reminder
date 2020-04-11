@@ -18,13 +18,15 @@ namespace AudioReminderService
         static void Main()
         {
 #if DEBUG
-            Thread.Sleep(5000);
+            //Thread.Sleep(5000);
 #endif
 
             new LoggerInitializer().CreateLogger();
 
             Log.Logger.Information("Program started");
-            LoggingHelper.RunWithExceptionLogging(RunService);
+            
+            //this try-catch doesn't catch exceptions during service starting and stopping, there are separate wrapper for that
+            LoggingHelper.RunWithExceptionLogging(RunService); 
 
             Log.Logger.Information("Program ended");
         }

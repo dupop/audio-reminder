@@ -30,12 +30,29 @@ namespace AudioReminderService
 
         public AudioReminderService()
         {
+            LoggingHelper.RunWithExceptionLogging(InitializeService);
+        }
+
+        protected override void OnStart(string[] args)
+        {
+            //exceptions thrown during servcie starting (and probably stopping) are not catched by try-catch from Main method
+            LoggingHelper.RunWithExceptionLogging(StartService);
+        }
+
+        protected override void OnStop()
+        {
+            LoggingHelper.RunWithExceptionLogging(StopService);
+        }
+
+
+        protected virtual void InitializeService()
+        {
             InitializeComponent();
             webServiceHost = new AudioReminderWebserviceHost();
             ReminderScheduler = new TimerScheduler();
         }
 
-        protected override void OnStart(string[] args)
+        protected virtual void StartService()
         {
             Log.Logger.Information("Service starting");
 
@@ -45,7 +62,6 @@ namespace AudioReminderService
             FilePersistenceAdapters.RemiderFilePersistence.EntitiesChanged += () => ReminderScheduler.UpdateReminderList(FilePersistenceAdapters.RemiderFilePersistence.Entities);
             FilePersistenceAdapters.SettingsFilePersistence.EntitiesChanged += () => ReminderScheduler.UpdateSettings(FilePersistenceAdapters.SettingsFilePersistence.Entities[0]);
 
-            Log.Logger.Information("Updating list of reminders in scheduler");
             ReminderScheduler.UpdateSettings(FilePersistenceAdapters.SettingsFilePersistence.Entities[0]);
             ReminderScheduler.UpdateReminderList(FilePersistenceAdapters.RemiderFilePersistence.Entities);
             ReminderScheduler.ReminderTimeUp += RingingCaller.RingReminder;
@@ -54,13 +70,13 @@ namespace AudioReminderService
             webServiceHost.Start();
 
             ReminderScheduler.Start();
-            
+
             //TODO: really use settings given from UI
 
             Log.Logger.Information("Service starting done");
         }
 
-        protected override void OnStop()
+        protected virtual void StopService()
         {
             Log.Logger.Information("Service stopping");
 
@@ -73,6 +89,5 @@ namespace AudioReminderService
             Log.Logger.Information("Service stopping done");
         }
 
-        
     }
 }
