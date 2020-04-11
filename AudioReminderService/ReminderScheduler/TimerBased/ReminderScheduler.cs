@@ -1,6 +1,5 @@
 ﻿using AudioReminderCore.Model;
 using AudioReminderService.Persistence;
-using AudioReminderService.ReminderScheduler.Utils;
 using Quartz;
 using Quartz.Impl;
 using Serilog;
@@ -11,13 +10,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 
-namespace AudioReminderService.ReminderScheduler
+namespace AudioReminderService.ReminderScheduler.TimerBased
 {
     //TODO: optimize later so that one dismiss does not cause recreating of all timers
-    //TODO: extract beeper handling
     //TODO: implement whole this class
 
-    class TimerReminderScheduler : IReminderScheduler
+    class ReminderScheduler
     {
         bool IsRunning { get; set; }
         protected Timer nextReminderTimer { get; set; }
@@ -25,7 +23,6 @@ namespace AudioReminderService.ReminderScheduler
         protected ServiceSettingsDto ServiceSettings { get; set; }
 
         public event Action<string> ReminderTimeUp;
-        public event Action BeeperTimeUp;
 
         /// <summary>
         /// Last time that program started annoying user.
@@ -43,7 +40,7 @@ namespace AudioReminderService.ReminderScheduler
         protected DateTime? LastReminderSnoozing { get; set; }
 
 
-        public TimerReminderScheduler()
+        public ReminderScheduler()
         {
             nextReminderTimer = new Timer();
             nextReminderTimer.AutoReset = false;
@@ -55,7 +52,7 @@ namespace AudioReminderService.ReminderScheduler
         private void NextReminderTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             //TODO: maybe do sam verification if this reminder is indeed correct, and handle situation if not? probably not needed?
-            if(ActiveSortedReminders?.Any() != true)
+            if (ActiveSortedReminders?.Any() != true)
             {
                 Log.Logger.Error("Elapsed Timer from scheduled can't find reminder for which ringin should be done.");
                 return;
@@ -94,7 +91,7 @@ namespace AudioReminderService.ReminderScheduler
         {
             Log.Logger.Information("Stopping TimerScheduler");
 
-            if(!IsRunning)
+            if (!IsRunning)
             {
                 Log.Logger.Warning("TimerScheduler is already stopped.");
                 return;
@@ -111,7 +108,7 @@ namespace AudioReminderService.ReminderScheduler
             Log.Logger.Information("Updating list of reminders in TimerScheduler");
 
             //pause timer util we decide when should it ring again
-            if(IsRunning)
+            if (IsRunning)
             {
                 Log.Logger.Information("Pausing timer");
                 nextReminderTimer.Stop();
@@ -156,11 +153,11 @@ namespace AudioReminderService.ReminderScheduler
 #warning //TODO: just a mock alogirhtm, a correct one is neede here! implement this from LastReminderRinging,LastReminderDismissing,
             //LastReminderSnoozing. We sould probably not ring again at all until we get at least snooze response, but on the other
             //hand some sanity check would be good because ringer maybe got stuck so we should try another ring so that next important events are not missed?
-            bool isUserAlreadyAnnoyedTooMuchRecently = LastReminderRinging != null && now - LastReminderRinging < snoozeInterval; 
+            bool isUserAlreadyAnnoyedTooMuchRecently = LastReminderRinging != null && now - LastReminderRinging < snoozeInterval;
 
             bool reminderAlreadyReadyForRinging = now > nextReminder.ScheduledTime;
 
-            if(!reminderAlreadyReadyForRinging)
+            if (!reminderAlreadyReadyForRinging)
             {
                 int timeMsUntilEvent = (int)(nextReminder.ScheduledTime - now).TotalMilliseconds;
                 int intervalForTimer = Math.Max(timeMsUntilEvent, minTimerLength);
@@ -169,7 +166,7 @@ namespace AudioReminderService.ReminderScheduler
             }
 
             //reminder should ring already, we should just check if we didn't ring too much regarding this event already
-            if(isUserAlreadyAnnoyedTooMuchRecently)
+            if (isUserAlreadyAnnoyedTooMuchRecently)
             {
                 //TODO: handle this scneario properly, adding a stub algorithm
 
@@ -198,14 +195,6 @@ namespace AudioReminderService.ReminderScheduler
             Log.Logger.Information("TimerScheduler triggering a ring done");
         }
 
-        protected void OnBeeperTimeUp()
-        {
-            Log.Logger.Information("TimerScheduler triggering a beep");
-
-            BeeperTimeUp?.Invoke();
-
-            Log.Logger.Information("TimerScheduler triggering a beep done");
-        }
         #endregion
 
         //TODO: check if quartz or other dependency have time calculation library
@@ -224,7 +213,7 @@ namespace AudioReminderService.ReminderScheduler
 
             if (reminderEntity.IsRepeatable())
             {
-                DateTime now = DateTime.UtcNow; 
+                DateTime now = DateTime.UtcNow;
 
                 reminderEntity.ScheduledTime = new NextReminderOccurenceCalculator().GetNextReminderOccurence(reminderEntity, now).Value;
             }

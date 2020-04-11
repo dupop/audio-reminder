@@ -68,9 +68,11 @@
     <Compile Include="AudioReminderService.Designer.cs">
       <DependentUpon>AudioReminderService.cs</DependentUpon>
     </Compile>
-    <Compile Include="ReminderScheduler\Utils\NextReminderOccurenceCalculator.cs" />
-    <Compile Include="ReminderScheduler\Utils\ReminderDismissableValidator.cs" />
-    <Compile Include="ReminderScheduler\TimerReminderScheduler.cs" />
+    <Compile Include="ReminderScheduler\TimerBased\TimerScheduler.cs" />
+    <Compile Include="ReminderScheduler\TimerBased\BeeperScheduler.cs" />
+    <Compile Include="ReminderScheduler\TimerBased\NextReminderOccurenceCalculator.cs" />
+    <Compile Include="ReminderScheduler\TimerBased\ReminderDismissableValidator.cs" />
+    <Compile Include="ReminderScheduler\TimerBased\ReminderScheduler.cs" />
     <Compile Include="WebService\AudioReminderWebserviceHost.cs" />
     <Compile Include="WebService\AudioReminderWebservice.cs" />
     <Compile Include="Persistence\FilePersistanceAdapter.cs" />
@@ -79,7 +81,7 @@
     <Compile Include="MockData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReminderScheduler\QuartzReminderScheduler.cs" />
+    <Compile Include="ReminderScheduler\QuartzBased\QuartzReminderScheduler.cs" />
     <Compile Include="RingerCalling\RingingCaller.cs" />
     <Compile Include="SerializationHelper.cs" />
     <Compile Include="RingerCalling\RingingClinetPipeHandler.cs" />

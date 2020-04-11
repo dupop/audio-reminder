@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 
-namespace AudioReminderService.ReminderScheduler
+namespace AudioReminderService.ReminderScheduler.QuartzBased
 {
     class QuartzReminderScheduler : IReminderScheduler
     {

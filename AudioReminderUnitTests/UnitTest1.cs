@@ -1,6 +1,6 @@
 ﻿using System;
 using AudioReminderCore.Model;
-using AudioReminderService.ReminderScheduler.Utils;
+using AudioReminderService.ReminderScheduler.TimerBased;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AudioReminderUnitTests
@@ -20,7 +20,7 @@ namespace AudioReminderUnitTests
                 RepeatWeeklyDays = new bool[] { true, true, true, true, true, false, false }
             };
 
-            var calc = new AudioReminderService.ReminderScheduler.Utils.NextReminderOccurenceCalculator();
+            var calc = new NextReminderOccurenceCalculator();
 
             DateTime now1 = new DateTime(2020, 4, 11, 9, 0, 0);
             DateTime expectedNextOccurence1 = new DateTime(2020, 4, 12, 8, 0, 0);

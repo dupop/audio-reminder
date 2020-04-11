@@ -40,6 +40,7 @@ namespace AudioReminderCore.Model
         //[DataMember]
         //public DateTime? LastRang { get; set; }
 
+
         /// <summary>
         /// Deep copy
         /// </summary>

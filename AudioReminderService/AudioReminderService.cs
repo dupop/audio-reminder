@@ -19,19 +19,20 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
+using AudioReminderService.ReminderScheduler.TimerBased;
 
 namespace AudioReminderService
 {
     public partial class AudioReminderService : ServiceBase
     {
         AudioReminderWebserviceHost webServiceHost;
-        public static IReminderScheduler ReminderScheduler; //make non-static if possible, persistence also
+        public static IReminderScheduler ReminderScheduler; //TODO: make non-static if possible, persistence also
 
         public AudioReminderService()
         {
             InitializeComponent();
             webServiceHost = new AudioReminderWebserviceHost();
-            ReminderScheduler = new TimerReminderScheduler();
+            ReminderScheduler = new TimerScheduler();
         }
 
         protected override void OnStart(string[] args)

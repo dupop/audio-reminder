@@ -29,9 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.eventsTableBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.eventsDataSet = new AudioReminderUI.EventsDataSet();
-            this.eventsDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.okButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
@@ -47,31 +44,12 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.testRinging = new System.Windows.Forms.Button();
             this.testBeeper = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.eventsTableBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.eventsDataSet)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.eventsDataSetBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.snoozeIntervalNumbericBox)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.beepIntervalNumbericBox)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // eventsTableBindingSource
-            // 
-            this.eventsTableBindingSource.DataMember = "EventsTable";
-            this.eventsTableBindingSource.DataSource = this.eventsDataSet;
-            // 
-            // eventsDataSet
-            // 
-            this.eventsDataSet.DataSetName = "EventsDataSet";
-            this.eventsDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // eventsDataSetBindingSource
-            // 
-            this.eventsDataSetBindingSource.AllowNew = true;
-            this.eventsDataSetBindingSource.DataSource = this.eventsDataSet;
-            this.eventsDataSetBindingSource.Position = 0;
             // 
             // label1
             // 
@@ -267,9 +245,6 @@
             this.Name = "SettingsForm";
             this.Text = "Audio Reminder - Settings";
             this.Load += new System.EventHandler(this.SettingsForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.eventsTableBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.eventsDataSet)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.eventsDataSetBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.snoozeIntervalNumbericBox)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -283,9 +258,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.BindingSource eventsTableBindingSource;
-        private EventsDataSet eventsDataSet;
-        private System.Windows.Forms.BindingSource eventsDataSetBindingSource;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Button cancelButton;
