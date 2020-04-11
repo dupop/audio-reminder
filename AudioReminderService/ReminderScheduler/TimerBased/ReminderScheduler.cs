@@ -20,7 +20,8 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
         bool IsRunning { get; set; }
         protected Timer nextReminderTimer { get; set; }
         protected List<ReminderEntity> ActiveSortedReminders { get; set; }
-        protected ServiceSettingsDto ServiceSettings { get; set; }
+        
+        public int? SnoozeIntervalMinutes { get; protected set; }
 
         public event Action<string> ReminderTimeUp;
 
@@ -144,7 +145,8 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
         {
             ReminderEntity nextReminder = ActiveSortedReminders.First();
 
-            TimeSpan snoozeInterval = new TimeSpan(0, ServiceSettings.SnoozeIntervalMinutes, 0);
+            TimeSpan snoozeInterval = new TimeSpan(0, SnoozeIntervalMinutes ?? 0, 0); //TODO: handle null snooze  (no snooze)
+
             int minTimerLength = 1;//Timer can't handle 0 ms. 0 ms could be result of rounding from ticks to miliseconds
 
             //good to be constant in a variable during this analysis in method so that it doesn't change during analysis. It could make some kind of timer deadlock where timer would never ring.
@@ -234,9 +236,16 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
         }
 
 
-        public virtual void UpdateSettings(ServiceSettingsDto serviceSettingsDto)
+        public virtual void ConfigureSnooze(bool snoozeEnabled, int snoozeIntervalMinutes)
         {
-            ServiceSettings = serviceSettingsDto;
+            if(snoozeEnabled)
+            {
+                SnoozeIntervalMinutes = snoozeIntervalMinutes;
+            }
+            else
+            {
+                SnoozeIntervalMinutes = null;
+            }
 
             //TODO: react on this change
         }

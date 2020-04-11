@@ -9,8 +9,14 @@ namespace AudioReminderService.ReminderScheduler
     /// </summary>
     public interface IReminderScheduler
     {
+        /// <summary>
+        /// Starts the service if/when it is enabled in user settings.
+        /// </summary>
         void Start();
 
+        /// <summary>
+        /// Stops the service until Start method is called again, irregardles of user settings.
+        /// </summary>
         void Stop();
 
         /// <summary>

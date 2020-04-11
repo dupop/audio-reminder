@@ -86,6 +86,9 @@
             // autostartEnabledCheckbox
             // 
             this.autostartEnabledCheckbox.AutoSize = true;
+            this.autostartEnabledCheckbox.Checked = true;
+            this.autostartEnabledCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.autostartEnabledCheckbox.Enabled = false;
             this.autostartEnabledCheckbox.Location = new System.Drawing.Point(4, 16);
             this.autostartEnabledCheckbox.Margin = new System.Windows.Forms.Padding(2);
             this.autostartEnabledCheckbox.Name = "autostartEnabledCheckbox";
@@ -97,6 +100,8 @@
             // serviceEnabledcheckBox
             // 
             this.serviceEnabledcheckBox.AutoSize = true;
+            this.serviceEnabledcheckBox.Checked = true;
+            this.serviceEnabledcheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.serviceEnabledcheckBox.Location = new System.Drawing.Point(4, 36);
             this.serviceEnabledcheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.serviceEnabledcheckBox.Name = "serviceEnabledcheckBox";

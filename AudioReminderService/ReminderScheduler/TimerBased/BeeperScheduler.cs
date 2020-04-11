@@ -23,23 +23,23 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
         /// </summary>
         protected bool intervalValueSet;
 
-        protected bool serviceEnabled;
+        protected bool shedulerEnabled;
         protected bool beeperEnabledInSettings;
 
         /// <summary>
-        /// Is the AudioReminderService running. This is one of the preconditions for running the beeper timer.
+        /// Is the TimerScheduler running at all. This is one of the preconditions for running the beeper timer.
         /// </summary>
-        public bool ServiceEnabled
+        public bool SchedulerEnabled
         {
             get 
             { 
-                return serviceEnabled;
+                return shedulerEnabled;
             }
             set
             {
                 bool wasEnabledBefore = IsRunning;
 
-                serviceEnabled = value;
+                shedulerEnabled = value;
 
                 HandleStatusChange(wasEnabledBefore);
             }
@@ -67,7 +67,7 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
         /// <summary>
         /// Is beeper timer currently running.
         /// </summary>
-        public bool IsRunning => serviceEnabled && beeperEnabledInSettings;
+        public bool IsRunning => shedulerEnabled && beeperEnabledInSettings;
         
         /// <summary>
         /// Beeper interval in minutes.
@@ -113,7 +113,7 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
             beeperTimer.AutoReset = true; //TODO: check this again when handling conccurency
             beeperTimer.Elapsed += BeeperTimer_Elapsed;
             
-            serviceEnabled = false;
+            shedulerEnabled = false;
             beeperEnabledInSettings = false;
             intervalValueSet = false;
         }
@@ -144,7 +144,7 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
             }
             else
             {
-                Log.Logger.Information($"BeeperScheduler already {(IsRunning ? "started" : "stopped")} [serviceEnabled = {serviceEnabled}, beeperEnabledInSettings = {beeperEnabledInSettings}, interval = {Interval}]");
+                Log.Logger.Information($"BeeperScheduler already {(IsRunning ? "started" : "stopped")} [serviceEnabled = {shedulerEnabled}, beeperEnabledInSettings = {beeperEnabledInSettings}, interval = {Interval}]");
             }
         }
 

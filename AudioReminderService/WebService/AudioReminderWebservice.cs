@@ -79,7 +79,7 @@ namespace AudioReminderService.WebService
 
             ReminderEntity reminderWithThisName = FilePersistenceAdapters.RemiderFilePersistence.Entities.FirstOrDefault(r => r.Name == reminderName);
 
-            AudioReminderService.ReminderScheduler.DismissReminder(reminderWithThisName);
+            AudioReminderService.scheduler.DismissReminder(reminderWithThisName);
         }
 
         public void SnoozeReminder(string reminderName)
@@ -88,7 +88,7 @@ namespace AudioReminderService.WebService
 
             ReminderEntity reminderWithThisName = FilePersistenceAdapters.RemiderFilePersistence.Entities.FirstOrDefault(r => r.Name == reminderName);
 
-            AudioReminderService.ReminderScheduler.SnoozeReminder(reminderWithThisName);
+            AudioReminderService.scheduler.SnoozeReminder(reminderWithThisName);
         }
 
         public void TestRinging()

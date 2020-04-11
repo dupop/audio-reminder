@@ -26,7 +26,7 @@ namespace AudioReminderService
     public partial class AudioReminderService : ServiceBase
     {
         AudioReminderWebserviceHost webServiceHost;
-        public static IReminderScheduler ReminderScheduler; //TODO: make non-static if possible, persistence also
+        public static IReminderScheduler scheduler; //TODO: make non-static if possible, persistence also
 
         public AudioReminderService()
         {
@@ -49,7 +49,7 @@ namespace AudioReminderService
         {
             InitializeComponent();
             webServiceHost = new AudioReminderWebserviceHost();
-            ReminderScheduler = new TimerScheduler();
+            scheduler = new TimerScheduler();
         }
 
         protected virtual void StartService()
@@ -59,17 +59,17 @@ namespace AudioReminderService
             FilePersistenceAdapters.Start();
 
             Log.Logger.Information("Scheduler will start listening to changes of reminder entities");
-            FilePersistenceAdapters.RemiderFilePersistence.EntitiesChanged += () => ReminderScheduler.UpdateReminderList(FilePersistenceAdapters.RemiderFilePersistence.Entities);
-            FilePersistenceAdapters.SettingsFilePersistence.EntitiesChanged += () => ReminderScheduler.UpdateSettings(FilePersistenceAdapters.SettingsFilePersistence.Entities[0]);
+            FilePersistenceAdapters.RemiderFilePersistence.EntitiesChanged += () => scheduler.UpdateReminderList(FilePersistenceAdapters.RemiderFilePersistence.Entities);
+            FilePersistenceAdapters.SettingsFilePersistence.EntitiesChanged += () => scheduler.UpdateSettings(FilePersistenceAdapters.SettingsFilePersistence.Entities[0]);
 
-            ReminderScheduler.UpdateSettings(FilePersistenceAdapters.SettingsFilePersistence.Entities[0]);
-            ReminderScheduler.UpdateReminderList(FilePersistenceAdapters.RemiderFilePersistence.Entities);
-            ReminderScheduler.ReminderTimeUp += RingingCaller.RingReminder;
-            ReminderScheduler.BeeperTimeUp += RingingCaller.RingBeep;
+            scheduler.UpdateSettings(FilePersistenceAdapters.SettingsFilePersistence.Entities[0]);
+            scheduler.UpdateReminderList(FilePersistenceAdapters.RemiderFilePersistence.Entities);
+            scheduler.ReminderTimeUp += RingingCaller.RingReminder;
+            scheduler.BeeperTimeUp += RingingCaller.RingBeep;
 
             webServiceHost.Start();
 
-            ReminderScheduler.Start();
+            scheduler.Start();
 
             //TODO: really use settings given from UI
 
@@ -80,7 +80,7 @@ namespace AudioReminderService
         {
             Log.Logger.Information("Service stopping");
 
-            ReminderScheduler.Stop();
+            scheduler.Stop();
 
             webServiceHost.Stop();
 

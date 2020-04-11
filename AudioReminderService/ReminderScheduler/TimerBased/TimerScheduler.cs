@@ -9,6 +9,11 @@ using System.Timers;
 
 namespace AudioReminderService.ReminderScheduler.TimerBased
 {
+    /// <summary>
+    /// Wrapper around Reminder and Beeper schedulers. Fires events for beeper and reminder time up. 
+    /// Provides two controlling interfaces (EnabledByService and SchedulerEnabledInSettings) and handles their combinations.
+    /// Provides means to update service settings, update reminders list and handle feedback from ringing.
+    /// </summary>
     class TimerScheduler : IReminderScheduler
     {
         public event Action BeeperTimeUp;
@@ -17,6 +22,53 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
         BeeperScheduler BeeperScheduler;
         ReminderScheduler ReminderScheduler;
 
+        protected bool enabledByService;
+        protected bool schedulerEnabledInSettings;
+
+        /// <summary>
+        /// Is scheduler enabled by the service. This is one of the preconditions for running the scheduler.
+        /// </summary>
+        public bool EnabledByService
+        {
+            get
+            {
+                return enabledByService;
+            }
+            set
+            {
+                bool wasEnabledBefore = IsRunning;
+
+                enabledByService = value;
+
+                HandleStatusChange(wasEnabledBefore);
+            }
+        }
+
+        /// <summary>
+        /// Is scheduler enabled in settings. This is one of the preconditions for running scheduler.
+        /// </summary>
+        public bool SchedulerEnabledInSettings
+        {
+            get
+            {
+                return schedulerEnabledInSettings;
+            }
+            set
+            {
+                bool wasEnabledBefore = IsRunning;
+
+                schedulerEnabledInSettings = value;
+
+                HandleStatusChange(wasEnabledBefore);
+            }
+        }
+
+        /// <summary>
+        /// Is beeper timer currently running.
+        /// </summary>
+        public bool IsRunning => enabledByService && schedulerEnabledInSettings;
+
+
 
         public TimerScheduler()
         {
@@ -24,6 +76,35 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
             ReminderScheduler = new ReminderScheduler();
         }
 
+
+        /// <summary>
+        /// Starts or stops timer if value of Enabled cahnged.
+        /// </summary>
+        protected virtual void HandleStatusChange(bool wasEnabledBefore)
+        {
+            bool startedNow = !wasEnabledBefore && IsRunning;
+            bool stoppedNow = wasEnabledBefore && !IsRunning;
+
+            if (startedNow)
+            {
+
+                BeeperScheduler.SchedulerEnabled = true;
+                ReminderScheduler.Start();
+
+                Log.Logger.Information($"Started TimerScheduler");
+            }
+            else if (stoppedNow)
+            {
+                BeeperScheduler.SchedulerEnabled = false;
+                ReminderScheduler.Stop();
+
+                Log.Logger.Information($"Stopped TimerScheduler");
+            }
+            else
+            {
+                Log.Logger.Information($"TimerScheduler already {(IsRunning ? "started" : "stopped")} [enabledByService = {enabledByService}, schedulerEnabledInSettings = {schedulerEnabledInSettings}]");
+            }
+        }
 
         #region Timer Callbacks
         protected void OnBeeperTimeUp()
@@ -52,22 +133,12 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
         /// </summary>
         public void Start()
         {
-            Log.Logger.Information("Starting TimerScheduler");
-
-            BeeperScheduler.ServiceEnabled = true;
-            ReminderScheduler.Start();
-
-            Log.Logger.Information("Starting TimerScheduler done");
+            EnabledByService = true;
         }
 
         public void Stop()
         {
-            Log.Logger.Information("Stopping TimerScheduler");
-
-            BeeperScheduler.ServiceEnabled = false;
-            ReminderScheduler.Stop();
-
-            Log.Logger.Information("Stopping TimerScheduler done");
+            EnabledByService = false;
         }
 
         public void DismissReminder(ReminderEntity reminder)
@@ -87,9 +158,15 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
 
         public void UpdateSettings(ServiceSettingsDto serviceSettingsDto)
         {
-            ReminderScheduler.UpdateSettings(serviceSettingsDto);
+            //TODO: remove autostart from UI. Disabling service autostart would probably be feature for future (for never) as it is too complex and doesn't bring almost any value.
+
+            ReminderScheduler.ConfigureSnooze(serviceSettingsDto.SnoozeEnabled, serviceSettingsDto.SnoozeIntervalMinutes);
+
             BeeperScheduler.Interval = serviceSettingsDto.BeeperIntervalMinutes;
             BeeperScheduler.BeeperEnabledInSettings = serviceSettingsDto.BeeperEnabled;
+
+            //we are actually only disabling the scheduler, not complete service
+            SchedulerEnabledInSettings = serviceSettingsDto.ServiceEnabled;
         }
         #endregion
 
