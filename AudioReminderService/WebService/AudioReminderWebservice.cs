@@ -17,7 +17,7 @@ namespace AudioReminderService.WebService
     {
         public void Delete(string reminderName)
         {
-            Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\" operation [reminderName = {reminderName}]");
+            Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\" [reminderName = {reminderName}]");
 
             FilePersistenceAdapters.RemiderFilePersistence.Entities.RemoveAll(reminder => reminder.Name == reminderName);
             FilePersistenceAdapters.RemiderFilePersistence.OnEntitesChanged();
@@ -25,7 +25,7 @@ namespace AudioReminderService.WebService
 
         public ReminderEntity Load(string reminderName)
         {
-            Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\" operation [reminderName = {reminderName}]");
+            Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\" [reminderName = {reminderName}]");
 
             ReminderEntity reminderWithThisName = FilePersistenceAdapters.RemiderFilePersistence.Entities.FirstOrDefault(r => r.Name == reminderName);
 
@@ -34,21 +34,21 @@ namespace AudioReminderService.WebService
 
         public ReminderEntity[] LoadAll()
         {
-            Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\" operation");
+            Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\"");
 
             return FilePersistenceAdapters.RemiderFilePersistence.Entities.ToArray();
         }
 
         public ServiceSettingsDto LoadSettings()
         {
-            Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\" operation");
+            Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\"");
 
             return FilePersistenceAdapters.SettingsFilePersistence.Entities.First();
         }
 
         public void Save(ReminderEntity createdReminder)
         {
-            Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\" operation [Name = {createdReminder?.Name}]");
+            Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\" [Name = {createdReminder?.Name}]");
 
             FilePersistenceAdapters.RemiderFilePersistence.Entities.Add(createdReminder);
             FilePersistenceAdapters.RemiderFilePersistence.OnEntitesChanged();
@@ -56,7 +56,7 @@ namespace AudioReminderService.WebService
 
         public void Update(string reminderOldName, ReminderEntity reminder)
         {
-            Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\" operation [reminderOldName = {reminderOldName}]");
+            Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\" [reminderOldName = {reminderOldName}]");
 
             //remove old reminder and add updated one
             FilePersistenceAdapters.RemiderFilePersistence.Entities.RemoveAll(r => r.Name == reminderOldName);
@@ -67,7 +67,7 @@ namespace AudioReminderService.WebService
 
         public void UpdateSettings(ServiceSettingsDto settings)
         {
-            Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\" operation");
+            Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\"");
 
             FilePersistenceAdapters.SettingsFilePersistence.Entities.Clear();
             FilePersistenceAdapters.SettingsFilePersistence.Entities.Add(settings);
@@ -75,7 +75,7 @@ namespace AudioReminderService.WebService
 
         public void DismissReminder(string reminderName)
         {
-            Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\" operation [reminderName = {reminderName}]");
+            Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\" [reminderName = {reminderName}]");
 
             ReminderEntity reminderWithThisName = FilePersistenceAdapters.RemiderFilePersistence.Entities.FirstOrDefault(r => r.Name == reminderName);
 
@@ -84,7 +84,7 @@ namespace AudioReminderService.WebService
 
         public void SnoozeReminder(string reminderName)
         {
-            Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\" operation [reminderName = {reminderName}]");
+            Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\" [reminderName = {reminderName}]");
 
             ReminderEntity reminderWithThisName = FilePersistenceAdapters.RemiderFilePersistence.Entities.FirstOrDefault(r => r.Name == reminderName);
 
@@ -93,14 +93,14 @@ namespace AudioReminderService.WebService
 
         public void TestRinging()
         {
-            Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\" operation");
+            Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\"");
 
             RingingCaller.RingReminderTest();
         }
 
         public void TestBeeper()
         {
-            Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\" operation");
+            Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\"");
 
             RingingCaller.RingBeep();
         }

@@ -22,7 +22,8 @@ namespace AudioReminderService.ReminderScheduler.Utils
                 return false;
             }
 
-            if (!ValidateReminderNotAlreadyDismissed(reminderEntity))
+            bool reminedrAlreadyDismissed = !ValidateReminderNotAlreadyDismissed(reminderEntity);
+            if (reminedrAlreadyDismissed)
             {
                 return false;
             }

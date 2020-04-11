@@ -11,10 +11,6 @@ namespace AudioReminderService.ReminderScheduler.Utils
     public class NextReminderOccurenceCalculator
     {
 
-        //TODO: add more unit tests, and plotting of methods as graph f(x) = y to find edge cases
-        //TODO: After e.g. 1 year of not using service shoud we show that all recuring reminders are missed?
-        //TODO: Consider option of using sched + new TimeStamp, see datetime aritchmetic rules
-
         /// <summary>
         /// Finds the moment of the first occurence of a reminder in the future. 
         /// Null only for non-repeating reminders from the past.

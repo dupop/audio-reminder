@@ -15,6 +15,7 @@ namespace AudioReminderService.ReminderScheduler
 {
     //TODO: optimize later so that one dismiss does not cause recreating of all timers
     //TODO: extract beeper handling
+    //TODO: implement whole this class
 
     class TimerReminderScheduler : IReminderScheduler
     {
@@ -85,7 +86,6 @@ namespace AudioReminderService.ReminderScheduler
             IsRunning = true;
 
             //Time
-            //TODO: implement whole this class
 
             Log.Logger.Information("Starting TimerScheduler done");
         }
@@ -143,12 +143,12 @@ namespace AudioReminderService.ReminderScheduler
         /// Expects that there is at least one active remidner
         /// </summary>
         /// <returns></returns>
-        private int GetTimeInMsUntilNextRinging()
+        protected virtual int GetTimeInMsUntilNextRinging()
         {
             ReminderEntity nextReminder = ActiveSortedReminders.First();
 
             TimeSpan snoozeInterval = new TimeSpan(0, ServiceSettings.SnoozeIntervalMinutes, 0);
-            int minTimerLength = 1;//Timer can't handle 0 ms, but that could be result of rounding from ticks to miliseconds
+            int minTimerLength = 1;//Timer can't handle 0 ms. 0 ms could be result of rounding from ticks to miliseconds
 
             //good to be constant in a variable during this analysis in method so that it doesn't change during analysis. It could make some kind of timer deadlock where timer would never ring.
             DateTime now = DateTime.UtcNow;
@@ -158,7 +158,7 @@ namespace AudioReminderService.ReminderScheduler
             //hand some sanity check would be good because ringer maybe got stuck so we should try another ring so that next important events are not missed?
             bool isUserAlreadyAnnoyedTooMuchRecently = LastReminderRinging != null && now - LastReminderRinging < snoozeInterval; 
 
-            bool reminderAlreadyReadyForRinging = nextReminder.ScheduledTime >= now;
+            bool reminderAlreadyReadyForRinging = now > nextReminder.ScheduledTime;
 
             if(!reminderAlreadyReadyForRinging)
             {
@@ -172,8 +172,9 @@ namespace AudioReminderService.ReminderScheduler
             if(isUserAlreadyAnnoyedTooMuchRecently)
             {
                 //TODO: handle this scneario properly, adding a stub algorithm
-                
-                int timeMsUntilNextRinging = (int)(LastReminderRinging.Value /*not null?*/ + snoozeInterval - now).TotalMilliseconds;
+
+                TimeSpan timeUntilNextSnoozeRinging = LastReminderRinging.Value /*not null?*/ + snoozeInterval - now;
+                int timeMsUntilNextRinging = (int)timeUntilNextSnoozeRinging.TotalMilliseconds;
                 int intervalForTimer = Math.Max(timeMsUntilNextRinging, minTimerLength);
 
                 return intervalForTimer;
@@ -207,9 +208,11 @@ namespace AudioReminderService.ReminderScheduler
         }
         #endregion
 
-        //TODO: convert from local used on UI to UTC in list and vice versa..
-        //TODO: prohibit on UI possibility that user adds weekly recuring event, but sets first occurence in 3 years...
         //TODO: check if quartz or other dependency have time calculation library
+        //TODO: add more unit tests, and plotting of methods as graph f(x) = y to find edge cases
+        //TODO: After e.g. 1 year of not using service shoud we show that all recuring reminders are missed?
+        //TODO: Consider option of using sched + new TimeStamp, see datetime aritchmetic rules
+        //TODO: check again if same timestamp is everwhere passed and used in complete algorightm to prevent contradicting situations that some condition is true and few lines later the same condition is false
         public void DismissReminder(ReminderEntity reminderEntity)
         {
             if (!new ReminderDismissableValidator().ValidateReminderShouldBeRinging(reminderEntity))
@@ -221,7 +224,7 @@ namespace AudioReminderService.ReminderScheduler
 
             if (reminderEntity.IsRepeatable())
             {
-                DateTime now = DateTime.UtcNow; //TODO: same timestamp should probably be passed and used in complete algorightm to prevent contraciting situations that some conditions are true and few lines later false
+                DateTime now = DateTime.UtcNow; 
 
                 reminderEntity.ScheduledTime = new NextReminderOccurenceCalculator().GetNextReminderOccurence(reminderEntity, now).Value;
             }

@@ -38,9 +38,11 @@ namespace AudioReminderUI
         {
             reminderNameStringBox.Text = reminderToUpdate.Name;
 
-            scheduledTimePicker.Value = reminderToUpdate.ScheduledTime.Date;
-            hoursNumericBox.Value = reminderToUpdate.ScheduledTime.Hour;
-            minuteNumbericBox.Value = reminderToUpdate.ScheduledTime.Minute;
+            DateTime scheduledLocalTime = ConvertFromUtcToLocal(reminderToUpdate.ScheduledTime);
+
+            scheduledDatePicker.Value = scheduledLocalTime.Date;
+            hoursNumericBox.Value = scheduledLocalTime.Hour;
+            minuteNumbericBox.Value = scheduledLocalTime.Minute;
 
             repeatWeeklyCheckBox.Checked = reminderToUpdate.RepeatPeriod == RepeatPeriod.Weekly;
 
@@ -69,7 +71,8 @@ namespace AudioReminderUI
 
         protected virtual ReminderEntity CreateReminderEntity()
         {
-            DateTime scheduledDateTime = scheduledTimePicker.Value + new TimeSpan((int)hoursNumericBox.Value, (int)minuteNumbericBox.Value, 0);
+            DateTime scheduledDateTime = scheduledDatePicker.Value + new TimeSpan((int)hoursNumericBox.Value, (int)minuteNumbericBox.Value, 0);
+            DateTime scheduledDateTimeUtc = ConvertFromLocalToUtc(scheduledDateTime);
 
             //create bool array from the checkbox list
             bool repeatWeekly = repeatWeeklyCheckBox.Checked;
@@ -93,7 +96,7 @@ namespace AudioReminderUI
             var reminderEntity = new ReminderEntity()
             {
                 Name = reminderNameStringBox.Text,
-                ScheduledTime = scheduledDateTime,
+                ScheduledTime = scheduledDateTimeUtc,
                 RepeatPeriod = repeatPeriod,
                 RepeatWeeklyDays = repeatWeeklyDays
             };
@@ -101,7 +104,6 @@ namespace AudioReminderUI
             return reminderEntity;
         }
 
-        //TODO: add validation or even better warning for multiple periods checked
         protected virtual RepeatPeriod GetRepeatPeriod(bool repeatWeekly)
         {
             RepeatPeriod repeatPeriod;
@@ -128,6 +130,10 @@ namespace AudioReminderUI
 
         protected virtual bool ValidateInput()
         {
+            //TODO: validation aginst reminder set in the past?
+            //TODO: validation or even better warning for multiple periods checked
+            //TODO: prohibit on UI possibility that user adds weekly recuring event, but sets first occurence in 3 years... or at least put warning
+
             string reminderName = reminderNameStringBox.Text;
             bool reminderNameIsEmpty =  string.IsNullOrWhiteSpace(reminderName);
 
@@ -155,6 +161,37 @@ namespace AudioReminderUI
             
             Log.Logger.Information($"Checking if reminder name '{reminderName}' is avialable done. Result is {nameAvialable}");
             return nameAvialable;
+        }
+
+
+        /// <summary>
+        /// Returns SchduledTime as a UTC time.
+        /// </summary>
+        /// <param name="scheduledLocalTime">Local time. The kind property does not need to be spcified.</param>
+        /// <returns>UTC Time with Kind=UTC.</returns>
+        protected virtual DateTime ConvertFromLocalToUtc(DateTime scheduledLocalTime)
+        {
+            //ToUniversalTime() needs the Kind of input time to be Local, so we ensure this here
+            DateTime scheduledLocalTimeWithExplicitKind = new DateTime(scheduledLocalTime.Ticks, DateTimeKind.Local);
+
+            DateTime scheduledTimeUtc = scheduledLocalTimeWithExplicitKind.ToUniversalTime();
+
+            return scheduledTimeUtc;
+        }
+
+        /// <summary>
+        /// Returns SchduledTime as a local time.
+        /// </summary>
+        /// <param name="scheduledUtcTime">UTC time. The kind property does not need to be spcified.</param>
+        /// <returns>Local time in  with Kind=Local.</returns>
+        public DateTime ConvertFromUtcToLocal(DateTime scheduledUtcTime)
+        {
+            //ToLocalTime() needs the Kind of input time to be UTC (or Unspecified as it is also treated as UTC), so we ensure this here
+            DateTime scheduledUtcTimeWithExplicitKind = new DateTime(scheduledUtcTime.Ticks, DateTimeKind.Utc);
+
+            DateTime scheduledLocalTime = scheduledUtcTimeWithExplicitKind.ToLocalTime();
+
+            return scheduledLocalTime;
         }
 
     }

@@ -17,6 +17,7 @@ namespace AudioReminderCore.Model
         public string Name { get; set; }
 
         /// <summary>
+        /// UTC Time and date of next reminder ringing. 
         /// Must always be defined for a reminder.
         /// </summary>
         [DataMember]
@@ -82,6 +83,10 @@ namespace AudioReminderCore.Model
             return Name;
         }
 
+        /// <summary>
+        /// Gets RepeatWeeklyDays as string, eg. "MoTuThWdFr".
+        /// </summary>
+        /// <returns></returns>
         public string GetRepeatWeekDays()
         {
             string[] dayOfWeekInitials = new string[] { "Mo", "Tu", "Th", "Wd", "Fr", "St", "Sn" };

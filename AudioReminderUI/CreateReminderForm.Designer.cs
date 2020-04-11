@@ -32,7 +32,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.repeatWeeklyCheckBox = new System.Windows.Forms.CheckBox();
             this.repeatYearlyCheckBox = new System.Windows.Forms.CheckBox();
-            this.scheduledTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.scheduledDatePicker = new System.Windows.Forms.DateTimePicker();
             this.repeatMonthlyCheckBox = new System.Windows.Forms.CheckBox();
             this.repeatWeeklyCheckedListBox = new System.Windows.Forms.CheckedListBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -86,11 +86,11 @@
             // 
             // scheduledTimePicker
             // 
-            this.scheduledTimePicker.AccessibleName = "Date of first occurance";
-            this.scheduledTimePicker.Location = new System.Drawing.Point(13, 77);
-            this.scheduledTimePicker.Name = "scheduledTimePicker";
-            this.scheduledTimePicker.Size = new System.Drawing.Size(200, 20);
-            this.scheduledTimePicker.TabIndex = 1;
+            this.scheduledDatePicker.AccessibleName = "Date of first occurance";
+            this.scheduledDatePicker.Location = new System.Drawing.Point(13, 77);
+            this.scheduledDatePicker.Name = "scheduledTimePicker";
+            this.scheduledDatePicker.Size = new System.Drawing.Size(200, 20);
+            this.scheduledDatePicker.TabIndex = 1;
             // 
             // repeatMonthlyCheckBox
             // 
@@ -219,7 +219,7 @@
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.scheduledTimePicker);
+            this.Controls.Add(this.scheduledDatePicker);
             this.Controls.Add(this.repeatYearlyCheckBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.reminderNameStringBox);
@@ -240,7 +240,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox repeatWeeklyCheckBox;
         private System.Windows.Forms.CheckBox repeatYearlyCheckBox;
-        private System.Windows.Forms.DateTimePicker scheduledTimePicker;
+        private System.Windows.Forms.DateTimePicker scheduledDatePicker;
         private System.Windows.Forms.CheckBox repeatMonthlyCheckBox;
         private System.Windows.Forms.CheckedListBox repeatWeeklyCheckedListBox;
         private System.Windows.Forms.GroupBox groupBox1;
