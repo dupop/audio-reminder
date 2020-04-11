@@ -204,24 +204,29 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
         //TODO: After e.g. 1 year of not using service shoud we show that all recuring reminders are missed?
         //TODO: Consider option of using sched + new TimeStamp, see datetime aritchmetic rules
         //TODO: check again if same timestamp is everwhere passed and used in complete algorightm to prevent contradicting situations that some condition is true and few lines later the same condition is false
+        //TODO: subsribing to and handlign system clock changes, especially when we go back in time
+
         public void DismissReminder(ReminderEntity reminderEntity)
         {
-            if (!new ReminderDismissableValidator().ValidateReminderShouldBeRinging(reminderEntity))
+            DateTime now = DateTime.UtcNow;
+
+            if (!new ReminderDismissableValidator().ValidateReminderShouldBeRinging(reminderEntity, now))
             {
                 return;
             }
 
-            reminderEntity.LastDismissedOccurence = reminderEntity.ScheduledTime;//TODO: instead of this, last passed occureance of event should be dismissed, maybe 3 more times event occured until now
+            //dismissing nearest occurence of reminder in the past (not the originaly scheduled time)
+            DateTime lastReminderRinging = new LastReminderOccurenceCalculator().GetLastReminderOccurence(reminderEntity, now).Value;
+            reminderEntity.LastDismissedOccurence = lastReminderRinging;
 
             if (reminderEntity.IsRepeatable())
             {
-                DateTime now = DateTime.UtcNow;
-
-                reminderEntity.ScheduledTime = new NextReminderOccurenceCalculator().GetNextReminderOccurence(reminderEntity, now).Value;
+                //setting next ringing of the reminder on its first next occurence by its schedule
+                DateTime nextReminderRinging = new NextReminderOccurenceCalculator().GetNextReminderOccurence(reminderEntity, now).Value;
+                reminderEntity.ScheduledTime = nextReminderRinging;
             }
 
-            //AudioReminderService.ReminderScheduler.OnReminderDismissed(reminderEntity);
-            LastReminderDismissing = DateTime.UtcNow;
+            LastReminderDismissing = now;
 
             FilePersistenceAdapters.RemiderFilePersistence.OnEntitesChanged(); //indirectly triggers UpdateReminderList on this object
         }

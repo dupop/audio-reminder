@@ -15,15 +15,15 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
         /// Validates that this reminder should indeed be ringing now.
         /// Protection of some kind of double dismis request (maybe by multiple ringing windows etc..) that would cause next occurance of reminder to be skipped
         /// </summary>
-        public virtual bool ValidateReminderShouldBeRinging(ReminderEntity reminderEntity)
+        public virtual bool ValidateReminderShouldBeRinging(ReminderEntity reminderEntity, DateTime now)
         {
-            if (!ValidateReminderIsInThePast(reminderEntity))
+            if (!ValidateReminderIsInThePast(reminderEntity, now))
             {
                 return false;
             }
 
-            bool reminedrAlreadyDismissed = !ValidateReminderNotAlreadyDismissed(reminderEntity);
-            if (reminedrAlreadyDismissed)
+            //Fail validation if reminder is dismissed already
+            if (!ValidateReminderNotAlreadyDismissed(reminderEntity))
             {
                 return false;
             }
@@ -42,9 +42,8 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
             return true;
         }
 
-        protected virtual bool ValidateReminderIsInThePast(ReminderEntity reminderEntity)
+        protected virtual bool ValidateReminderIsInThePast(ReminderEntity reminderEntity, DateTime now)
         {
-            DateTime now = DateTime.UtcNow;
             bool reminderNotYetReady = reminderEntity.ScheduledTime > now;
 
             if (reminderNotYetReady)

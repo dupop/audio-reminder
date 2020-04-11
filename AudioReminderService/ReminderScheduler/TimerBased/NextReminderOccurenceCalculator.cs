@@ -10,7 +10,6 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
 {
     public class NextReminderOccurenceCalculator
     {
-
         /// <summary>
         /// Finds the moment of the first occurence of a reminder in the future. 
         /// Null only for non-repeating reminders from the past.
@@ -26,6 +25,7 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
                 return GetNextOccurenceOfRepeatingReminder(reminder, now);
             }
         }
+
 
         protected virtual DateTime? GetNextOccurenceOfNonRepeatingReminder(ReminderEntity reminder, DateTime now)
         {
@@ -71,18 +71,15 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
         //If scheduled time would be EXACTLY NOW we treat that as past also, and find the next occurence
         protected virtual DateTime GetNextOccurenceOfRepeatingReminderFromThePast(ReminderEntity reminder, DateTime now)
         {
-            if (reminder.RepeatPeriod == RepeatPeriod.Yearly)
+            switch (reminder.RepeatPeriod)
             {
-                return GetNextOccurenceOfYearlyRepeatingReminder(reminder.ScheduledTime, now);
+                case RepeatPeriod.Yearly:
+                    return GetNextOccurenceOfYearlyRepeatingReminder(reminder.ScheduledTime, now);
+                case RepeatPeriod.Monthly:
+                    return GetNextOccurenceOfMonthlyRepeatingReminder(reminder.ScheduledTime, now);
+                default: //weekly recuring reminder
+                    return GetNextOccurenceOfWeeklyRepeatingReminder(reminder.ScheduledTime, now, reminder.RepeatWeeklyDays);
             }
-
-            if (reminder.RepeatPeriod == RepeatPeriod.Monthly)
-            {
-                return GetNextOccurenceOfMonthlyRepeatingReminder(reminder.ScheduledTime, now);
-            }
-
-            //else weekly recuring reminder
-            return GetNextOccurenceOfWeeklyRepeatingReminder(reminder.ScheduledTime, now, reminder.RepeatWeeklyDays);
         }
 
 
@@ -115,7 +112,7 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
             bool isNextOccurenceInFollowingYear = !isNextOccurenceInThisMonth && now.Month == 12;
 
             int yearOfNextOccurence = isNextOccurenceInFollowingYear ? now.Year + 1 : now.Year;
-            int monthOfNextOccurence = isNextOccurenceInThisMonth ? now.Month : (now.Month + 1) % 12;
+            int monthOfNextOccurence = isNextOccurenceInThisMonth ? now.Month : DateTimeArithmeticHelper.MonthModulo(now.Month + 1);
 
             DateTime nextMonthlyOccurenceDate = new DateTime(yearOfNextOccurence, monthOfNextOccurence, scheduledTimeInThePast.Day);
             
@@ -148,7 +145,7 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
 
             for (int i = 0; i < 7; i++)
             {
-                int nextRingDayOfWeek = GetDayOfWeekMondayBased(nextRingDate);
+                int nextRingDayOfWeek = DateTimeArithmeticHelper.GetDayOfWeekMondayBased(nextRingDate);
 
                 bool isOkToRingOnThatDay = repeatWeeklyDays[nextRingDayOfWeek] == true;
 
@@ -165,19 +162,6 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
             return nextWeeklyOccurenceDateTime;
         }
 
-        protected virtual int GetDayOfWeekMondayBased(DateTime proposedNewTime)
-        {
-            int dayOfWeekSundayBased = (int)proposedNewTime.DayOfWeek;
-            int dayOfWeekMondayBased = (dayOfWeekSundayBased + 1) % 7;
-            return dayOfWeekMondayBased;
-        }
-
-        protected virtual DateTime GetMomentInTwoMinutes()
-        {
-            TimeSpan twoMinutes = new TimeSpan(0, 2, 0);
-            DateTime mockNextOccurence = DateTime.UtcNow + twoMinutes;
-            return mockNextOccurence;
-        }
 
     }
 }
