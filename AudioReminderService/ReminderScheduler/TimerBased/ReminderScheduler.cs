@@ -14,11 +14,22 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
 {
     //TODO: optimize later so that one dismiss does not cause recreating of all timers
     //TODO: implement whole this class
+    //TODO: draw detailed state diagram for all this...
 
     class ReminderScheduler
     {
-        bool IsRunning { get; set; }
+        /// <summary>
+        /// Is reminder events firing enabled. 
+        /// This doesn't necessary mean that timer is running, e.g. there could be no active reminders.
+        /// </summary>
+        bool IsEnabled { get; set; }
+
+        ReminderSchedulerState SchedulerState;
         protected Timer nextReminderTimer { get; set; }
+        
+        /// <summary>
+        /// Chonologically ordered list of reminders that will trigger ringing.
+        /// </summary>
         protected List<ReminderEntity> ActiveSortedReminders { get; set; }
         
         public int? SnoozeIntervalMinutes { get; protected set; }
@@ -44,22 +55,39 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
         public ReminderScheduler()
         {
             nextReminderTimer = new Timer();
+            nextReminderTimer.Enabled = false;
             nextReminderTimer.AutoReset = false;
             nextReminderTimer.Elapsed += NextReminderTimer_Elapsed;
 
-            IsRunning = false;
+            IsEnabled = false;
+            SchedulerState = ReminderSchedulerState.NoActiveReminders;
         }
 
         private void NextReminderTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            //TODO: maybe do sam verification if this reminder is indeed correct, and handle situation if not? probably not needed?
-            if (ActiveSortedReminders?.Any() != true)
+            ReminderEntity elapsedReminder = ActiveSortedReminders?.FirstOrDefault();
+            DateTime now = DateTime.UtcNow;
+
+            if (elapsedReminder == null)
             {
-                Log.Logger.Error("Elapsed Timer from scheduled can't find reminder for which ringin should be done.");
+                Log.Logger.Error("Elapsed Timer from scheduled can't find reminder for which ringing should be done.");
+                //TODO: handle this flow
                 return;
             }
 
-            OnReminderTimeup(ActiveSortedReminders.First().Name);
+            if (!new ReminderDismissableValidator().ValidateReminderShouldBeRinging(elapsedReminder, now))
+            {
+                Log.Logger.Error("Elapsed reminder is in invalid state (from the future or already dismissed).");
+                //TODO: handle this flow
+                return;
+            }
+
+            //start ringing
+            OnReminderTimeUp(elapsedReminder.Name, now);
+
+            SchedulerState = ReminderSchedulerState.WaitingUserResponse; //we could even already be in this state if this timer was triggered by snooze button
+
+            //TODO: we should start snooze timer here, or even before that a timer for turning of the noise of this reminder after e.g. 1 min?
         }
 
         #region Interface for controling ReminderScheduler
@@ -70,7 +98,9 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
         {
             Log.Logger.Information("Starting ReminderScheduler");
 
-            if (IsRunning)
+            DateTime now = DateTime.UtcNow; //good to be constant in a variable during this analysis in method so that it doesn't change during analysis. It could make some kind of timer deadlock where timer would never ring.
+
+            if (IsEnabled)
             {
                 Log.Logger.Warning("ReminderScheduler is already running.");
                 return;
@@ -78,12 +108,13 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
 
             if (ActiveSortedReminders == null)
             {
-                throw new InvalidOperationException("TimerReminderScheduler must be given initial list of reminders (at least an empty one) before starting it for the first time.");
+                Log.Logger.Error("TimerReminderScheduler must be given initial list of reminders (at least an empty one) before starting it for the first time. Ignoring start request to ReminderScheduler");
+                return;
             }
 
-            IsRunning = true;
+            IsEnabled = true;
 
-            //Time
+            TryToScheduleNextReminder(now);
 
             Log.Logger.Information("Starting ReminderScheduler done");
         }
@@ -92,13 +123,13 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
         {
             Log.Logger.Information("Stopping ReminderScheduler");
 
-            if (!IsRunning)
+            if (!IsEnabled)
             {
                 Log.Logger.Warning("ReminderScheduler is already stopped.");
                 return;
             }
 
-            IsRunning = false;
+            IsEnabled = false;
             nextReminderTimer.Stop();
 
             Log.Logger.Information("Stopping ReminderScheduler done");
@@ -107,14 +138,15 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
         public void UpdateReminderList(IList<ReminderEntity> upToDateReminders)
         {
             Log.Logger.Information("Updating list of reminders in ReminderScheduler");
+            
+            DateTime now = DateTime.UtcNow; //good to be constant in a variable during this analysis in method so that it doesn't change during analysis. It could make some kind of timer deadlock where timer would never ring.
 
             //pause timer util we decide when should it ring again
-            if (IsRunning)
+            if (IsEnabled)
             {
-                Log.Logger.Information("Pausing timer");
+                Log.Logger.Information("Pausing timer (if it is running at all)");
                 nextReminderTimer.Stop();
             }
-
 
             //TODO: maybe not do this now but when needed, we can just find 1 first; keep list ordered instead of oredering it each time
             ActiveSortedReminders = upToDateReminders
@@ -122,36 +154,54 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
                 .Select(r => (ReminderEntity)r.Clone())
                 .OrderBy(r => r.ScheduledTime)
                 .ToList();
-
-            //TODO: draw detailed state diagram for all this...
-
-            //conitune timer if there is need for this at all
-            if (IsRunning && ActiveSortedReminders.Any())
+            
+            //if scheduler is enabled continue timer (if there is need for this at all after change of reminders)
+            if (IsEnabled)
             {
-                int intervalMs = GetTimeInMsUntilNextRinging();
-                nextReminderTimer.Interval = intervalMs;
-                Log.Logger.Information($"Continuing timer with intveral [Interval = {intervalMs} ms] ");
-                nextReminderTimer.Start();
+                TryToScheduleNextReminder(now);
             }
 
             Log.Logger.Information("Updating list of reminders in ReminderScheduler done");
         }
 
+        private void TryToScheduleNextReminder(DateTime now)
+        {
+            if(SchedulerState == ReminderSchedulerState.WaitingUserResponse)
+            {
+                //TODO: handle this transiton when it not caused by snooze/dimiss but when this is action PARALEL to waiting for user response
+            }
+
+            bool activeRemindersExist = ActiveSortedReminders.Any();
+
+            //continue timer (if there is need for this at all after change of reminders)
+            if (activeRemindersExist)
+            {
+                int intervalMs = GetTimeInMsUntilNextRinging(now);
+                nextReminderTimer.Interval = intervalMs;
+                Log.Logger.Information($"Starting timer with intveral [Interval = {intervalMs} ms] ");
+                nextReminderTimer.Start();
+                SchedulerState = ReminderSchedulerState.WaitingNextReminder;
+            }
+            else
+            {
+                Log.Logger.Information($"Reminder timer will not be started because there are no active reminders.");
+                SchedulerState = ReminderSchedulerState.NoActiveReminders;
+            }
+        }
+        #endregion
+
         /// <summary>
         /// Expects that there is at least one active remidner
         /// </summary>
         /// <returns></returns>
-        protected virtual int GetTimeInMsUntilNextRinging()
+        protected virtual int GetTimeInMsUntilNextRinging(DateTime now)
         {
             ReminderEntity nextReminder = ActiveSortedReminders.First();
 
             TimeSpan snoozeInterval = new TimeSpan(0, SnoozeIntervalMinutes ?? 0, 0); //TODO: handle null snooze  (no snooze)
 
             int minTimerLength = 1;//Timer can't handle 0 ms. 0 ms could be result of rounding from ticks to miliseconds
-
-            //good to be constant in a variable during this analysis in method so that it doesn't change during analysis. It could make some kind of timer deadlock where timer would never ring.
-            DateTime now = DateTime.UtcNow;
-
+            
 #warning //TODO: just a mock alogirhtm, a correct one is neede here! implement this from LastReminderRinging,LastReminderDismissing,
             //LastReminderSnoozing. We sould probably not ring again at all until we get at least snooze response, but on the other
             //hand some sanity check would be good because ringer maybe got stuck so we should try another ring so that next important events are not missed?
@@ -183,21 +233,17 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
             //not triggering ring now, because I want this scenario to be handled on the sam thread as other scnearios would do, not to make additional risks
             return minTimerLength;
         }
-        #endregion
 
 
-        #region Timer Callbacks
-        protected void OnReminderTimeup(string reminderName)
+        protected void OnReminderTimeUp(string reminderName, DateTime now)
         {
             Log.Logger.Information("ReminderScheduler triggering a ring");
 
-            LastReminderRinging = DateTime.UtcNow;
+            LastReminderRinging = now;
             ReminderTimeUp?.Invoke(reminderName);
 
             Log.Logger.Information("ReminderScheduler triggering a ring done");
         }
-
-        #endregion
 
         //TODO: check if quartz or other dependency have time calculation library
         //TODO: add more unit tests, and plotting of methods as graph f(x) = y to find edge cases
@@ -209,6 +255,12 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
         public void DismissReminder(ReminderEntity reminderEntity)
         {
             DateTime now = DateTime.UtcNow;
+
+            if(SchedulerState != ReminderSchedulerState.WaitingUserResponse)
+            {
+                Log.Logger.Error($"Ignoring attempt to dismiss reminder [name = {reminderEntity.Name}] because current scheduler state is {SchedulerState} instead od WaitingUserResponse");
+                return;
+            }
 
             if (!new ReminderDismissableValidator().ValidateReminderShouldBeRinging(reminderEntity, now))
             {
@@ -227,32 +279,74 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
             }
 
             LastReminderDismissing = now;
+            //WaitingReminderUserResponse = false; //TODO: state change to be done in UpdateReminderList if it was triggered from this method
 
-            FilePersistenceAdapters.RemiderFilePersistence.OnEntitesChanged(); //indirectly triggers UpdateReminderList on this object
+            FilePersistenceAdapters.RemiderFilePersistence.OnEntitesChanged(); //indirectly also triggers UpdateReminderList on this object, and that will retrigger timer if there are still active timers
         }
 
         public void SnoozeReminder(ReminderEntity reminderEntity)
         {
+            DateTime now = DateTime.UtcNow;
+
+            if (SchedulerState != ReminderSchedulerState.WaitingUserResponse)
+            {
+                Log.Logger.Error($"Ignoring attempt to snooze reminder [name = {reminderEntity.Name}] because current scheduler state is {SchedulerState} instead od WaitingUserResponse");
+                return;
+            }
+
+            if (!new ReminderDismissableValidator().ValidateReminderShouldBeRinging(reminderEntity, now))
+            {
+                return;
+            }
+
+            if(SnoozeIntervalMinutes == null)
+            {
+                Log.Logger.Error($"Ignoring attempt to snooze reminder [name = {reminderEntity.Name}] because snooze option is not set in the scheduler.");
+                return;
+            }
+
             //TODO: do we need any implementation regarding this at all, should we maybe keep status DialogShown, and not show again for some time if there is no (at least) snooze response?
             //AudioReminderService.ReminderScheduler.OnReminderSnoozed(reminderEntity);
-            LastReminderSnoozing = DateTime.UtcNow;
+            LastReminderSnoozing = now;
+            //WaitingReminderUserResponse = false; //TODO: state change to be done in UpdateReminderList if it was triggered from this method
 
-            FilePersistenceAdapters.RemiderFilePersistence.OnEntitesChanged(); //indirectly triggers UpdateReminderList on this object
+            int intervalMs = SnoozeIntervalMinutes.Value * 60 * 1000;
+            nextReminderTimer.Interval = intervalMs;
+            Log.Logger.Information($"Starting timer with intveral [Interval = {intervalMs} ms] for snooze purpose");
+            nextReminderTimer.Start();
+
+            FilePersistenceAdapters.RemiderFilePersistence.OnEntitesChanged(); //indirectly also  triggers UpdateReminderList on this object
         }
 
 
         public virtual void ConfigureSnooze(bool snoozeEnabled, int snoozeIntervalMinutes)
         {
-            if(snoozeEnabled)
+            int? oldSnoozeInterval = SnoozeIntervalMinutes;
+
+            if (snoozeEnabled)
             {
-                SnoozeIntervalMinutes = snoozeIntervalMinutes;
+                if(snoozeIntervalMinutes > 0)
+                {
+                    SnoozeIntervalMinutes = snoozeIntervalMinutes;
+                }
+                else
+                {
+                    Log.Logger.Error($"ReminderScheduler ignoring snooze interval less than 1min [value = {snoozeIntervalMinutes}]. Treating this as no snooze.");
+                    SnoozeIntervalMinutes = null;
+                }
             }
             else
             {
                 SnoozeIntervalMinutes = null;
             }
 
-            //TODO: react on this change
+            bool snoozeIntervalChanged = oldSnoozeInterval != SnoozeIntervalMinutes;
+
+            if (snoozeIntervalChanged && SchedulerState == ReminderSchedulerState.WaitingUserResponse)
+            {
+                //TODO: react on snooze interval change while snooze value is actively bein used
+            }
+
         }
     }
 }
