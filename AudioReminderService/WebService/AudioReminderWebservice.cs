@@ -71,6 +71,8 @@ namespace AudioReminderService.WebService
 
             FilePersistenceAdapters.SettingsFilePersistence.Entities.Clear();
             FilePersistenceAdapters.SettingsFilePersistence.Entities.Add(settings);
+
+            FilePersistenceAdapters.SettingsFilePersistence.OnEntitesChanged();
         }
 
         public void DismissReminder(string reminderName)

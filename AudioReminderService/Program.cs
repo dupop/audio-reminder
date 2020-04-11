@@ -44,8 +44,4 @@ namespace AudioReminderService
         }
     }
 
-    //TODO: 
-    //add all copyrights...
-    //align namespace
-
 }

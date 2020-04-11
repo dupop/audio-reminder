@@ -78,7 +78,7 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
 
             if (ActiveSortedReminders == null)
             {
-                throw new InvalidOperationException("TimerReminderScheduler must be given initial list of reminders before starting it for the first time.");
+                throw new InvalidOperationException("TimerReminderScheduler must be given initial list of reminders (at least an empty one) before starting it for the first time.");
             }
 
             IsRunning = true;

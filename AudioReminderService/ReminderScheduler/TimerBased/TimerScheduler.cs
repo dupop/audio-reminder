@@ -74,6 +74,9 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
         {
             BeeperScheduler = new BeeperScheduler();
             ReminderScheduler = new ReminderScheduler();
+            
+            BeeperScheduler.BeeperTimeUp += OnBeeperTimeUp;
+            ReminderScheduler.ReminderTimeUp += ReminderTimeUp;
         }
 
 
