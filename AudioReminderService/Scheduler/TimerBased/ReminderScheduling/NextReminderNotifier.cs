@@ -89,8 +89,6 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
 
         private void NextReminderTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            Log.Logger.Information("Processing Next reminder elapsed timer event in NextReminderNotifier.");
-
             if (!isEnabled)
             {
                 //not expected to happen, but may be the result of some unexpected edge case
@@ -109,7 +107,7 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
                 return;
             }
 
-            Log.Logger.Information("Elapsed Reminder is valid, firing OnReminderElapsed event so that it can be added to elapsed reimnders list");
+            Log.Logger.Information($"Firing OnReminderElapsed event for [name = {elapsedReminder.Name}] so that it can be added to elapsed reimnders list");
 
             //Add reminder to list of elapsed reminders
             OnReminderElapsed(elapsedReminder, now);
@@ -120,8 +118,6 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
             //Dismissing operation will put repeatable reminder in list again (with new ScheduledTime) by triggering UpdateReminderList via persistence adapter.
 
             //TODO: should snooze somehow put it in this list or UI manager should handle that itself? Reminder schedule change for snooze purposes would its information regarding real scheduled time. Also adding reminder for snoozing to this list would trigger adding all other reminders to the list.
-
-            Log.Logger.Information("Processing Next reminder elapsed timer event in NextReminderNotifier done.");
         }
 
         protected virtual bool ValidateReminderElapsed(ReminderEntity reminder, DateTime now)
@@ -165,7 +161,7 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
             //pause timer util we decide when should it ring again so that it does not make conccurency issues while we are changing the list
             if (isEnabled)
             {
-                Log.Logger.Information("Pausing timer (if it is running at all)"); //maybe there were no events
+                Log.Logger.Information("Pausing NextReminderNotifier timer (if it is running at all)"); //maybe there were no events
                 NextReminderTimer.Stop();
             }
 
@@ -209,22 +205,18 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
         }
 
         /// <summary>
-        /// Starts timer for the next reminder
+        /// Starts timer for the next reminder whici is assumed to exist
         /// </summary>
-        /// <param name="now"></param>
         protected virtual void ScheduleNextReminder(DateTime now)
         {
-            int intervalMs = GetTimeInMsUntilNextRinging(now);
-            NextReminderTimer.Interval = intervalMs;
-            Log.Logger.Information($"Starting NextReminderNotifier timer with intveral [Interval = {intervalMs} ms] ");
-            NextReminderTimer.Start();
-        }
-
-        protected virtual int GetTimeInMsUntilNextRinging(DateTime now)
-        {
             ReminderEntity nextReminder = ActiveSortedReminders.First();
+            
+            int intervalMs = GetTimeInMsUntilNextRinging(nextReminder, now);
 
-            return GetTimeInMsUntilNextRinging(nextReminder, now);
+            Log.Logger.Information($"Starting NextReminderNotifier timer [Reminder name = {nextReminder.Name}, Interval = {intervalMs} ms] ");
+            
+            NextReminderTimer.Interval = intervalMs;
+            NextReminderTimer.Start();
         }
 
         /// <summary>

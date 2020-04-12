@@ -94,10 +94,11 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
 
             if (startedNow)
             {
+                Log.Logger.Information($"Starting UserInteractionManager");
                 //TODO: consider current state before doing this
                 GoToRingingOrIdleState(now);
 
-                Log.Logger.Information($"Started UserInteractionManager");
+                Log.Logger.Information($"Starting UserInteractionManager done");
             }
             else if (stoppedNow)
             {
@@ -139,6 +140,7 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
                 return;
             }
 
+            Log.Logger.Information($"Processing OnReminderElapsed event [name = {reminder.Name}, current component state = {UserState}, isEnabled = true].");
             switch (UserState)
             {
                 case ReminderSchedulerState.NoElapsedReminders:
@@ -170,7 +172,7 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
         {
             Log.Logger.Information("UserInteractionManager triggering a ringing");
             RingingNeeded?.Invoke(reminderName);
-            Log.Logger.Information("UserInteractionManager triggering a ringing done");
+            Log.Logger.Information("UserInteractionManager triggering a ringing done"); //TODO: this seem to behave async? check why?
 
         }
 
@@ -410,7 +412,7 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
             //pause timer util we decide when should it ring again
             if (IsEnabled)
             {
-                Log.Logger.Information("Pausing timer (if it is running at all)");
+                Log.Logger.Information("Pausing UserInteractionManger timer (if it is running at all)");
                 SnoozeTimer.Stop();
             }
 

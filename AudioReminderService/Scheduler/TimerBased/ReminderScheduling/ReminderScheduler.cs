@@ -43,8 +43,6 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
             NextReminderNotifier.ReminderElapsed += UserInteractionManager.OnReminderElapsed;
             UserInteractionManager.RingingNeeded += OnRingingNeeded;
 
-            NextReminderNotifier.IsEnabled = true;
-
             Log.Logger.Information($"Creating ReminderScheduler done");
         }
 

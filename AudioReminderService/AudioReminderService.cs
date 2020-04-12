@@ -47,9 +47,13 @@ namespace AudioReminderService
 
         protected virtual void InitializeService()
         {
+            Log.Logger.Information("Service initalizing");
+
             InitializeComponent();
             webServiceHost = new AudioReminderWebserviceHost();
             scheduler = new TimerScheduler();
+
+            Log.Logger.Information("Service initalizing done");
         }
 
         protected virtual void StartService()

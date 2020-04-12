@@ -80,7 +80,7 @@ namespace AudioReminderService.Scheduler.TimerBased
             ReminderScheduler = new ReminderScheduler();
             
             BeeperScheduler.BeeperTimeUp += OnBeeperTimeUp;
-            ReminderScheduler.RingingNeeded += ReminderTimeUp;
+            ReminderScheduler.RingingNeeded += OnReminderTimeUp;
 
             Log.Logger.Information($"Creating TimerScheduler done");
         }
@@ -121,8 +121,9 @@ namespace AudioReminderService.Scheduler.TimerBased
             BeeperTimeUp?.Invoke();
         }
 
-        protected void OnReminderTimeup(string reminderName)
+        protected void OnReminderTimeUp(string reminderName)
         {
+            Log.Logger.Information($"TimerScheduler firing ReminderTimeUp event for [name = {reminderName}]");
             ReminderTimeUp?.Invoke(reminderName);
         }
         #endregion
