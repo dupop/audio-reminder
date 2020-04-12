@@ -65,7 +65,7 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
 
         }
 
-        private void HandleStatusChange(bool wasEnabledBefore)
+        protected virtual void HandleStatusChange(bool wasEnabledBefore)
         {
             bool startedNow = !wasEnabledBefore && isEnabled;
             bool stoppedNow = wasEnabledBefore && !isEnabled;
@@ -155,6 +155,7 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
 
         /// <summary>
         /// Updates the list of active reminders, and starts the timer if needed.
+        /// It is ok to call the method even when the component is disabled.
         /// </summary>
         /// <param name="upToDateReminders"></param>
         public void UpdateReminderList(IList<ReminderEntity> upToDateReminders)

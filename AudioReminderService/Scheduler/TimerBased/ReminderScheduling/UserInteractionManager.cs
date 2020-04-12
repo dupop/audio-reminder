@@ -20,10 +20,25 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
 
         public event Action<string> RingingNeeded;
 
+        protected bool isEnabled;
+
         /// <summary>
-        /// Is making more ringing enabled 
+        /// Is making more ringing enabled     //TODO: more precise defintion   <--- this is realted to actually implementing this feature
         /// </summary>
-        public bool IsEnabled { get; set; } //TODO: more precise defintion + use this value
+        public bool IsEnabled 
+        {
+            get 
+            { 
+                return isEnabled;
+            }
+            set
+            {
+                bool wasEnabledBefore = isEnabled;
+                isEnabled = value;
+
+                HandleStatusChange(wasEnabledBefore);
+            }
+        } 
 
         /// <summary>
         /// Reminders that are elapsed but are not yet dismissed.
@@ -31,7 +46,7 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
         /// </summary>
         protected List<ReminderEntity> ElapsedActiveReminders { get; set; }
 
-        ReminderSchedulerState userState;
+        protected ReminderSchedulerState UserState { get; set; }
 
         protected Timer SnoozeTimer { get; set; }
 
@@ -61,14 +76,38 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
             SnoozeTimer = new Timer();
             SnoozeTimer.Enabled = false;
             SnoozeTimer.AutoReset = false;
-            SnoozeTimer.Elapsed += SnoozeTimer_Elapsed; ;
+            SnoozeTimer.Elapsed += SnoozeTimer_Elapsed;
 
             ElapsedActiveReminders = new List<ReminderEntity>();
             IsEnabled = false;
-            userState = ReminderSchedulerState.NoElapsedReminders;
+            UserState = ReminderSchedulerState.NoElapsedReminders;
 
             Log.Logger.Information($"Creating UserInteractionManager done");
 
+        }
+
+        protected virtual void HandleStatusChange(bool wasEnabledBefore)
+        {
+            bool startedNow = !wasEnabledBefore && isEnabled;
+            bool stoppedNow = wasEnabledBefore && !isEnabled;
+            DateTime now = DateTime.UtcNow;
+
+            if (startedNow)
+            {
+                //TODO: consider current state before doing this
+                GoToRingingOrIdleState(now);
+
+                Log.Logger.Information($"Started UserInteractionManager");
+            }
+            else if (stoppedNow)
+            {
+                SnoozeTimer.Stop();
+                Log.Logger.Information($"Stopped UserInteractionManager");
+            }
+            else
+            {
+                Log.Logger.Information($"UserInteractionManager already {(isEnabled ? "started" : "stopped")}");
+            }
         }
 
         /// <summary>
@@ -96,10 +135,11 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
 
             if (!IsEnabled)
             {
+                Log.Logger.Information($"OnReminderElapsed event [name = {reminder.Name}] will be handled just by adding reminder to the list because UserInteractionManager is currently not enabled.");
                 return;
             }
 
-            switch (userState)
+            switch (UserState)
             {
                 case ReminderSchedulerState.NoElapsedReminders:
 
@@ -120,7 +160,7 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
         protected void GoToRingingState(string reminderName, DateTime now)
         {
             //TODO:  should we start snooze timer here, or even before that a timer for turning off the noise of this reminder after e.g. 1 min of no response from user?
-            userState = ReminderSchedulerState.WaitingUserResponse;
+            UserState = ReminderSchedulerState.WaitingUserResponse;
             LastReminderRinging = now;
 
             OnRingingNeeded(reminderName);
@@ -141,9 +181,11 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
         {
             DateTime now = DateTime.UtcNow;
 
-            if (userState != ReminderSchedulerState.WaitingUserResponse)
+            //TODO: this is proably not expexted to happen during disabled state, but I assume it should make no harm to react on this bacause user can still have old ringing dialogs
+
+            if (UserState != ReminderSchedulerState.WaitingUserResponse)
             {
-                Log.Logger.Error($"Ignoring attempt to dismiss reminder [name = {reminderEntity.Name}] because current scheduler state is {userState} instead od WaitingUserResponse");
+                Log.Logger.Error($"Ignoring attempt to dismiss reminder [name = {reminderEntity.Name}] because current scheduler state is {UserState} instead od WaitingUserResponse");
                 return;
             }
 
@@ -168,6 +210,7 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
 
             ElapsedActiveReminders.Remove(reminderEntity);
 
+            //TODO: skip when disabled?
             //TODO: test this - we are here potenitally calling ringer again before response for Dismissing is returned.
             GoToRingingOrIdleState(now);
 
@@ -194,7 +237,7 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
             }
             else
             {
-                userState = ReminderSchedulerState.NoElapsedReminders;
+                UserState = ReminderSchedulerState.NoElapsedReminders;
                 Log.Logger.Information($"No more elapsed reminders in the list. GoToRingingOrIdleState method is setting state to NoElapsedReminders");
             }
         }
@@ -203,9 +246,9 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
         {
             DateTime now = DateTime.UtcNow;
 
-            if (userState != ReminderSchedulerState.WaitingUserResponse)
+            if (UserState != ReminderSchedulerState.WaitingUserResponse)
             {
-                Log.Logger.Error($"Ignoring attempt to snooze reminder [name = {reminderEntity.Name}] because current scheduler state is {userState} instead od WaitingUserResponse");
+                Log.Logger.Error($"Ignoring attempt to snooze reminder [name = {reminderEntity.Name}] because current scheduler state is {UserState} instead od WaitingUserResponse");
                 return;
             }
 
@@ -221,12 +264,13 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
                 return;
             }
 
+            //TODO: how to handle this when disabled?
             GoToSnoozeState(now);
         }
 
         protected virtual void GoToSnoozeState(DateTime now, int? customSnoozeIntervalMs = null)
         {
-            userState = ReminderSchedulerState.SnoozeTime;
+            UserState = ReminderSchedulerState.SnoozeTime;
             LastReminderSnoozing = now;
 
             //determine interval
@@ -251,11 +295,11 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
 
         protected virtual void HandleSnoozeElapsed(DateTime now)
         {
-            if (userState != ReminderSchedulerState.SnoozeTime)
+            if (UserState != ReminderSchedulerState.SnoozeTime)
             {
                 //only expected to happen as a result of not well handled concurrency
                 //this may put component in a deadlock probably! Will disable+enabled unblock the state?
-                Log.Logger.Error($"UserState is {userState} instead of {ReminderSchedulerState.SnoozeTime} after snooze period elapsed. Ignoring timer event.");
+                Log.Logger.Error($"UserState is {UserState} instead of {ReminderSchedulerState.SnoozeTime} after snooze period elapsed. Ignoring timer event.");
                 return;
             }
 
@@ -264,7 +308,7 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
             {
                 //only expected to happen as a result of not well handled concurrency
                 Log.Logger.Error($"No reminder found after snooze period elapsed. Going to {ReminderSchedulerState.NoElapsedReminders} state.");
-                userState = ReminderSchedulerState.NoElapsedReminders;
+                UserState = ReminderSchedulerState.NoElapsedReminders;
                 return;
             }
 
@@ -298,8 +342,10 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
 
             bool snoozeIntervalChanged = oldSnoozeInterval != SnoozeIntervalMinutes;
 
-            if (snoozeIntervalChanged && userState == ReminderSchedulerState.SnoozeTime)
+            if (snoozeIntervalChanged && UserState == ReminderSchedulerState.SnoozeTime)
             {
+                //TODO: how to handle when disabled? should component go out of snoozeTime state when we it becamoes disabled?
+
                 if (SnoozeIntervalMinutes == null)
                 {
                     Log.Logger.Information($"Snooze value changed to null and UserState was SnoozeTime. Attemting to run remaning reminders immediately (if there are any).");
@@ -333,7 +379,7 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
 
         //TODO: providte functionallity to run immediately all snooze reminders, not to bother user later with them. This will also be useful for IsOkToModifyReminder situation
 
-        internal bool IsOkToModifyReminder(string reminderName)
+        public virtual bool IsOkToModifyReminder(string reminderName)
         {
             bool reminderIsInList = ElapsedActiveReminders.Any(rem => rem.Name == reminderName);
             DateTime now = DateTime.UtcNow;
@@ -342,6 +388,8 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
             if (reminderIsInList)
             {
                 Log.Logger.Information("Change of elapsed but not dismissed reminder was attempted. Running snoozed reminders now.");
+
+                //TODO: how to handle this when disabled?
                 SnoozeTimer.Stop();
                 GoToRingingOrIdleState(now); //TODO: this may be unsafe as maybe we are not in snooze state, but e.g. already waiting user reaction?
             }
@@ -353,7 +401,7 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
         /// <summary>
         /// We are not introducing new reminders through this method, we are just filtering out timers that are possibly not for ringing any more (and that are deleted) or modifying the existing ones
         /// </summary>
-        public void UpdateReminderList(IList<ReminderEntity> upToDateReminders)
+        public virtual void UpdateReminderList(IList<ReminderEntity> upToDateReminders)
         {
             Log.Logger.Information("Updating list of reminders in UserInteractionManger");
 
