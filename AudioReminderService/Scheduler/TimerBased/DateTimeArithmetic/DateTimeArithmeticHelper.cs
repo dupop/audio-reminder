@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AudioReminderService.ReminderScheduler.TimerBased
+namespace AudioReminderService.Scheduler.TimerBased.DateTimeArithmetic
 {
     public static class DateTimeArithmeticHelper
     {

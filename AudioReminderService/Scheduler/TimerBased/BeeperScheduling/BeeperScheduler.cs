@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 
-namespace AudioReminderService.ReminderScheduler.TimerBased
+namespace AudioReminderService.Scheduler.TimerBased.BeeperScheduling
 {
     //TODO: beeper should probably be triggered on full hours not 60min from computer starting moment, with current settings it may fire any time, change this on UI to 5,15,30,60,120,180 hours, quiet interval will probably be needed for beeper
 
@@ -33,8 +33,8 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
         /// </summary>
         public bool SchedulerEnabled
         {
-            get 
-            { 
+            get
+            {
                 return shedulerEnabled;
             }
             set
@@ -52,11 +52,11 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
         /// </summary>
         public bool BeeperEnabledInSettings
         {
-            get 
+            get
             {
-                return beeperEnabledInSettings; 
+                return beeperEnabledInSettings;
             }
-            set 
+            set
             {
                 bool wasEnabledBefore = IsRunning;
 
@@ -70,7 +70,7 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
         /// Is beeper timer currently running.
         /// </summary>
         public bool IsRunning => shedulerEnabled && beeperEnabledInSettings;
-        
+
         /// <summary>
         /// Beeper interval in minutes.
         /// No default value, needs to be set before starting timer.
@@ -90,7 +90,7 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
                 int intervalInMinutes = value;
                 const int minimalIntervalLengthMinutes = 1;
 
-                if(intervalInMinutes < minimalIntervalLengthMinutes)
+                if (intervalInMinutes < minimalIntervalLengthMinutes)
                 {
                     Log.Logger.Error($"Attempted to set interval for BeeperScheduler of {intervalInMinutes} min which is less than 1 min. Interval change will be ignored in BeeperScheduler.");
                     return;
@@ -114,7 +114,7 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
             beeperTimer.Enabled = false;
             beeperTimer.AutoReset = true; //TODO: check this again when handling conccurency
             beeperTimer.Elapsed += BeeperTimer_Elapsed;
-            
+
             shedulerEnabled = false;
             beeperEnabledInSettings = false;
             intervalValueSet = false;
@@ -130,7 +130,7 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
 
             if (startedNow)
             {
-                if(!intervalValueSet)
+                if (!intervalValueSet)
                 {
                     Log.Logger.Error($"Attempted to run BeeperScheduler without defined interval. Timer will not be started until interval is set and scheduler is stopped and started again.");
                     return;

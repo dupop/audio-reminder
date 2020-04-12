@@ -1,5 +1,6 @@
 ﻿using AudioReminderCore.Model;
 using AudioReminderService.Persistence;
+using AudioReminderService.Scheduler.TimerBased.DateTimeArithmetic;
 using Quartz;
 using Quartz.Impl;
 using Serilog;
@@ -10,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 
-namespace AudioReminderService.ReminderScheduler.TimerBased
+namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
 {
     //TODO: optimize later so that one dismiss does not cause recreating of all timers
     //TODO: implement whole this class
@@ -26,12 +27,12 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
 
         ReminderSchedulerState SchedulerState;
         protected Timer nextReminderTimer { get; set; }
-        
+
         /// <summary>
         /// Chonologically ordered list of reminders that will trigger ringing.
         /// </summary>
         protected List<ReminderEntity> ActiveSortedReminders { get; set; }
-        
+
         public int? SnoozeIntervalMinutes { get; protected set; }
 
         public event Action<string> ReminderTimeUp;
@@ -138,7 +139,7 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
         public void UpdateReminderList(IList<ReminderEntity> upToDateReminders)
         {
             Log.Logger.Information("Updating list of reminders in ReminderScheduler");
-            
+
             DateTime now = DateTime.UtcNow; //good to be constant in a variable during this analysis in method so that it doesn't change during analysis. It could make some kind of timer deadlock where timer would never ring.
 
             //pause timer util we decide when should it ring again
@@ -154,7 +155,7 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
                 .Select(r => (ReminderEntity)r.Clone())
                 .OrderBy(r => r.ScheduledTime)
                 .ToList();
-            
+
             //if scheduler is enabled continue timer (if there is need for this at all after change of reminders)
             if (IsEnabled)
             {
@@ -166,7 +167,7 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
 
         private void TryToScheduleNextReminder(DateTime now)
         {
-            if(SchedulerState == ReminderSchedulerState.WaitingUserResponse)
+            if (SchedulerState == ReminderSchedulerState.WaitingUserResponse)
             {
                 //TODO: handle this transiton when it not caused by snooze/dimiss but when this is action PARALEL to waiting for user response
             }
@@ -201,7 +202,7 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
             TimeSpan snoozeInterval = new TimeSpan(0, SnoozeIntervalMinutes ?? 0, 0); //TODO: handle null snooze  (no snooze)
 
             int minTimerLength = 1;//Timer can't handle 0 ms. 0 ms could be result of rounding from ticks to miliseconds
-            
+
 #warning //TODO: just a mock alogirhtm, a correct one is neede here! implement this from LastReminderRinging,LastReminderDismissing,
             //LastReminderSnoozing. We sould probably not ring again at all until we get at least snooze response, but on the other
             //hand some sanity check would be good because ringer maybe got stuck so we should try another ring so that next important events are not missed?
@@ -256,7 +257,7 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
         {
             DateTime now = DateTime.UtcNow;
 
-            if(SchedulerState != ReminderSchedulerState.WaitingUserResponse)
+            if (SchedulerState != ReminderSchedulerState.WaitingUserResponse)
             {
                 Log.Logger.Error($"Ignoring attempt to dismiss reminder [name = {reminderEntity.Name}] because current scheduler state is {SchedulerState} instead od WaitingUserResponse");
                 return;
@@ -299,7 +300,7 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
                 return;
             }
 
-            if(SnoozeIntervalMinutes == null)
+            if (SnoozeIntervalMinutes == null)
             {
                 Log.Logger.Error($"Ignoring attempt to snooze reminder [name = {reminderEntity.Name}] because snooze option is not set in the scheduler.");
                 return;
@@ -325,7 +326,7 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
 
             if (snoozeEnabled)
             {
-                if(snoozeIntervalMinutes > 0)
+                if (snoozeIntervalMinutes > 0)
                 {
                     SnoozeIntervalMinutes = snoozeIntervalMinutes;
                 }

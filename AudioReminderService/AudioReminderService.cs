@@ -2,7 +2,7 @@
 using AudioReminderCore.Model;
 using AudioReminderService.Persistence;
 using AudioReminderService.RingerCalling;
-using AudioReminderService.ReminderScheduler;
+using AudioReminderService.Scheduler;
 using AudioReminderService.WebService;
 using GlobalHotKey;
 using Serilog;
@@ -19,7 +19,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
-using AudioReminderService.ReminderScheduler.TimerBased;
+using AudioReminderService.Scheduler.TimerBased;
 
 namespace AudioReminderService
 {

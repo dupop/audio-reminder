@@ -1,4 +1,6 @@
 ﻿using AudioReminderCore.Model;
+using AudioReminderService.Scheduler.TimerBased.BeeperScheduling;
+using AudioReminderService.Scheduler.TimerBased.ReminderScheduling;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -7,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 
-namespace AudioReminderService.ReminderScheduler.TimerBased
+namespace AudioReminderService.Scheduler.TimerBased
 {
     /// <summary>
     /// Wrapper around Reminder and Beeper schedulers. Fires events for beeper and reminder time up. 

@@ -1,6 +1,6 @@
 ﻿using System;
 using AudioReminderCore.Model;
-using AudioReminderService.ReminderScheduler.TimerBased;
+using AudioReminderService.Scheduler.TimerBased.DateTimeArithmetic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AudioReminderUnitTests

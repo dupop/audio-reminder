@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AudioReminderService.ReminderScheduler.TimerBased
+namespace AudioReminderService.Scheduler.TimerBased.DateTimeArithmetic
 {
     public class NextReminderOccurenceCalculator
     {
@@ -47,7 +47,7 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
             return nextReminderOccurence;
         }
 
-        
+
         protected virtual DateTime GetNextOccurenceOfRepeatingReminder(ReminderEntity reminder, DateTime now)
         {
             bool isReminderInTheFuture = reminder.ScheduledTime > now;
@@ -56,7 +56,7 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
             if (isReminderInTheFuture)
             {
                 //if scheduled time is in the future, that is the next occurence
-                nextReminderOccurence =  reminder.ScheduledTime;
+                nextReminderOccurence = reminder.ScheduledTime;
                 Log.Logger.Information($"Next occurence of repeatable reminder [name = {reminder.Name}] scheduled in the future is [old scheduled = {reminder.ScheduledTime}, new scheduled = {nextReminderOccurence}, now = {now}, repeat = {reminder.RepeatPeriod}, repeatDays = {reminder.GetRepeatWeekDays()}].");
             }
             else
@@ -115,7 +115,7 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
             int monthOfNextOccurence = isNextOccurenceInThisMonth ? now.Month : DateTimeArithmeticHelper.MonthModulo(now.Month + 1);
 
             DateTime nextMonthlyOccurenceDate = new DateTime(yearOfNextOccurence, monthOfNextOccurence, scheduledTimeInThePast.Day);
-            
+
             DateTime nextMonthlyOccurenceDateTime = nextMonthlyOccurenceDate + scheduledTimeInThePast.TimeOfDay;
 
             return nextMonthlyOccurenceDateTime;

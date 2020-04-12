@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace AudioReminderService.ReminderScheduler.TimerBased
+namespace AudioReminderService.Scheduler.TimerBased.DateTimeArithmetic
 {
 
     public class LastReminderOccurenceCalculator
@@ -97,7 +97,7 @@ namespace AudioReminderService.ReminderScheduler.TimerBased
             int monthOfLastOccurence = isLastOccurenceInThisMonth ? now.Month : DateTimeArithmeticHelper.MonthModulo(now.Month - 1);
 
             DateTime lastMonthlyOccurenceDate = new DateTime(yearOfLastOccurence, monthOfLastOccurence, scheduledTimeInThePast.Day);
-            
+
             DateTime lastMonthlyOccurenceDateTime = lastMonthlyOccurenceDate + scheduledTimeInThePast.TimeOfDay;
 
             return lastMonthlyOccurenceDateTime;

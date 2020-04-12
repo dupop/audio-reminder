@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AudioReminderService.ReminderScheduler
+namespace AudioReminderService.Scheduler
 {
     /// <summary>
     /// TODO descirption
