@@ -135,7 +135,7 @@ namespace AudioReminderUI
 
             Proxy.TestBeeper();
 
-            Log.Logger.Information($"tarting beeper done");
+            Log.Logger.Information($"Starting beeper done");
         }
 
         protected virtual void SaveImplementation(ReminderEntity createdReminder)
