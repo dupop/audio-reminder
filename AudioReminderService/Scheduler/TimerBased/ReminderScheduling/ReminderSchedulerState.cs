@@ -8,8 +8,7 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
 {
     public enum ReminderSchedulerState
     {
-        NoActiveReminders,
-        WaitingNextReminder,
+        NoElapsedReminders,
         WaitingUserResponse
     }
 }

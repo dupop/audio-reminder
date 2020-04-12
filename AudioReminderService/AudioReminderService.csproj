@@ -69,13 +69,13 @@
       <DependentUpon>AudioReminderService.cs</DependentUpon>
     </Compile>
     <Compile Include="Scheduler\TimerBased\DateTimeArithmetic\DateTimeArithmeticHelper.cs" />
-    <Compile Include="Scheduler\TimerBased\DateTimeArithmetic\LastReminderOccurenceCalculator.cs" />
     <Compile Include="Scheduler\TimerBased\ReminderScheduling\NextReminderNotifier.cs" />
     <Compile Include="Scheduler\TimerBased\ReminderScheduling\ReminderSchedulerState.cs" />
+    <Compile Include="Scheduler\TimerBased\ReminderScheduling\UserInteractionManager.cs" />
     <Compile Include="Scheduler\TimerBased\TimerScheduler.cs" />
     <Compile Include="Scheduler\TimerBased\BeeperScheduling\BeeperScheduler.cs" />
     <Compile Include="Scheduler\TimerBased\DateTimeArithmetic\NextReminderOccurenceCalculator.cs" />
-    <Compile Include="Scheduler\TimerBased\ReminderScheduling\ReminderDismissableValidator.cs" />
+    <Compile Include="Scheduler\TimerBased\ReminderScheduling\ElapsedReminderValidator.cs" />
     <Compile Include="Scheduler\TimerBased\ReminderScheduling\ReminderScheduler.cs" />
     <Compile Include="WebService\AudioReminderWebserviceHost.cs" />
     <Compile Include="WebService\AudioReminderWebservice.cs" />

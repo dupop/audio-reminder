@@ -78,7 +78,7 @@ namespace AudioReminderService.Scheduler.TimerBased
             ReminderScheduler = new ReminderScheduler();
             
             BeeperScheduler.BeeperTimeUp += OnBeeperTimeUp;
-            ReminderScheduler.ReminderTimeUp += ReminderTimeUp;
+            ReminderScheduler.RingingNeeded += ReminderTimeUp;
         }
 
 
@@ -123,11 +123,11 @@ namespace AudioReminderService.Scheduler.TimerBased
 
         protected void OnReminderTimeup(string reminderName)
         {
-            Log.Logger.Information("TimerScheduler triggering a ring");
+            Log.Logger.Information("TimerScheduler triggering a ringing");
 
             ReminderTimeUp?.Invoke(reminderName);
 
-            Log.Logger.Information("TimerScheduler triggering a ring done");
+            Log.Logger.Information("TimerScheduler triggering a ringing done");
         }
         #endregion
 
@@ -170,7 +170,7 @@ namespace AudioReminderService.Scheduler.TimerBased
             BeeperScheduler.Interval = serviceSettingsEntity.BeeperIntervalMinutes;
             BeeperScheduler.BeeperEnabledInSettings = serviceSettingsEntity.BeeperEnabled;
 
-            //we are actually only disabling the scheduler, not complete service
+            //we are actually only disabling the this scheduler, not complete service
             SchedulerEnabledInSettings = serviceSettingsEntity.ServiceEnabled;
         }
         #endregion

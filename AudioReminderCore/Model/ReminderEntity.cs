@@ -34,11 +34,17 @@ namespace AudioReminderCore.Model
         [DataMember]
         public bool[] RepeatWeeklyDays { get; set; }
 
-        [DataMember]
-        public DateTime? LastDismissedOccurence { get; set; }
+        //[DataMember]
+        //public DateTime? LastDismissedOccurence { get; set; }
 
         //[DataMember]
         //public DateTime? LastRang { get; set; }
+
+        /// <summary>
+        /// Always false for repeatable reminders, because their time is just rescheduled when user dismisses them.
+        /// </summary>
+        [DataMember]
+        public bool Dismissed { get; set; }
 
 
         /// <summary>
@@ -59,24 +65,6 @@ namespace AudioReminderCore.Model
         public bool IsRepeatable()
         {
             return RepeatPeriod == RepeatPeriod.NoRepeat;
-        }
-
-        /// <summary>
-        /// Returns true if there is nothing more to be done regarding this reminder.
-        /// </summary>
-        /// <returns></returns>
-        public bool IsDone()
-        {
-            //repetable reminder is never done, it will always ring again
-            if (IsRepeatable())
-            {
-                return false;
-            }
-
-            //single-firing event is done if its only occurence is dismissed
-            bool dismissed = ScheduledTime == LastDismissedOccurence;
-
-            return dismissed;
         }
 
         public override string ToString()
