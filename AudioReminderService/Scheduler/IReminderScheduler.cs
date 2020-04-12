@@ -42,5 +42,7 @@ namespace AudioReminderService.Scheduler
         event Action BeeperTimeUp;
 
         void UpdateSettings(ServiceSettingsEntity serviceSettingsEntity);
+
+        bool IsOkToModifyReminder(string reminderName);
     }
 }

@@ -110,6 +110,8 @@ namespace AudioReminderService.Scheduler.TimerBased.BeeperScheduling
         /// </summary>
         public BeeperScheduler()
         {
+            Log.Logger.Information($"Creating BeeperScheduler");
+
             beeperTimer = new Timer();
             beeperTimer.Enabled = false;
             beeperTimer.AutoReset = true; //TODO: check this again when handling conccurency
@@ -118,6 +120,8 @@ namespace AudioReminderService.Scheduler.TimerBased.BeeperScheduling
             shedulerEnabled = false;
             beeperEnabledInSettings = false;
             intervalValueSet = false;
+
+            Log.Logger.Information($"Creating BeeperScheduler done");
         }
 
         /// <summary>

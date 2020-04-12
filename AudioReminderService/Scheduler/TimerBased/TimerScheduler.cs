@@ -74,11 +74,15 @@ namespace AudioReminderService.Scheduler.TimerBased
 
         public TimerScheduler()
         {
+            Log.Logger.Information($"Creating TimerScheduler");
+
             BeeperScheduler = new BeeperScheduler();
             ReminderScheduler = new ReminderScheduler();
             
             BeeperScheduler.BeeperTimeUp += OnBeeperTimeUp;
             ReminderScheduler.RingingNeeded += ReminderTimeUp;
+
+            Log.Logger.Information($"Creating TimerScheduler done");
         }
 
 
@@ -114,20 +118,12 @@ namespace AudioReminderService.Scheduler.TimerBased
         #region Timer Callbacks
         protected void OnBeeperTimeUp()
         {
-            Log.Logger.Information("TimerScheduler triggering a beep");
-
             BeeperTimeUp?.Invoke();
-
-            Log.Logger.Information("TimerScheduler triggering a beep done");
         }
 
         protected void OnReminderTimeup(string reminderName)
         {
-            Log.Logger.Information("TimerScheduler triggering a ringing");
-
             ReminderTimeUp?.Invoke(reminderName);
-
-            Log.Logger.Information("TimerScheduler triggering a ringing done");
         }
         #endregion
 
@@ -148,21 +144,49 @@ namespace AudioReminderService.Scheduler.TimerBased
 
         public void DismissReminder(ReminderEntity reminder)
         {
+            Log.Logger.Information("Dismissing reminder in TimerScheduler");
+
             ReminderScheduler.DismissReminder(reminder);
+
+            Log.Logger.Information("Dismissing reminder in TimerScheduler done");
         }
 
         public void SnoozeReminder(ReminderEntity reminder)
         {
+            Log.Logger.Information("Snoozing reminder in TimerScheduler");
+
             ReminderScheduler.SnoozeReminder(reminder);
+
+            Log.Logger.Information("Snoozing reminder in TimerScheduler done");
         }
 
         public void UpdateReminderList(IList<ReminderEntity> upToDateReminders)
         {
+            Log.Logger.Information("Updating list of reminders in TimerScheduler");
+
             ReminderScheduler.UpdateReminderList(upToDateReminders);
+
+            Log.Logger.Information("Updating list of reminders in TimerScheduler done");
+        }
+
+        /// <summary>
+        /// Returns false when reminder is elapsed but not yet dismissed
+        /// </summary>
+        public bool IsOkToModifyReminder(string reminderName)
+        {
+            Log.Logger.Information("Checking if reminder can be modified in TimerScheduler");
+
+            bool result = ReminderScheduler.IsOkToModifyReminder(reminderName);
+            
+            Log.Logger.Information("Checking if reminder can be modified in TimerScheduler done");
+
+            return result;
         }
 
         public void UpdateSettings(ServiceSettingsEntity serviceSettingsEntity)
         {
+            Log.Logger.Information("TimerScheduler updating settings");
+
             //TODO: remove autostart from UI. Disabling service autostart would probably be feature for future (for never) as it is too complex and doesn't bring almost any value.
 
             ReminderScheduler.ConfigureSnooze(serviceSettingsEntity.SnoozeEnabled, serviceSettingsEntity.SnoozeIntervalMinutes);
@@ -172,6 +196,9 @@ namespace AudioReminderService.Scheduler.TimerBased
 
             //we are actually only disabling the this scheduler, not complete service
             SchedulerEnabledInSettings = serviceSettingsEntity.ServiceEnabled;
+
+            Log.Logger.Information("TimerScheduler updating settings done");
+
         }
         #endregion
 

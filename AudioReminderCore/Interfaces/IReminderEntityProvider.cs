@@ -16,9 +16,9 @@ namespace AudioReminderCore.Interfaces
         ReminderEntity Load(string reminderName);
 
         [OperationContract]
-        void Update(string reminderOldName, ReminderEntity reminder);
+        bool Update(string reminderOldName, ReminderEntity reminder);
         
         [OperationContract]
-        void Delete(string reminderName);
+        bool Delete(string reminderName);
     }
 }

@@ -112,10 +112,18 @@ namespace AudioReminderUI
 
             var updatedReminder = createReminderForm.CreateOrUpdatedReminder;
 
-            PersistenceAdapter.Update(reminderToUpdate.Name, updatedReminder);
+            bool result = PersistenceAdapter.Update(reminderToUpdate.Name, updatedReminder);
 
-            //using the element in the listbox
-            remindersListBox.Items[remindersListBox.SelectedIndex] = updatedReminder;
+            if(result == true)
+            {
+                //using the element in the listbox
+                remindersListBox.Items[remindersListBox.SelectedIndex] = updatedReminder;
+            }
+            else
+            {
+                ErrorDialogUtility.ErrorDialog("Can't modify snoozed reminders. Snoozed reminders will be started now.");
+            }
+            
         }
 
         protected virtual void CloneAction()
@@ -152,8 +160,15 @@ namespace AudioReminderUI
                 return;
             }
 
-            PersistenceAdapter.Delete(reminderToDelete.Name);
-            HandleRemovingFromListBox(reminderToDelete);
+            bool result = PersistenceAdapter.Delete(reminderToDelete.Name);
+            if (result == true)
+            {
+                HandleRemovingFromListBox(reminderToDelete);
+            }
+            else
+            {
+                ErrorDialogUtility.ErrorDialog("Can't delete snoozed reminders. Snoozed reminders will be started now.");
+            }
         }
 
         /// <summary>

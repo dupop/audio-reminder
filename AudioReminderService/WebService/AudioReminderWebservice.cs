@@ -15,12 +15,20 @@ namespace AudioReminderService.WebService
 {
     class AudioReminderWebservice : IAudioReminderService
     {
-        public void Delete(string reminderName)
+        public bool Delete(string reminderName)
         {
             Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\" [reminderName = {reminderName}]");
 
+
+            if (!AudioReminderService.scheduler.IsOkToModifyReminder(reminderName)) //TODO put nullcheck somwhere
+            {
+                return false;
+            }
+
             FilePersistenceAdapters.RemiderFilePersistence.Entities.RemoveAll(reminder => reminder.Name == reminderName);
             FilePersistenceAdapters.RemiderFilePersistence.OnEntitesChanged();
+
+            return true;
         }
 
         public ReminderEntity Load(string reminderName)
@@ -54,15 +62,22 @@ namespace AudioReminderService.WebService
             FilePersistenceAdapters.RemiderFilePersistence.OnEntitesChanged();
         }
 
-        public void Update(string reminderOldName, ReminderEntity reminder)
+        public bool Update(string reminderOldName, ReminderEntity reminder)
         {
             Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\" [reminderOldName = {reminderOldName}]");
+
+            if (!AudioReminderService.scheduler.IsOkToModifyReminder(reminder.Name)) //TODO put nullcheck somwhere
+            {
+                return false;
+            }
 
             //remove old reminder and add updated one
             FilePersistenceAdapters.RemiderFilePersistence.Entities.RemoveAll(r => r.Name == reminderOldName);
             FilePersistenceAdapters.RemiderFilePersistence.Entities.Add(reminder);
 
             FilePersistenceAdapters.RemiderFilePersistence.OnEntitesChanged();
+
+            return true;
         }
 
         public void UpdateSettings(ServiceSettingsEntity settings)

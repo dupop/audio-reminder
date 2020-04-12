@@ -51,6 +51,8 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
 
         public NextReminderNotifier()
         {
+            Log.Logger.Information($"Creating NextReminderNotifier");
+
             NextReminderTimer = new Timer();
             NextReminderTimer.Enabled = false;
             NextReminderTimer.AutoReset = false;
@@ -58,6 +60,9 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
 
             ActiveSortedReminders = new List<ReminderEntity>();
             isEnabled = false;
+
+            Log.Logger.Information($"Creating NextReminderNotifier done");
+
         }
 
         private void HandleStatusChange(bool wasEnabledBefore)
@@ -84,6 +89,8 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
 
         private void NextReminderTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
+            Log.Logger.Information("Processing Next reminder elapsed timer event in NextReminderNotifier.");
+
             if (!isEnabled)
             {
                 //not expected to happen, but may be the result of some unexpected edge case
@@ -97,10 +104,12 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
             if (!ValidateReminderElapsed(elapsedReminder, now))
             {
                 //not expected to happen, but may be the result of some unexpected edge case
-                Log.Logger.Error("Elapsed reminder is in invalid state (it is null, or scheduled in the future, or already dismissed). Attemting Recovery mechanism.");
+                Log.Logger.Error("Elapsed reminder is in invalid state in NextReminderNotifier (it is null, or scheduled in the future, or already dismissed). Attemting Recovery mechanism.");
                 Recovery(now);
                 return;
             }
+
+            Log.Logger.Information("Elapsed Reminder is valid, firing OnReminderElapsed event so that it can be added to elapsed reimnders list");
 
             //Add reminder to list of elapsed reminders
             OnReminderElapsed(elapsedReminder, now);
@@ -111,6 +120,8 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
             //Dismissing operation will put repeatable reminder in list again (with new ScheduledTime) by triggering UpdateReminderList via persistence adapter.
 
             //TODO: should snooze somehow put it in this list or UI manager should handle that itself? Reminder schedule change for snooze purposes would its information regarding real scheduled time. Also adding reminder for snoozing to this list would trigger adding all other reminders to the list.
+
+            Log.Logger.Information("Processing Next reminder elapsed timer event in NextReminderNotifier done.");
         }
 
         protected virtual bool ValidateReminderElapsed(ReminderEntity reminder, DateTime now)
@@ -137,10 +148,8 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
             TryToScheduleNextReminder(now);
         }
 
-
         protected virtual void OnReminderElapsed(ReminderEntity reminder, DateTime now)
         {
-            Log.Logger.Information("Reminder elapsed. It can be added to elapsed reminders list.");
             ReminderElapsed?.Invoke(reminder);
         }
 
@@ -150,8 +159,6 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
         /// <param name="upToDateReminders"></param>
         public void UpdateReminderList(IList<ReminderEntity> upToDateReminders)
         {
-            Log.Logger.Information("Updating list of reminders in ReminderScheduler");
-
             DateTime now = DateTime.UtcNow; //good to be constant in a variable during this analysis in method so that it doesn't change during analysis. It could make some kind of timer deadlock where timer would never ring.
 
             //pause timer util we decide when should it ring again so that it does not make conccurency issues while we are changing the list
@@ -169,8 +176,6 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
             {
                 TryToScheduleNextReminder(now);
             }
-
-            Log.Logger.Information("Updating list of reminders in ReminderScheduler done");
         }
 
         protected virtual List<ReminderEntity> CloneAndSortOnlyActiveReminders(IList<ReminderEntity> allReminders)

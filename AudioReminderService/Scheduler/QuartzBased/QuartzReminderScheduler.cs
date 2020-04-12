@@ -100,6 +100,11 @@ namespace AudioReminderService.Scheduler.QuartzBased
         {
             throw new NotImplementedException();
         }
+
+        public bool IsOkToModifyReminder(string reminderName)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
     }
 }

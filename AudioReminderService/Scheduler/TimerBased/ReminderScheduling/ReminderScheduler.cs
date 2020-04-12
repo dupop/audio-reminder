@@ -14,15 +14,14 @@ using System.Timers;
 namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
 {
     //TODO: optimize later so that one dismiss does not cause recreating of all timers
-    //TODO: implement whole this class
     //TODO: draw detailed state diagram for all this...
     //TODO: check again if same timestamp is everwhere passed and used in complete algorightm to prevent contradicting situations that some condition is true and few lines later the same condition is false
-    //TODO: review loging in this and the 2 subclasses
     //TODO: subscribing to and handlign system clock changes, especially when we go back in time
     //TODO: add more unit tests, and plotting of methods as graph f(x) = y to find edge cases
     //TODO: check if quartz or other dependency have time calculation library
     //TODO: After e.g. 1 year of not using service shoud we show that all recuring reminders are missed?
     //TODO: Consider option of using sched + new TimeStamp, see datetime aritchmetic rules
+    //TODO: review logging at method start and end after work is broken to threads
 
     class ReminderScheduler
     {
@@ -34,6 +33,8 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
 
         public ReminderScheduler()
         {
+            Log.Logger.Information($"Creating ReminderScheduler");
+
             IsEnabled = false;
 
             NextReminderNotifier = new NextReminderNotifier();
@@ -43,15 +44,13 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
             UserInteractionManager.RingingNeeded += OnRingingNeeded;
 
             NextReminderNotifier.IsEnabled = true;
+
+            Log.Logger.Information($"Creating ReminderScheduler done");
         }
 
         protected void OnRingingNeeded(string reminderName)
         {
-            Log.Logger.Information("ReminderScheduler triggering a ring");
-
             RingingNeeded?.Invoke(reminderName);
-
-            Log.Logger.Information("ReminderScheduler triggering a ring done");
         }
 
         public void Start()
@@ -71,7 +70,7 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
             IsEnabled = true;
 
             NextReminderNotifier.IsEnabled = true;
-            //UserInteractionManager.IsEnabled = true; //Enabled this component when it is ready
+            UserInteractionManager.IsEnabled = true;
 
             Log.Logger.Information("Starting ReminderScheduler done");
         }
@@ -95,14 +94,6 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
             Log.Logger.Information("Stopping ReminderScheduler done");
         }
 
-        public void UpdateReminderList(IList<ReminderEntity> upToDateReminders)
-        {
-            //TODO: maybe choose here only appropriate data for both
-
-            NextReminderNotifier.UpdateReminderList(upToDateReminders);
-            UserInteractionManager.UpdateReminderList(upToDateReminders);
-        }
-
         public void DismissReminder(ReminderEntity reminderEntity)
         {
             UserInteractionManager.DismissReminder(reminderEntity);
@@ -111,6 +102,22 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
         public void SnoozeReminder(ReminderEntity reminderEntity)
         {
             UserInteractionManager.SnoozeReminder(reminderEntity);
+        }
+
+        public void UpdateReminderList(IList<ReminderEntity> upToDateReminders)
+        {
+            //TODO: maybe choose here only appropriate data for both
+
+            NextReminderNotifier.UpdateReminderList(upToDateReminders);
+            //UserInteractionManager.UpdateReminderList(upToDateReminders);
+        }
+
+        /// <summary>
+        /// Returns false when reminder is elapsed but not yet dismissed
+        /// </summary>
+        public bool IsOkToModifyReminder(string reminderName)
+        {
+            return UserInteractionManager.IsOkToModifyReminder(reminderName);
         }
 
         public virtual void ConfigureSnooze(bool snoozeEnabled, int snoozeIntervalMinutes)
