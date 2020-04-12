@@ -11,6 +11,8 @@ using System.Timers;
 
 namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
 {
+    //TODO: log all state changes
+
     /// <summary>
     /// Keeps track of list of already elapsed timers and what reminders are currently shown to user, how and if he responded and which of the elapsed reminders should be additionaly shown
     /// </summary>
@@ -95,31 +97,46 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
                 return;
             }
 
-            if (userState == ReminderSchedulerState.NoElapsedReminders)
+            switch (userState)
             {
-                //start ringing
-                OnRingingNeeded(reminder.Name, now);
-                //TODO: we should start snooze timer here, or even before that a timer for turning off the noise of this reminder after e.g. 1 min?
+                case ReminderSchedulerState.NoElapsedReminders:
 
-                userState = ReminderSchedulerState.WaitingUserResponse;
-            }
-            else //WaitingUserResponse
-            {
-                //TODO: what to do when another event comes but previous is not yet handled by the user?
+                    //start ringing
+                    GoToRingingState(reminder.Name, now);
+                    break;
+                case ReminderSchedulerState.WaitingUserResponse:
+                    //ignoring next reminder until previous remidner is handled
+                    //what to do when another event comes but previous is not yet handled by the user - just show them one by one, when handling previous is over, or update this one to show all?
+                    break;
+                case ReminderSchedulerState.SnoozeTime:
+                    //ignoring next reminder until previous remidner is handled
+                    //TODO: force showing of both reminders in the same form window? (forcing showing them one by one would be confusing as we don't respect snooze interval, and user is not aware that behing this reminder is another (potentially with higher priority))
+                    break;
             }
         }
 
 
-        protected void OnRingingNeeded(string reminderName, DateTime now)
+        protected void GoToRingingState(string reminderName, DateTime now)
         {
-            Log.Logger.Information("ReminderScheduler triggering a ring");
+            Log.Logger.Information("ReminderScheduler triggering a ringing");
 
+            //TODO:  should we start snooze timer here, or even before that a timer for turning off the noise of this reminder after e.g. 1 min of no response from user?
+            userState = ReminderSchedulerState.WaitingUserResponse;
             LastReminderRinging = now;
-            RingingNeeded?.Invoke(reminderName);
 
-            Log.Logger.Information("ReminderScheduler triggering a ring done");
+            OnRingingNeeded(reminderName);
+
+            Log.Logger.Information("ReminderScheduler triggering a ringing done");
         }
 
+        protected virtual void OnRingingNeeded(string reminderName)
+        {
+            RingingNeeded?.Invoke(reminderName);
+        }
+
+        //todo: all these return statements are risky, they prevent the only chance for the user the make next step and don't give him another chance. e.g. if snooze feautre is disabled while ringing form is open, and than user clicks snooze
+        //todo: disable, even better hide snooze button if that feature is disabled, we will probably need to handle closing the form as dismiss, not snooze
+        //todo: validation if reminders as paramters to dismiss and snooze, are indeed excepted (or we first expect some other), or just remove them (less safe)
         public void DismissReminder(ReminderEntity reminderEntity)
         {
             DateTime now = DateTime.UtcNow;
@@ -131,7 +148,7 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
             }
 
             // Protection of some kind of double dismis request (maybe by multiple ringing windows or something else) that would cause next occurance of reminder to be skipped
-            if (!new ElapsedReminderValidator().ValidateReminderShouldBeRinging(reminderEntity, now))
+            if (!ValidateReminderShouldBeRinging(reminderEntity, now))
             {
                 return;
             }
@@ -149,11 +166,36 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
 
             LastReminderDismissing = now;
 
-            //TODO: check if there are more reminder in the list to be started immediately?
+            ElapsedActiveReminders.Remove(reminderEntity);
 
-            //WaitingReminderUserResponse = false;//userState != ReminderSchedulerState.NoElapsedReminders //TODO: state change to be done in UpdateReminderList if it was triggered from this method
+            //TODO: test this - we are here potenitally calling ringer again before response for Dismissing is returned.
+            GoToRingingOrIdleState(now);
 
-            FilePersistenceAdapters.RemiderFilePersistence.OnEntitesChanged(); //indirectly also triggers UpdateReminderList on this object, and that will retrigger timer if there are still active timers
+            //indirectly also triggers UpdateReminderList on this object //TODO: what are effects of that, probably none?
+            //TODO: immediate notifying of this change to NextReminderNOtifier is not needed. Should it be prevented or it produces no harm, as it only gives us duplicate reminders here?
+            FilePersistenceAdapters.RemiderFilePersistence.OnEntitesChanged();
+        }
+
+        protected virtual bool ValidateReminderShouldBeRinging(ReminderEntity reminderEntity, DateTime now)
+        {
+            return new ElapsedReminderValidator().ValidateReminderShouldBeRinging(reminderEntity, now);
+        }
+
+        /// <summary>
+        /// Immediately fires next event if there is any reminder in the list, or goes to NoElapsedReminders state otherwise.
+        /// </summary>
+        protected virtual void GoToRingingOrIdleState(DateTime now)
+        {
+            if (ElapsedActiveReminders.Any())
+            {
+                var nextToRing = ElapsedActiveReminders.First();
+
+                GoToRingingState(nextToRing.Name, now);
+            }
+            else
+            {
+                userState = ReminderSchedulerState.NoElapsedReminders;
+            }
         }
 
         public void SnoozeReminder(ReminderEntity reminderEntity)
@@ -178,23 +220,50 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
                 return;
             }
 
-            //TODO: do we need any implementation regarding this at all, should we maybe keep status DialogShown, and not show again for some time if there is no (at least) snooze response?
-            //AudioReminderService.ReminderScheduler.OnReminderSnoozed(reminderEntity);
+            GoToSnoozeState(now);
+        }
+
+        protected virtual void GoToSnoozeState(DateTime now, int? customSnoozeIntervalMs = null)
+        {
+            userState = ReminderSchedulerState.SnoozeTime;
             LastReminderSnoozing = now;
-            //WaitingReminderUserResponse = false; //TODO: state change to be done in UpdateReminderList if it was triggered from this method
 
-            int intervalMs = SnoozeIntervalMinutes.Value * 60 * 1000;
-            SnoozeTimer.Interval = intervalMs;
-            Log.Logger.Information($"Starting timer with intveral [Interval = {intervalMs} ms] for snooze purpose");
+            //determine interval
+            int configuredIntervalMs = SnoozeIntervalMinutes.Value * 60 * 1000;
+            int snoozeIntervalToUse = customSnoozeIntervalMs ?? configuredIntervalMs;
+
+            //start timer
+            SnoozeTimer.Interval = snoozeIntervalToUse;
+            Log.Logger.Information($"Starting snooze timer with intveral [Interval = {snoozeIntervalToUse} ms]");
             SnoozeTimer.Start();
-
-            FilePersistenceAdapters.RemiderFilePersistence.OnEntitesChanged(); //indirectly also  triggers UpdateReminderList on this object
         }
 
         protected virtual void SnoozeTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            //TODO: handle
-            throw new NotImplementedException();
+            DateTime now = DateTime.UtcNow;
+            HandleSnoozeElapsed(now);
+        }
+
+        protected virtual void HandleSnoozeElapsed(DateTime now)
+        {
+            if (userState != ReminderSchedulerState.SnoozeTime)
+            {
+                //only expected to happen as a result of not well handled concurrency
+                //this may put component in a deadlock probably! Will disable+enabled unblock the state?
+                Log.Logger.Error($"UserState is {userState} instead of {ReminderSchedulerState.SnoozeTime} after snooze period elapsed. Ignoring timer event.");
+                return;
+            }
+
+            var nextReminderToRing = ElapsedActiveReminders.FirstOrDefault();
+            if (nextReminderToRing == null)
+            {
+                //only expected to happen as a result of not well handled concurrency
+                Log.Logger.Error($"No reminder found after snooze period elapsed. Going to {ReminderSchedulerState.NoElapsedReminders} state.");
+                userState = ReminderSchedulerState.NoElapsedReminders;
+                return;
+            }
+
+            GoToRingingState(nextReminderToRing.Name, now);
         }
 
         /// <summary>
@@ -209,7 +278,7 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
 
             int minTimerLength = 1;//Timer can't handle 0 ms. 0 ms could be result of rounding from ticks to miliseconds
 
-#warning //TODO: just a mock alogirhtm, a correct one is neede here! implement this from LastReminderRinging,LastReminderDismissing,
+            //TODO: just a mock alogirhtm, a correct one is neede here! implement this from LastReminderRinging,LastReminderDismissing,
             //LastReminderSnoozing. We sould probably not ring again at all until we get at least snooze response, but on the other
             //hand some sanity check would be good because ringer maybe got stuck so we should try another ring so that next important events are not missed?
             bool isUserAlreadyAnnoyedTooMuchRecently = LastReminderRinging != null && now - LastReminderRinging < snoozeInterval;
@@ -235,6 +304,9 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
         public virtual void ConfigureSnooze(bool snoozeEnabled, int snoozeIntervalMinutes)
         {
             int? oldSnoozeInterval = SnoozeIntervalMinutes;
+            SnoozeTimer.Stop(); //preventing concurrency issues, we will restart it again if state was indeed SnoozeTime
+
+            DateTime now = DateTime.UtcNow;
 
             if (snoozeEnabled)
             {
@@ -255,10 +327,33 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
 
             bool snoozeIntervalChanged = oldSnoozeInterval != SnoozeIntervalMinutes;
 
-            if (snoozeIntervalChanged && userState == ReminderSchedulerState.WaitingUserResponse)
+            if (snoozeIntervalChanged && userState == ReminderSchedulerState.SnoozeTime)
             {
-                //TODO: react on snooze interval change while snooze value is actively bein used
+                if (SnoozeIntervalMinutes == null)
+                {
+                    GoToRingingOrIdleState(now);
+                }
+                else
+                {
+                    //uses new snoose interval while recalculating the remaining time
+                    int remainingSnoozeTimeMs = CalculateRemainingSnoozeTime(now);
+
+                    GoToSnoozeState(now, remainingSnoozeTimeMs);
+                }
             }
+        }
+
+        protected virtual int CalculateRemainingSnoozeTime(DateTime now)
+        {
+            TimeSpan alreadyElapsedTime = now - LastReminderSnoozing.Value; //nullcehck for additional robustness?
+            int alreadyElapsedTimeMs = (int)alreadyElapsedTime.TotalMilliseconds;
+
+            int snoozePeriodMs = SnoozeIntervalMinutes.Value * 60 * 1000;
+
+            const int minimalTimerIntervalMs = 1; //timer can't handle 0ms or negative value
+
+            int remainingSnoozeTimeMs = Math.Max(snoozePeriodMs - alreadyElapsedTimeMs, minimalTimerIntervalMs);
+            return remainingSnoozeTimeMs;
         }
 
         //TODO: providte functionallity to run immediately all snooze reminders, not to bother user later with them
