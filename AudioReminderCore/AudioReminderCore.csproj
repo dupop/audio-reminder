@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientProxies\AudioReminderWebServiceClient.cs" />
+    <Compile Include="FilePathHelper.cs" />
     <Compile Include="Interfaces\IAudioReminderService.cs" />
     <Compile Include="Interfaces\IPersistenceAdapter.cs" />
     <Compile Include="Interfaces\IReminderRinging.cs" />

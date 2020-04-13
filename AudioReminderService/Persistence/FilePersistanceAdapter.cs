@@ -1,4 +1,5 @@
-﻿using AudioReminderCore.Model;
+﻿using AudioReminderCore;
+using AudioReminderCore.Model;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -81,7 +82,7 @@ namespace AudioReminderService.Persistence
 
         protected string GetFilePath()
         {
-            string serviceDir = AppDomain.CurrentDomain.BaseDirectory; //TODO: extract both occuranecs of this
+            string serviceDir = FilePathHelper.FindDirectory();
             string persistenceSubDir = "persistence";
             string peristenceDir = Path.Combine(serviceDir, persistenceSubDir);
 
