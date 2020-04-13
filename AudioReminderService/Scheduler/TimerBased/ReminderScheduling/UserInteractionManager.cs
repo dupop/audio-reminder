@@ -23,7 +23,7 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
         protected bool isEnabled;
 
         /// <summary>
-        /// Is making more ringing enabled     //TODO: more precise defintion   <--- this is realted to actually implementing this feature
+        /// Is making more ringing enabled     //TODO: more precise defintion   <--- this is realted to actually implementing this feature, we need to preoperly combine this with UserState somehow 
         /// </summary>
         public bool IsEnabled 
         {

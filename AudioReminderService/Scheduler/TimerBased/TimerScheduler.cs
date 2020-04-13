@@ -123,7 +123,6 @@ namespace AudioReminderService.Scheduler.TimerBased
 
         protected void OnReminderTimeUp(string reminderName)
         {
-            Log.Logger.Information($"TimerScheduler firing ReminderTimeUp event for [name = {reminderName}]");
             ReminderTimeUp?.Invoke(reminderName);
         }
         #endregion
