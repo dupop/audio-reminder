@@ -64,7 +64,7 @@ namespace AudioReminderCore.Model
 
         public bool IsRepeatable()
         {
-            return RepeatPeriod == RepeatPeriod.NoRepeat;
+            return RepeatPeriod != RepeatPeriod.NoRepeat;
         }
 
         public override string ToString()
