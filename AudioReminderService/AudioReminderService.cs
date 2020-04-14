@@ -2,7 +2,7 @@
 using AudioReminderCore.Model;
 using AudioReminderService.Persistence;
 using AudioReminderService.RingerCalling;
-using AudioReminderService.ReminderScheduler;
+using AudioReminderService.Scheduler;
 using AudioReminderService.WebService;
 using GlobalHotKey;
 using Serilog;
@@ -19,63 +19,77 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
+using AudioReminderService.Scheduler.TimerBased;
 
 namespace AudioReminderService
 {
     public partial class AudioReminderService : ServiceBase
     {
         AudioReminderWebserviceHost webServiceHost;
-        IReminderScheduler scheduler;
+        public static IReminderScheduler scheduler; //TODO: make non-static if possible, persistence also
 
         public AudioReminderService()
         {
-            InitializeComponent();
-            webServiceHost = new AudioReminderWebserviceHost();
-            scheduler = new TimerReminderScheduler();
+            LoggingHelper.RunWithExceptionLogging(InitializeService);
         }
 
         protected override void OnStart(string[] args)
         {
-            Log.Logger.Information("Service starting");
-
-            Log.Logger.Information("Starting file persistence");
-            FilePersistenceAdapters.Start();
-
-            Log.Logger.Information("QuartzWrapper will start listening to changes of reminder entities");
-            FilePersistenceAdapters.RemiderFilePersistence.EntitiesChanged += () => scheduler.UpdateReminderList(FilePersistenceAdapters.RemiderFilePersistence.Entities);
-
-            Log.Logger.Information("Updating list of reminders in QuartzWrapper");
-            scheduler.UpdateReminderList(FilePersistenceAdapters.RemiderFilePersistence.Entities);
-            scheduler.OnReminderTimeup += RingingCaller.RingReminder;
-            scheduler.OnBeeperTimeUp += RingingCaller.RingBeep;
-
-            Log.Logger.Information("Starting webservice");
-            webServiceHost.Start();
-
-            Log.Logger.Information("Starting QuartzWrapper");
-            scheduler.Start();
-            
-            //TODO: really use settings given from UI
-
-            Log.Logger.Information("Service starting done");
+            //exceptions thrown during servcie starting (and probably stopping) are not catched by try-catch from Main method
+            LoggingHelper.RunWithExceptionLogging(StartService);
         }
 
         protected override void OnStop()
         {
+            LoggingHelper.RunWithExceptionLogging(StopService);
+        }
+
+
+        protected virtual void InitializeService()
+        {
+            Log.Logger.Information("Service initalizing");
+
+            InitializeComponent();
+            webServiceHost = new AudioReminderWebserviceHost();
+            scheduler = new TimerScheduler();
+
+            Log.Logger.Information("Service initalizing done");
+        }
+
+        protected virtual void StartService()
+        {
+            Log.Logger.Information("Service starting");
+
+            FilePersistenceAdapters.Start();
+
+            Log.Logger.Information("Scheduler will start listening to changes of reminder entities");
+            FilePersistenceAdapters.RemiderFilePersistence.EntitiesChanged += () => scheduler.UpdateReminderList(FilePersistenceAdapters.RemiderFilePersistence.Entities);
+            FilePersistenceAdapters.SettingsFilePersistence.EntitiesChanged += () => scheduler.UpdateSettings(FilePersistenceAdapters.SettingsFilePersistence.Entities[0]);
+
+            scheduler.UpdateSettings(FilePersistenceAdapters.SettingsFilePersistence.Entities[0]);
+            scheduler.UpdateReminderList(FilePersistenceAdapters.RemiderFilePersistence.Entities);
+            scheduler.ReminderTimeUp += RingingCaller.RingReminder;
+            scheduler.BeeperTimeUp += RingingCaller.RingBeep;
+
+            webServiceHost.Start();
+
+            scheduler.Start();
+
+            Log.Logger.Information("Service starting done");
+        }
+
+        protected virtual void StopService()
+        {
             Log.Logger.Information("Service stopping");
 
-            Log.Logger.Information("Stopping QuartzWrapper");
             scheduler.Stop();
 
-            Log.Logger.Information("Stopping webservice");
             webServiceHost.Stop();
 
-            Log.Logger.Information("Stopping persistence");
             FilePersistenceAdapters.Stop();
 
             Log.Logger.Information("Service stopping done");
         }
 
-        
     }
 }

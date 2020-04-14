@@ -15,17 +15,25 @@ namespace AudioReminderService.WebService
 {
     class AudioReminderWebservice : IAudioReminderService
     {
-        public void Delete(string reminderName)
+        public bool Delete(string reminderName)
         {
-            Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called [reminderName = {reminderName}]");
+            Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\" [reminderName = {reminderName}]");
+
+
+            if (!AudioReminderService.scheduler.IsOkToModifyReminder(reminderName)) //TODO put nullcheck somwhere
+            {
+                return false;
+            }
 
             FilePersistenceAdapters.RemiderFilePersistence.Entities.RemoveAll(reminder => reminder.Name == reminderName);
-            FilePersistenceAdapters.RemiderFilePersistence.TriggerEntitesChangedEvent();
+            FilePersistenceAdapters.RemiderFilePersistence.OnEntitesChanged();
+
+            return true;
         }
 
         public ReminderEntity Load(string reminderName)
         {
-            Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called [reminderName = {reminderName}]");
+            Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\" [reminderName = {reminderName}]");
 
             ReminderEntity reminderWithThisName = FilePersistenceAdapters.RemiderFilePersistence.Entities.FirstOrDefault(r => r.Name == reminderName);
 
@@ -34,75 +42,82 @@ namespace AudioReminderService.WebService
 
         public ReminderEntity[] LoadAll()
         {
-            Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called");
+            Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\"");
 
             return FilePersistenceAdapters.RemiderFilePersistence.Entities.ToArray();
         }
 
-        public ServiceSettingsDto LoadSettings()
+        public ServiceSettingsEntity LoadSettings()
         {
-            Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called");
+            Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\"");
 
             return FilePersistenceAdapters.SettingsFilePersistence.Entities.First();
         }
 
         public void Save(ReminderEntity createdReminder)
         {
-            Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called [Name = {createdReminder?.Name}]");
+            Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\" [Name = {createdReminder?.Name}]");
 
             FilePersistenceAdapters.RemiderFilePersistence.Entities.Add(createdReminder);
-            FilePersistenceAdapters.RemiderFilePersistence.TriggerEntitesChangedEvent();
+            FilePersistenceAdapters.RemiderFilePersistence.OnEntitesChanged();
         }
 
-        public void Update(string reminderOldName, ReminderEntity reminder)
+        public bool Update(string reminderOldName, ReminderEntity reminder)
         {
-            Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called [reminderOldName = {reminderOldName}]");
+            Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\" [reminderOldName = {reminderOldName}]");
+
+            if (!AudioReminderService.scheduler.IsOkToModifyReminder(reminder.Name)) //TODO put nullcheck somwhere
+            {
+                return false;
+            }
 
             //remove old reminder and add updated one
             FilePersistenceAdapters.RemiderFilePersistence.Entities.RemoveAll(r => r.Name == reminderOldName);
             FilePersistenceAdapters.RemiderFilePersistence.Entities.Add(reminder);
 
-            FilePersistenceAdapters.RemiderFilePersistence.TriggerEntitesChangedEvent();
+            FilePersistenceAdapters.RemiderFilePersistence.OnEntitesChanged();
+
+            return true;
         }
 
-        public void UpdateSettings(ServiceSettingsDto settings)
+        public void UpdateSettings(ServiceSettingsEntity settings)
         {
-            Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called");
+            Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\"");
 
             FilePersistenceAdapters.SettingsFilePersistence.Entities.Clear();
             FilePersistenceAdapters.SettingsFilePersistence.Entities.Add(settings);
+
+            FilePersistenceAdapters.SettingsFilePersistence.OnEntitesChanged();
         }
 
         public void DismissReminder(string reminderName)
         {
-            Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called [reminderName = {reminderName}]");
+            Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\" [reminderName = {reminderName}]");
 
             ReminderEntity reminderWithThisName = FilePersistenceAdapters.RemiderFilePersistence.Entities.FirstOrDefault(r => r.Name == reminderName);
 
-            reminderWithThisName.Dismissed = true;
-            FilePersistenceAdapters.RemiderFilePersistence.TriggerEntitesChangedEvent();
+            AudioReminderService.scheduler.DismissReminder(reminderWithThisName);
         }
 
         public void SnoozeReminder(string reminderName)
         {
-            Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called [reminderName = {reminderName}]");
+            Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\" [reminderName = {reminderName}]");
 
             ReminderEntity reminderWithThisName = FilePersistenceAdapters.RemiderFilePersistence.Entities.FirstOrDefault(r => r.Name == reminderName);
 
-            //TODO: do we need any implementation regarding this at all, should we maybe keep status DialogShown, and not show again for some time if there is no (at least) snooze response?
-            FilePersistenceAdapters.RemiderFilePersistence.TriggerEntitesChangedEvent();
+            AudioReminderService.scheduler.SnoozeReminder(reminderWithThisName);
         }
 
         public void TestRinging()
         {
-            Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called");
+            Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\"");
 
             RingingCaller.RingReminderTest();
         }
 
         public void TestBeeper()
         {
-            Log.Logger.Information($"Webservice \"{MethodBase.GetCurrentMethod().Name}\" operation called");
+            Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\"");
 
             RingingCaller.RingBeep();
         }

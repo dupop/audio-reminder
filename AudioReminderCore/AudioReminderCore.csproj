@@ -58,9 +58,10 @@
     <Compile Include="Interfaces\IServiceSettingsEntityProvider.cs" />
     <Compile Include="LoggingHelper.cs" />
     <Compile Include="LoggerInitializer.cs" />
+    <Compile Include="Model\RepeatPeriod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\ReminderEntity.cs" />
-    <Compile Include="Model\ServiceSettingsDto.cs" />
+    <Compile Include="Model\ServiceSettingsEntity.cs" />
     <Compile Include="NamedPipeHelper.cs" />
     <Compile Include="WebserviceAdressHelper.cs" />
   </ItemGroup>

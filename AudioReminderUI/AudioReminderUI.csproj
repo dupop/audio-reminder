@@ -64,14 +64,6 @@
       <DependentUpon>CreateReminderForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ErrorDialogUtility.cs" />
-    <Compile Include="EventsDataSet.cs">
-      <DependentUpon>EventsDataSet.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="EventsDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EventsDataSet.xsd</DependentUpon>
-    </Compile>
     <Compile Include="PersistenceAdapter.cs" />
     <Compile Include="HotKeyListener.cs" />
     <Compile Include="MainMenuForm.cs">
@@ -116,17 +108,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="EventsDataSet.xsc">
-      <DependentUpon>EventsDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="EventsDataSet.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>EventsDataSet.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="EventsDataSet.xss">
-      <DependentUpon>EventsDataSet.xsd</DependentUpon>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

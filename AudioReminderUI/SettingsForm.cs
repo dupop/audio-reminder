@@ -30,7 +30,7 @@ namespace AudioReminderUI
 
         private void okButton_Click(object sender, EventArgs e)
         {
-            var settings = CreateServiceSettingsDto();
+            var settings = CreateServiceSettingsEntity();
             
             PersistenceAdapter.UpdateSettings(settings);
 
@@ -39,9 +39,9 @@ namespace AudioReminderUI
         }
 
 
-        protected virtual ServiceSettingsDto CreateServiceSettingsDto()
+        protected virtual ServiceSettingsEntity CreateServiceSettingsEntity()
         {
-           var settings = new ServiceSettingsDto()
+           var settings = new ServiceSettingsEntity()
             {
                 AutoStartService = autostartEnabledCheckbox.Checked,
                 ServiceEnabled = serviceEnabledcheckBox.Checked,
@@ -54,7 +54,7 @@ namespace AudioReminderUI
             return settings;
         }
 
-        protected virtual void DisplaySettingsFromDto(ServiceSettingsDto settings)
+        protected virtual void DisplaySettingsFromDto(ServiceSettingsEntity settings)
         {
             autostartEnabledCheckbox.Checked = settings.AutoStartService;
             serviceEnabledcheckBox.Checked = settings.ServiceEnabled;

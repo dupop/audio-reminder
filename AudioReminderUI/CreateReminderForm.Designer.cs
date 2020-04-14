@@ -32,7 +32,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.repeatWeeklyCheckBox = new System.Windows.Forms.CheckBox();
             this.repeatYearlyCheckBox = new System.Windows.Forms.CheckBox();
-            this.scheduledTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.scheduledDatePicker = new System.Windows.Forms.DateTimePicker();
             this.repeatMonthlyCheckBox = new System.Windows.Forms.CheckBox();
             this.repeatWeeklyCheckedListBox = new System.Windows.Forms.CheckedListBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -84,13 +84,13 @@
             this.repeatYearlyCheckBox.Text = "Repeat yearly";
             this.repeatYearlyCheckBox.UseVisualStyleBackColor = true;
             // 
-            // scheduledTimePicker
+            // scheduledDatePicker
             // 
-            this.scheduledTimePicker.AccessibleName = "Date of first occurance";
-            this.scheduledTimePicker.Location = new System.Drawing.Point(13, 77);
-            this.scheduledTimePicker.Name = "scheduledTimePicker";
-            this.scheduledTimePicker.Size = new System.Drawing.Size(200, 20);
-            this.scheduledTimePicker.TabIndex = 1;
+            this.scheduledDatePicker.AccessibleName = "Date of first occurance";
+            this.scheduledDatePicker.Location = new System.Drawing.Point(13, 77);
+            this.scheduledDatePicker.Name = "scheduledDatePicker";
+            this.scheduledDatePicker.Size = new System.Drawing.Size(200, 20);
+            this.scheduledDatePicker.TabIndex = 1;
             // 
             // repeatMonthlyCheckBox
             // 
@@ -144,10 +144,11 @@
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(119, 306);
+            this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.okButton.Location = new System.Drawing.Point(187, 299);
             this.okButton.Margin = new System.Windows.Forms.Padding(2);
             this.okButton.Name = "okButton";
-            this.okButton.Size = new System.Drawing.Size(50, 23);
+            this.okButton.Size = new System.Drawing.Size(75, 23);
             this.okButton.TabIndex = 7;
             this.okButton.Text = "Ok";
             this.okButton.UseVisualStyleBackColor = true;
@@ -155,11 +156,12 @@
             // 
             // cancelButton
             // 
+            this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(185, 306);
+            this.cancelButton.Location = new System.Drawing.Point(266, 299);
             this.cancelButton.Margin = new System.Windows.Forms.Padding(2);
             this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(50, 23);
+            this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 8;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
@@ -205,7 +207,7 @@
             this.label2.TabIndex = 17;
             this.label2.Text = "Time";
             // 
-            // CreateReminderForm
+            // CreateAndUpdateReminderForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -219,11 +221,11 @@
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.scheduledTimePicker);
+            this.Controls.Add(this.scheduledDatePicker);
             this.Controls.Add(this.repeatYearlyCheckBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.reminderNameStringBox);
-            this.Name = "CreateReminderForm";
+            this.Name = "CreateAndUpdateReminderForm";
             this.Text = "CreateReminderForm";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -240,7 +242,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox repeatWeeklyCheckBox;
         private System.Windows.Forms.CheckBox repeatYearlyCheckBox;
-        private System.Windows.Forms.DateTimePicker scheduledTimePicker;
+        private System.Windows.Forms.DateTimePicker scheduledDatePicker;
         private System.Windows.Forms.CheckBox repeatMonthlyCheckBox;
         private System.Windows.Forms.CheckedListBox repeatWeeklyCheckedListBox;
         private System.Windows.Forms.GroupBox groupBox1;

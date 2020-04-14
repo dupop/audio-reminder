@@ -45,9 +45,9 @@ namespace AudioReminderCore.ClientProxies
 
 
         #region Proxy methods
-        public void Delete(string reminderName)
+        public bool Delete(string reminderName)
         {
-            Channel.Delete(reminderName);
+            return Channel.Delete(reminderName);
         }
 
         public ReminderEntity Load(string reminderName)
@@ -60,7 +60,7 @@ namespace AudioReminderCore.ClientProxies
             return Channel.LoadAll();
         }
 
-        public ServiceSettingsDto LoadSettings()
+        public ServiceSettingsEntity LoadSettings()
         {
             return Channel.LoadSettings();
         }
@@ -80,12 +80,12 @@ namespace AudioReminderCore.ClientProxies
             Channel.Save(createdReminder);
         }
 
-        public void Update(string reminderOldName, ReminderEntity reminder)
+        public bool Update(string reminderOldName, ReminderEntity reminder)
         {
-            Channel.Update(reminderOldName, reminder);
+            return Channel.Update(reminderOldName, reminder);
         }
 
-        public void UpdateSettings(ServiceSettingsDto settings)
+        public void UpdateSettings(ServiceSettingsEntity settings)
         {
             Channel.UpdateSettings(settings);
         }

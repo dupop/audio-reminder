@@ -47,7 +47,7 @@ namespace AudioReminderUI
             Log.Logger.Information($"Persisting reminder '{createdReminder.Name}' done");
         }
 
-        public virtual void Update(string reminderOldName, ReminderEntity reminder)
+        public virtual bool Update(string reminderOldName, ReminderEntity reminder)
         {
             if (reminder == null)
             {
@@ -57,9 +57,11 @@ namespace AudioReminderUI
 
             Log.Logger.Information($"Updating reminder '{reminder.Name}' ");
 
-            UpdateImplementation(reminderOldName, reminder);
+            bool result = UpdateImplementation(reminderOldName, reminder);
 
-            Log.Logger.Information($"Updating reminder '{reminder.Name}' done");
+            Log.Logger.Information($"Updating reminder '{reminder.Name}' done with result {result}");
+
+            return result;
         }
 
         public virtual ReminderEntity[] LoadAll()
@@ -72,13 +74,15 @@ namespace AudioReminderUI
             return reminders;
         }
 
-        public virtual void Delete(string reminderName)
+        public virtual bool Delete(string reminderName)
         {
             Log.Logger.Information($"Delting reminder '{reminderName}' ");
 
-            DeleteImplementation(reminderName);
+            bool result = DeleteImplementation(reminderName);
 
-            Log.Logger.Information($"Delting reminder '{reminderName}' done");
+            Log.Logger.Information($"Delting reminder '{reminderName}' done with result {result}");
+
+            return result;
         }
 
         public virtual ReminderEntity Load(string reminderName)
@@ -90,7 +94,7 @@ namespace AudioReminderUI
             return reminder;
         }
 
-        public virtual void UpdateSettings(ServiceSettingsDto settings)
+        public virtual void UpdateSettings(ServiceSettingsEntity settings)
         {
             if (settings == null)
             {
@@ -106,11 +110,11 @@ namespace AudioReminderUI
         }
 
 
-        public virtual ServiceSettingsDto LoadSettings()
+        public virtual ServiceSettingsEntity LoadSettings()
         {
             Log.Logger.Information($"Loading settings");
 
-            ServiceSettingsDto settings = LoadSettingsImplementation();
+            ServiceSettingsEntity settings = LoadSettingsImplementation();
 
             Log.Logger.Information($"Loading settings done");
             return settings;
@@ -131,7 +135,7 @@ namespace AudioReminderUI
 
             Proxy.TestBeeper();
 
-            Log.Logger.Information($"tarting beeper done");
+            Log.Logger.Information($"Starting beeper done");
         }
 
         protected virtual void SaveImplementation(ReminderEntity createdReminder)
@@ -139,9 +143,9 @@ namespace AudioReminderUI
             Proxy.Save(createdReminder);
         }
 
-        protected virtual void UpdateImplementation(string reminderOldName, ReminderEntity reminder)
+        protected virtual bool UpdateImplementation(string reminderOldName, ReminderEntity reminder)
         {
-            Proxy.Update(reminderOldName, reminder);
+            return Proxy.Update(reminderOldName, reminder);
         }
 
         protected virtual ReminderEntity[] LoadAllImplementation()
@@ -149,9 +153,9 @@ namespace AudioReminderUI
             return Proxy.LoadAll();
         }
 
-        protected virtual void DeleteImplementation(string reminderName)
+        protected virtual bool DeleteImplementation(string reminderName)
         {
-            Proxy.Delete(reminderName);
+            return Proxy.Delete(reminderName);
         }
 
         protected virtual ReminderEntity LoadImplementation(string reminderName)
@@ -159,12 +163,12 @@ namespace AudioReminderUI
             return Proxy.Load(reminderName);
         }
 
-        protected virtual ServiceSettingsDto LoadSettingsImplementation()
+        protected virtual ServiceSettingsEntity LoadSettingsImplementation()
         {
             return Proxy.LoadSettings();
         }
 
-        protected virtual void UpdateSettingsImplementation(ServiceSettingsDto settings)
+        protected virtual void UpdateSettingsImplementation(ServiceSettingsEntity settings)
         {
             Proxy.UpdateSettings(settings);
         }

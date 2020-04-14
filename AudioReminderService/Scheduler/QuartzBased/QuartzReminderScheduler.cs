@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 
-namespace AudioReminderService.ReminderScheduler
+namespace AudioReminderService.Scheduler.QuartzBased
 {
     class QuartzReminderScheduler : IReminderScheduler
     {
@@ -30,8 +30,8 @@ namespace AudioReminderService.ReminderScheduler
         //}
         #endregion
 
-        public event Action<string> OnReminderTimeup;
-        public event Action OnBeeperTimeUp;
+        public event Action<string> ReminderTimeUp;
+        public event Action BeeperTimeUp;
 
         #region Interface for controling Quartz
         public void Start()
@@ -68,22 +68,42 @@ namespace AudioReminderService.ReminderScheduler
 
 
         #region Callbacks for Quartz jobs
-        protected void RingReminder(string reminderName)
+        protected void OnReminderTimeup(string reminderName)
         {
             Log.Logger.Information("QuartzWrapper triggering a ring");
 
-            OnReminderTimeup?.Invoke(reminderName);
+            ReminderTimeUp?.Invoke(reminderName);
 
             Log.Logger.Information("QuartzWrapper triggering a ring done");
         }
 
-        protected void RingBeep()
+        protected void OnBeeperTimeUp()
         {
             Log.Logger.Information("QuartzWrapper triggering a beep");
 
-            OnBeeperTimeUp?.Invoke();
+            BeeperTimeUp?.Invoke();
 
             Log.Logger.Information("QuartzWrapper triggering a beep done");
+        }
+
+        public void DismissReminder(ReminderEntity reminder)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SnoozeReminder(ReminderEntity reminder)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateSettings(ServiceSettingsEntity serviceSettingsEntity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsOkToModifyReminder(string reminderName)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }

@@ -28,10 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.eventsTableBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.eventsDataSet = new AudioReminderUI.EventsDataSet();
-            this.eventsDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.okButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
@@ -47,31 +43,12 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.testRinging = new System.Windows.Forms.Button();
             this.testBeeper = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.eventsTableBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.eventsDataSet)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.eventsDataSetBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.snoozeIntervalNumbericBox)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.beepIntervalNumbericBox)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // eventsTableBindingSource
-            // 
-            this.eventsTableBindingSource.DataMember = "EventsTable";
-            this.eventsTableBindingSource.DataSource = this.eventsDataSet;
-            // 
-            // eventsDataSet
-            // 
-            this.eventsDataSet.DataSetName = "EventsDataSet";
-            this.eventsDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // eventsDataSetBindingSource
-            // 
-            this.eventsDataSetBindingSource.AllowNew = true;
-            this.eventsDataSetBindingSource.DataSource = this.eventsDataSet;
-            this.eventsDataSetBindingSource.Position = 0;
             // 
             // label1
             // 
@@ -84,10 +61,11 @@
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(118, 299);
+            this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.okButton.Location = new System.Drawing.Point(173, 310);
             this.okButton.Margin = new System.Windows.Forms.Padding(2);
             this.okButton.Name = "okButton";
-            this.okButton.Size = new System.Drawing.Size(53, 34);
+            this.okButton.Size = new System.Drawing.Size(75, 23);
             this.okButton.TabIndex = 8;
             this.okButton.Text = "Ok";
             this.okButton.UseVisualStyleBackColor = true;
@@ -95,11 +73,12 @@
             // 
             // cancelButton
             // 
+            this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(181, 299);
+            this.cancelButton.Location = new System.Drawing.Point(257, 310);
             this.cancelButton.Margin = new System.Windows.Forms.Padding(2);
             this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(53, 34);
+            this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 9;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
@@ -107,6 +86,9 @@
             // autostartEnabledCheckbox
             // 
             this.autostartEnabledCheckbox.AutoSize = true;
+            this.autostartEnabledCheckbox.Checked = true;
+            this.autostartEnabledCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.autostartEnabledCheckbox.Enabled = false;
             this.autostartEnabledCheckbox.Location = new System.Drawing.Point(4, 16);
             this.autostartEnabledCheckbox.Margin = new System.Windows.Forms.Padding(2);
             this.autostartEnabledCheckbox.Name = "autostartEnabledCheckbox";
@@ -118,6 +100,8 @@
             // serviceEnabledcheckBox
             // 
             this.serviceEnabledcheckBox.AutoSize = true;
+            this.serviceEnabledcheckBox.Checked = true;
+            this.serviceEnabledcheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.serviceEnabledcheckBox.Location = new System.Drawing.Point(4, 36);
             this.serviceEnabledcheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.serviceEnabledcheckBox.Name = "serviceEnabledcheckBox";
@@ -136,9 +120,19 @@
             0,
             0,
             0});
+            this.snoozeIntervalNumbericBox.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.snoozeIntervalNumbericBox.Name = "snoozeIntervalNumbericBox";
             this.snoozeIntervalNumbericBox.Size = new System.Drawing.Size(80, 20);
             this.snoozeIntervalNumbericBox.TabIndex = 5;
+            this.snoozeIntervalNumbericBox.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
             // 
             // label3
             // 
@@ -152,6 +146,8 @@
             // snoozeEnabledcheckBox
             // 
             this.snoozeEnabledcheckBox.AutoSize = true;
+            this.snoozeEnabledcheckBox.Checked = true;
+            this.snoozeEnabledcheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.snoozeEnabledcheckBox.Location = new System.Drawing.Point(7, 12);
             this.snoozeEnabledcheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.snoozeEnabledcheckBox.Name = "snoozeEnabledcheckBox";
@@ -267,9 +263,6 @@
             this.Name = "SettingsForm";
             this.Text = "Audio Reminder - Settings";
             this.Load += new System.EventHandler(this.SettingsForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.eventsTableBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.eventsDataSet)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.eventsDataSetBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.snoozeIntervalNumbericBox)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -283,9 +276,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.BindingSource eventsTableBindingSource;
-        private EventsDataSet eventsDataSet;
-        private System.Windows.Forms.BindingSource eventsDataSetBindingSource;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Button cancelButton;
