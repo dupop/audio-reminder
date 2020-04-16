@@ -47,6 +47,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="UnitTest1.cs" />
@@ -63,6 +64,10 @@
     <ProjectReference Include="..\AudioReminderService\AudioReminderService.csproj">
       <Project>{041e9405-7c2b-4156-bdc8-586f5e8a044a}</Project>
       <Name>AudioReminderService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AudioReminderUI\AudioReminderUI.csproj">
+      <Project>{28CD2815-61BE-4EB9-965F-1DD2385BF251}</Project>
+      <Name>AudioReminderUI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

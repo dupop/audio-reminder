@@ -1,6 +1,7 @@
 ﻿using System;
 using AudioReminderCore.Model;
 using AudioReminderService.Scheduler.TimerBased.DateTimeArithmetic;
+using AudioReminderUI;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AudioReminderUnitTests
@@ -36,6 +37,49 @@ namespace AudioReminderUnitTests
         {
             var actualnextOccurence = calc.GetNextReminderOccurence(weekly8am, now).Value;
             Assert.AreEqual(expectedNextOccurence, actualnextOccurence);
+        }
+
+        [TestMethod]
+        public void TestAnyChecked_WhenAllAreFalse()
+        {
+            //arange
+            bool[] repeatWeeklyDays = { false, false, false, false, false, false, false };
+            bool expectedResult = false;
+
+            //act
+            bool actualResult = CreateAndUpdateReminderForm.AnyChecked(repeatWeeklyDays);
+
+            //assert
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [TestMethod]
+        public void TestAnyChecked_WhenOneIsTrue()
+        {
+            //arange
+            bool[] repeatWeeklyDays = { true, false, false, false, false, false, false };
+            bool expectedResult = true;
+
+            //act
+            bool actualResult = CreateAndUpdateReminderForm.AnyChecked(repeatWeeklyDays);
+
+            //assert
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+
+        [TestMethod]
+        public void TestAnyChecked_WhenOneIsTrueOnAnotherPosition()
+        {
+            //arange
+            bool[] repeatWeeklyDays = { false, false, false, false, false, true, false };
+            bool expectedResult = true;
+
+            //act
+            bool actualResult = CreateAndUpdateReminderForm.AnyChecked(repeatWeeklyDays);
+
+            //assert
+            Assert.AreEqual(expectedResult, actualResult);
         }
     }
 }
