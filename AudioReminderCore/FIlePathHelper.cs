@@ -14,7 +14,7 @@ namespace AudioReminderCore
         /// <summary>
         /// Finds current program directory.
         /// </summary>
-       public static string FindDirectory()
+        public static string FindDirectory()
         {
             string programDirectory = AppDomain.CurrentDomain.BaseDirectory;
 

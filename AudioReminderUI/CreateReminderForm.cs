@@ -84,9 +84,9 @@ namespace AudioReminderUI
                     repeatWeeklyDays[checkedIndex] = true;
                 }
             }
-
-            //disable weekly flag if 0 days are selected
-            if (!repeatWeeklyDays.Any())
+            
+            ////disable weekly flag if 0 days are selected
+            if (AnyChecked(repeatWeeklyDays))
             {
                 repeatWeekly = false;
             }
@@ -102,6 +102,23 @@ namespace AudioReminderUI
             };
 
             return reminderEntity;
+        }
+
+
+        /// <summary>
+        /// Determines if any value in the array is true
+        /// </summary>
+        public static bool AnyChecked(bool[] repeatWeeklyDays)
+        {
+            //use operators see: https://softkorner.files.wordpress.com/2011/09/untitled.png
+            //use if, swtich, for, while, foreach,
+
+            if (Array.Exists(repeatWeeklyDays, element => element == true))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         protected virtual RepeatPeriod GetRepeatPeriod(bool repeatWeekly)
@@ -135,7 +152,7 @@ namespace AudioReminderUI
             //TODO: prohibit on UI possibility that user adds weekly recuring event, but sets first occurence in 3 years... or at least put warning
 
             string reminderName = reminderNameStringBox.Text;
-            bool reminderNameIsEmpty =  string.IsNullOrWhiteSpace(reminderName);
+            bool reminderNameIsEmpty = string.IsNullOrWhiteSpace(reminderName);
 
             if (reminderNameIsEmpty)
             {
@@ -144,7 +161,7 @@ namespace AudioReminderUI
             }
 
             bool nameSameAsBefore = oldValueOfReminderToBeUpdated?.Name == reminderName;
-            if(!nameSameAsBefore && !IsNameAvialable(reminderName))
+            if (!nameSameAsBefore && !IsNameAvialable(reminderName))
             {
                 ErrorDialogUtility.ErrorDialog("Reminder name already exists");
                 return false;
