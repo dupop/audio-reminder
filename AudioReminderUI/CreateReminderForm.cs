@@ -44,8 +44,6 @@ namespace AudioReminderUI
             hoursNumericBox.Value = scheduledLocalTime.Hour;
             minuteNumbericBox.Value = scheduledLocalTime.Minute;
 
-            repeatWeeklyCheckBox.Checked = reminderToUpdate.RepeatPeriod == RepeatPeriod.Weekly;
-
             for (int i = 0; i < 7; i++)
             {
                 repeatWeeklyCheckedListBox.SetItemCheckState(i, reminderToUpdate.RepeatWeeklyDays[i] ? CheckState.Checked : CheckState.Unchecked);
@@ -75,7 +73,7 @@ namespace AudioReminderUI
             DateTime scheduledDateTimeUtc = ConvertFromLocalToUtc(scheduledDateTime);
 
             //create bool array from the checkbox list
-            bool repeatWeekly = repeatWeeklyCheckBox.Checked;
+            bool repeatWeekly = true /*= repeatWeeklyCheckBox.Checked*/; //TODO SI->SI: fix this
             bool[] repeatWeeklyDays = new bool[7];
             if (repeatWeekly)
             {
