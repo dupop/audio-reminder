@@ -86,7 +86,7 @@ namespace AudioReminderUI
             }
             
             ////disable weekly flag if 0 days are selected
-            if (AnyChecked(repeatWeeklyDays))
+            if (!AnyChecked(repeatWeeklyDays))
             {
                 repeatWeekly = false;
             }
