@@ -44,15 +44,13 @@ namespace AudioReminderUI
             hoursNumericBox.Value = scheduledLocalTime.Hour;
             minuteNumbericBox.Value = scheduledLocalTime.Minute;
 
-            repeatWeeklyCheckBox.Checked = reminderToUpdate.RepeatPeriod == RepeatPeriod.Weekly;
-
             for (int i = 0; i < 7; i++)
             {
                 repeatWeeklyCheckedListBox.SetItemCheckState(i, reminderToUpdate.RepeatWeeklyDays[i] ? CheckState.Checked : CheckState.Unchecked);
             }
 
             repeatMonthlyCheckBox.Checked = reminderToUpdate.RepeatPeriod == RepeatPeriod.Monthly;
-            
+
             repeatYearlyCheckBox.Checked = reminderToUpdate.RepeatPeriod == RepeatPeriod.Yearly;
         }
 
@@ -75,21 +73,14 @@ namespace AudioReminderUI
             DateTime scheduledDateTimeUtc = ConvertFromLocalToUtc(scheduledDateTime);
 
             //create bool array from the checkbox list
-            bool repeatWeekly = repeatWeeklyCheckBox.Checked;
             bool[] repeatWeeklyDays = new bool[7];
-            if (repeatWeekly)
+            foreach (int checkedIndex in repeatWeeklyCheckedListBox.CheckedIndices)
             {
-                foreach (int checkedIndex in repeatWeeklyCheckedListBox.CheckedIndices)
-                {
-                    repeatWeeklyDays[checkedIndex] = true;
-                }
+                repeatWeeklyDays[checkedIndex] = true;
             }
             
-            ////disable weekly flag if 0 days are selected
-            if (!AnyChecked(repeatWeeklyDays))
-            {
-                repeatWeekly = false;
-            }
+            //disable weekly flag if 0 days are selected
+            bool repeatWeekly = AnyChecked(repeatWeeklyDays);
 
             RepeatPeriod repeatPeriod = GetRepeatPeriod(repeatWeekly);
 
@@ -110,21 +101,13 @@ namespace AudioReminderUI
         /// </summary>
         public static bool AnyChecked(bool[] repeatWeeklyDays)
         {
-            //use operators see: https://softkorner.files.wordpress.com/2011/09/untitled.png
-            //use if, swtich, for, while, foreach,
-
-            if (Array.Exists(repeatWeeklyDays, element => element == true))
-            {
-                return true;
-            }
-
-            return false;
+            return Array.Exists(repeatWeeklyDays, element => element == true);
         }
 
         protected virtual RepeatPeriod GetRepeatPeriod(bool repeatWeekly)
         {
             RepeatPeriod repeatPeriod;
-            
+
             if (repeatYearlyCheckBox.Checked)
             {
                 repeatPeriod = RepeatPeriod.Yearly;
@@ -175,7 +158,7 @@ namespace AudioReminderUI
         {
 
             bool nameAvialable = nameChecker.Load(reminderName) == null;
-            
+
             Log.Logger.Information($"Checking if reminder name '{reminderName}' is avialable done. Result is {nameAvialable}");
             return nameAvialable;
         }
