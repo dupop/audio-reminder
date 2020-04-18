@@ -18,9 +18,7 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
     //TODO: check again if same timestamp is everwhere passed and used in complete algorightm to prevent contradicting situations that some condition is true and few lines later the same condition is false
     //TODO: subscribing to and handlign system clock changes, especially when we go back in time
     //TODO: add more unit tests, and plotting of methods as graph f(x) = y to find edge cases
-    //TODO: check if quartz or other dependency have time calculation library
     //TODO: After e.g. 1 year of not using service shoud we show that all recuring reminders are missed?
-    //TODO: Consider option of using sched + new TimeStamp, see datetime aritchmetic rules
     //TODO: review logging at method start and end after work is broken to threads
 
     class ReminderScheduler
@@ -107,6 +105,9 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
             //TODO: maybe choose here only appropriate data for both
 
             NextReminderNotifier.UpdateReminderList(upToDateReminders);
+
+            //UserInteractionManager is indirectly updated from events of NextReminderNotifier. When a reminder is changed it will fire a new event for it. 
+            //TODO: update reminders in UserInteractionManager from events, don't just ignore duplicates
             //UserInteractionManager.UpdateReminderList(upToDateReminders);
         }
 
