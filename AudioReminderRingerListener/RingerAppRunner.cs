@@ -1,4 +1,5 @@
-﻿using Serilog;
+﻿using AudioReminderCore;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,7 +15,7 @@ namespace AudioReminderRingerListener
     {
         protected virtual string GetRingerFullFilePath()
         {
-            string serviceDir = AppDomain.CurrentDomain.BaseDirectory; //TODO: extract both occuranecs of this to PathHelper
+            string serviceDir = FilePathHelper.FindDirectory();
             string productDir = new DirectoryInfo(serviceDir).Parent.Parent.Parent.FullName; // TODO: possible no rights execption + null exceptions + etc
 
             //TODO: extract harcoded part somwhere

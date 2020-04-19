@@ -12,7 +12,7 @@ using System.Timers;
 namespace AudioReminderService.Scheduler.TimerBased
 {
     /// <summary>
-    /// Wrapper around Reminder and Beeper schedulers. Fires events for beeper and reminder time up. 
+    /// Wrapper around Reminder and Beeper schedulers. Fires events for beeper and reminder time up.
     /// Provides two controlling interfaces (EnabledByService and SchedulerEnabledInSettings) and handles their combinations.
     /// Provides means to update service settings, update reminders list and handle feedback from ringing.
     /// </summary>

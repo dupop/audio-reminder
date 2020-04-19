@@ -25,7 +25,7 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
 
         /// <summary>
         /// User interaction manager is enabled and Ringer already rang, but user didn't yet respond to the ringing.
-        /// Waiting for user to respond. //TODO: will should also be tracking maximum no-reaction time to elapse and do something
+        /// Waiting for user to respond.
         /// </summary>
         WaitingUserResponse,
 

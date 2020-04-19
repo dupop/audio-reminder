@@ -12,26 +12,25 @@ namespace AudioReminderService.Persistence
 {
     public class FilePersistenceAdapter<TEntity>
     {
-        //TODO: Add Valite method to TEntity so that we fix or remove incorrect entities after load from file
+        //TODO DP->SI: Add Validate method to TEntity so that we fix or remove incorrect entities after load from file
 
-        //sinelgton code
+        /*//sinelgton code
 
-        //private static FilePersistanceAdapter singleton;
+        private static FilePersistanceAdapter singleton;
 
-        //public static FilePersistanceAdapter Singleton => singleton ?? InitializeSingleton();
+        public static FilePersistanceAdapter Singleton => singleton ?? InitializeSingleton();
 
-        ///// <summary>
-        ///// Provides eager singleton initialization
-        ///// </summary>
-        ///// <returns></returns>
-        //public static FilePersistanceAdapter InitializeSingleton()
-        //{
-        //    singleton = new FilePersistanceAdapter();
+        /// <summary>
+        /// Provides eager singleton initialization
+        /// </summary>
+        /// <returns></returns>
+        public static FilePersistanceAdapter InitializeSingleton()
+        {
+            singleton = new FilePersistanceAdapter();
 
-        //    return singleton;
-        //}
+            return singleton;
+        }*/
 
-        //private const string storageFilName = "reminders.xml";
         public List<TEntity> Entities;
         public ServiceSettingsEntity[] settingsDtos;
 

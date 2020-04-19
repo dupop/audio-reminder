@@ -8,7 +8,7 @@ using System.Timers;
 
 namespace AudioReminderService.Scheduler.TimerBased.BeeperScheduling
 {
-    //TODO: beeper should probably be triggered on full hours not 60min from computer starting moment, with current settings it may fire any time, change this on UI to 5,15,30,60,120,180 hours, quiet interval will probably be needed for beeper
+    //TODO DP->SI: beeper should probably be triggered on full hours not 60min from computer starting moment, with current settings it may fire any time, change this on UI to 5,15,30,60,120,180 & never.
 
     /// <summary>
     /// Wrapper around timer that fires BeeperTimeUp events.
@@ -18,7 +18,7 @@ namespace AudioReminderService.Scheduler.TimerBased.BeeperScheduling
     class BeeperScheduler
     {
         public event Action BeeperTimeUp;
-        protected Timer beeperTimer { get; set; }
+        protected Timer beeperTimer;
 
         /// <summary>
         /// Protection against running timer with undefined interval.

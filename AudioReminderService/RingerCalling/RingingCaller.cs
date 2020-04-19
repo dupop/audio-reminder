@@ -15,7 +15,7 @@ namespace AudioReminderService.RingerCalling
     public static class RingingCaller
     {
         //TODO: handle this conflict with client names, maybe use guid... or we will use IDs intead of names anyway;we could use another line to signal that this is just a beep if needed; use separate name for beep; implement the beep on other side, and detection of beep request
-        //TODO: also handle "showing of beep" , it shoud not open a form, or it should open another form and close immediately- but effects of that would need to be tested when arator is used
+        //TODO DP->SI: also handle "showing of beep" , it shoud not open a form, or it should open another form and close immediately- but effects of that would need to be tested when narator is used
 
         const string BeepReminderName = "test3";
         const string TestReminderName = "test3";
