@@ -102,12 +102,9 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
 
         public void UpdateReminderList(IList<ReminderEntity> upToDateReminders)
         {
-            //TODO: maybe choose here only appropriate data for both
-
             NextReminderNotifier.UpdateReminderList(upToDateReminders);
 
             //UserInteractionManager is indirectly updated from events of NextReminderNotifier. When a reminder is changed it will fire a new event for it. 
-            //TODO: update reminders in UserInteractionManager from events, don't just ignore duplicates
             //UserInteractionManager.UpdateReminderList(upToDateReminders);
         }
 
