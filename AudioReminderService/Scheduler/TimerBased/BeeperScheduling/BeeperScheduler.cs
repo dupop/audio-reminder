@@ -147,7 +147,7 @@ namespace AudioReminderService.Scheduler.TimerBased.BeeperScheduling
                     return;
                 }
 
-                beeperTimer.Start();
+                ScheduleNextBeep();
                 Log.Logger.Information($"Started BeeperScheduler");
             }
             else if (stoppedNow)
