@@ -9,7 +9,7 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
     /// <summary>
     /// Describes if the scheduler or the user should make the next move.
     /// </summary>
-    public enum ReminderSchedulerState
+    public enum UserInteractionState
     {
         /// <summary>
         /// User interaction manager is currently not enabled.

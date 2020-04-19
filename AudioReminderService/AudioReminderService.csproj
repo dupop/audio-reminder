@@ -70,7 +70,7 @@
     </Compile>
     <Compile Include="Scheduler\TimerBased\DateTimeArithmetic\DateTimeArithmeticHelper.cs" />
     <Compile Include="Scheduler\TimerBased\ReminderScheduling\NextReminderNotifier.cs" />
-    <Compile Include="Scheduler\TimerBased\ReminderScheduling\ReminderSchedulerState.cs" />
+    <Compile Include="Scheduler\TimerBased\ReminderScheduling\UserInteractionState.cs" />
     <Compile Include="Scheduler\TimerBased\ReminderScheduling\UserInteractionManager.cs" />
     <Compile Include="Scheduler\TimerBased\TimerScheduler.cs" />
     <Compile Include="Scheduler\TimerBased\BeeperScheduling\BeeperScheduler.cs" />
