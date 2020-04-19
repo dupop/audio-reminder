@@ -8,7 +8,7 @@ using System.Timers;
 
 namespace AudioReminderService.Scheduler.TimerBased.BeeperScheduling
 {
-    //TODO: beeper should probably be triggered on full hours not 60min from computer starting moment, with current settings it may fire any time, change this on UI to 5,15,30,60,120,180 hours, quiet interval will probably be needed for beeper
+    //TODO DP->SI: beeper should probably be triggered on full hours not 60min from computer starting moment, with current settings it may fire any time, change this on UI to 5,15,30,60,120,180 & never.
 
     /// <summary>
     /// Wrapper around timer that fires BeeperTimeUp events.
@@ -18,12 +18,17 @@ namespace AudioReminderService.Scheduler.TimerBased.BeeperScheduling
     class BeeperScheduler
     {
         public event Action BeeperTimeUp;
-        protected Timer beeperTimer { get; set; }
+        protected Timer beeperTimer;
 
         /// <summary>
         /// Protection against running timer with undefined interval.
         /// </summary>
         protected bool intervalValueSet;
+
+        /// <summary>
+        /// Configured beeper repeating period in minutes.
+        /// </summary>
+        protected int intervalMinutes;
 
         protected bool shedulerEnabled;
         protected bool beeperEnabledInSettings;
@@ -80,27 +85,29 @@ namespace AudioReminderService.Scheduler.TimerBased.BeeperScheduling
         {
             get
             {
-                double timerIntervalMs = beeperTimer.Interval;
-                int intervalInMinutes = CovertMilisecondsToMinutes(timerIntervalMs);
-
-                return intervalInMinutes;
+                return intervalMinutes;
             }
             set
             {
-                int intervalInMinutes = value;
+                beeperTimer.Stop();//preventing conncurency issues, it will be started again if needed
+
+                int intervalMinutesValue = value;
                 const int minimalIntervalLengthMinutes = 1;
 
-                if (intervalInMinutes < minimalIntervalLengthMinutes)
+                if (intervalMinutesValue < minimalIntervalLengthMinutes)
                 {
-                    Log.Logger.Error($"Attempted to set interval for BeeperScheduler of {intervalInMinutes} min which is less than 1 min. Interval change will be ignored in BeeperScheduler.");
+                    Log.Logger.Error($"Attempted to set interval for BeeperScheduler of {intervalMinutesValue} min which is less than 1 min. Interval change will be ignored in BeeperScheduler.");
                     return;
                 }
 
-                double intervalMs = CovertMinutesToMiliseconds(intervalInMinutes);
-
-                beeperTimer.Interval = intervalMs;
+                intervalMinutes = intervalMinutesValue;
                 intervalValueSet = true;
-                Log.Logger.Information($"BeeperScheduler interval updated to {intervalInMinutes} min (i.e. {intervalMs:0.##}ms)");
+                Log.Logger.Information($"BeeperScheduler interval updated to {intervalMinutesValue} min");
+
+                if (IsRunning)
+                {
+                    ScheduleNextBeep();
+                }
             }
         }
 
@@ -114,8 +121,8 @@ namespace AudioReminderService.Scheduler.TimerBased.BeeperScheduling
 
             beeperTimer = new Timer();
             beeperTimer.Enabled = false;
-            beeperTimer.AutoReset = true; //TODO: check this again when handling conccurency
             beeperTimer.Elapsed += BeeperTimer_Elapsed;
+            beeperTimer.AutoReset = false;
 
             shedulerEnabled = false;
             beeperEnabledInSettings = false;
@@ -154,27 +161,50 @@ namespace AudioReminderService.Scheduler.TimerBased.BeeperScheduling
             }
         }
 
-        protected virtual int CovertMilisecondsToMinutes(double intervalInMs)
-        {
-            double intervalInMinutes = intervalInMs / (60 * 1000);
-            int intervalInMinutesAsInt = (int)Math.Round(beeperTimer.Interval);
-
-            return intervalInMinutesAsInt;
-        }
-
-        protected virtual double CovertMinutesToMiliseconds(int intervalInMinutes)
-        {
-            int intervalMs = intervalInMinutes * 60 * 1000;
-
-            return intervalMs;
-        }
-
         private void BeeperTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             OnBeeperTimeUp();
+            ScheduleNextBeep();
         }
 
-        protected void OnBeeperTimeUp()
+        protected virtual void ScheduleNextBeep()
+        {
+            beeperTimer.Interval = CalculateNextTimerInterval();
+            beeperTimer.Start();
+        }
+
+        /// <summary>
+        /// Calculates exact timespan until next beep should be played.
+        /// </summary>
+        /// <returns>Returns timespan in miliseconds until next beep should be played.</returns>
+        /// <remarks>
+        /// Always calculating next timer interval based on current time and not just using the same already known interval
+        /// so that we compensate for time lost between timer starting (e.g. for synchornous triggering of the beeper).
+        /// </remarks>
+        protected virtual double CalculateNextTimerInterval()
+        {
+            DateTime now = DateTime.UtcNow;
+            DateTime today = now.Date;
+
+            int minnutesElapsedToday = now.Hour * 60 + now.Minute;
+
+            //intentionally using divison of integers to get number of complete periods
+            int beeperPeriodsElapsedToday = minnutesElapsedToday / intervalMinutes;
+
+            //number of minutes from start of today (i.e. midnight) until the moment that next beep should be played
+            int minuteOfNextBeepToday = (beeperPeriodsElapsedToday + 1) * intervalMinutes;
+
+            //overflow from today to tommorow is not an issue for this method
+            DateTime nextBeep = today + TimeSpan.FromMinutes(minuteOfNextBeepToday);
+
+            TimeSpan timerInterval = nextBeep - now;
+            double intervalMs = timerInterval.TotalMilliseconds;
+
+            Log.Logger.Information($"Next beep will be played in {intervalMs}ms");
+            return intervalMs;
+        }
+
+        protected virtual void OnBeeperTimeUp()
         {
             Log.Logger.Information($"BeeperScheduler triggering a beep");
 

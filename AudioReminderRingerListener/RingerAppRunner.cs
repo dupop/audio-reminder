@@ -1,4 +1,5 @@
-﻿using Serilog;
+﻿using AudioReminderCore;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,33 +13,62 @@ namespace AudioReminderRingerListener
 {
     class RingerAppRunner
     {
-        protected virtual string GetRingerFullFilePath()
+        protected virtual string GetBeeperFullFilePath()
         {
-            string serviceDir = AppDomain.CurrentDomain.BaseDirectory; //TODO: extract both occuranecs of this to PathHelper
-            string productDir = new DirectoryInfo(serviceDir).Parent.Parent.Parent.FullName; // TODO: possible no rights execption + null exceptions + etc
+            string productDir = FilePathHelper.GetProductDir();
 
             //TODO: extract harcoded part somwhere
-            //string threeForldersUp = @"\.\.\.\";
-            string ringingAppplicationSubDir = @"AudioReminderRinging\bin\Debug"; 
+            string beeperAppplicationSubDir = @"AudioReminderBeeper\bin\Debug";
+            string beeperApplicationName = "AudioReminderBeeper.exe";
+
+            return CombinePaths(productDir, beeperAppplicationSubDir, beeperApplicationName);
+        }
+
+        protected virtual string GetRingerFullFilePath()
+        {
+            string productDir = FilePathHelper.GetProductDir();
+
+            //TODO: extract harcoded part somwhere
+            string ringingAppplicationSubDir = @"AudioReminderRinging\bin\Debug";
             string ringingApplicationName = "AudioReminderRinging.exe";
 
-            //string productDir = Path.Combine(threeForldersUp, serviceDir);
+            return CombinePaths(productDir, ringingAppplicationSubDir, ringingApplicationName);
+        }
+
+        protected virtual string CombinePaths(string productDir, string ringingAppplicationSubDir, string ringingApplicationName)
+        {
             string ringerDir = Path.Combine(productDir, ringingAppplicationSubDir);
             string ringerApplicationFullPath = Path.Combine(ringerDir, ringingApplicationName);
+
             return ringerApplicationFullPath;
         }
 
-        private void SimpleProcessStartApporach(string reminderName, string ringerApplicationFullPath)
+        private void SimpleProcessStartApporach(string arguments, string applicationFullPath)
         {
-            Log.Logger.Information($"Calling ReminderRinger app as simple process [path = {ringerApplicationFullPath}, arg = {reminderName}]");
-            Process.Start(ringerApplicationFullPath, reminderName); //TODO: handle file not exist and other starting issues
+            if(arguments != null)
+            {
+                Log.Logger.Information($"Calling app as simple process [path = {applicationFullPath}, arg = {arguments}]");
+                Process.Start(applicationFullPath, arguments); //TODO: handle file not exist and other starting issues
+            }
+            else
+            {
+                Log.Logger.Information($"Calling app as simple process [path = {applicationFullPath}, no args]");
+                Process.Start(applicationFullPath); //TODO: handle file not exist and other starting issues
+            }
         }
 
-        public void Run(string reminderName)
+        public void RunRinger(string reminderName)
         {
             string ringerPath = GetRingerFullFilePath();
 
             SimpleProcessStartApporach(reminderName, ringerPath);
+        }
+
+        public void RunBeeper()
+        {
+            string beeperPath = GetBeeperFullFilePath();
+
+            SimpleProcessStartApporach(null, beeperPath);
         }
 
     }

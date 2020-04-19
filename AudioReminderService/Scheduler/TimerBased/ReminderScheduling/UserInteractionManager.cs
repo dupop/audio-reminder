@@ -65,18 +65,6 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
         /// Keeps track of interaction between the user and the scheduler and who is repoinsible to make next action.
         /// </summary>
         protected UserInteractionState UserState { get; set; }
-        
-        //TODO: consider if these are still needed
-        /// <summary>
-        /// Last time that program started annoying user.
-        /// </summary>
-        protected DateTime? LastReminderRinging { get; set; }
-
-        /// <summary>
-        /// Last time that user dismissed a reminder, i.e. he confimred that a reminder occurence is done.
-        /// </summary>
-        protected DateTime? LastReminderDismissing { get; set; }
-
 
 
         public UserInteractionManager()
@@ -171,9 +159,7 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
         /// <param name="now"></param>
         protected void GoToRingingState(string reminderName, DateTime now)
         {
-            //TODO:  should we start snooze timer here, or even before that a timer for turning off the noise of this reminder after e.g. 1 min of no response from user?
             UserState = UserInteractionState.WaitingUserResponse;
-            LastReminderRinging = now;
 
             OnRingingNeeded(reminderName);
         }
@@ -187,7 +173,7 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
 
         //todo: all these return statements are risky, they prevent the only chance for the user the make next step and don't give him another chance. e.g. if snooze feautre is disabled while ringing form is open, and than user clicks snooze
         //todo: when component is disabled we skip all processing, not just going to next state, review this once more to bse sure that this is ok. Same for snooze, snooze elapsed, 
-        //todo: disable, even better hide snooze button if that feature is disabled, we will probably need to handle closing the form as dismiss, not snooze
+        //todo: disable, even better hide snooze button if that feature is disabled, we will probably need to handle closing the form as dismiss, not snooze. We also need to prevent accidental closing of form on escape button.
         //todo: validation if reminders as paramters to dismiss and snooze, are indeed excepted (or we first expect some other), or just remove them (less safe)
         public void DismissReminder(ReminderEntity reminderEntity)
         {
@@ -217,8 +203,6 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
             {
                 reminderEntity.Dismissed = true;
             }
-
-            LastReminderDismissing = now;
 
             ElapsedActiveReminders.Remove(reminderEntity);
 
@@ -407,14 +391,14 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
         #endregion
 
 
-        //TODO: providte functionallity to run immediately all snooze reminders, not to bother user later with them. This will also be useful for IsOkToModifyReminder situation
+        //TODO DP->SI: provide functionallity to run immediately all snooze reminders, not to bother user later with them. This will also be useful for IsOkToModifyReminder situation
 
         public virtual bool IsOkToModifyReminder(string reminderName)
         {
             bool reminderIsInList = ElapsedActiveReminders.Any(rem => rem.Name == reminderName);
             DateTime now = DateTime.UtcNow;
 
-            //TODO: instead of running them now, it would be more polite to ask user if he wants to run the reminder now. It would be even better to just update the reminders immediately, but that is too complex for now (see UpdateReminderList method)
+            //TODO DP->SI: instead of running them now, it would be more polite to ask user if he wants to run the reminder now. It would be even better to just update the reminders immediately, but that is too complex for now (see UpdateReminderList method)
             if (reminderIsInList && UserState != UserInteractionState.Disabled)
             {
                 Log.Logger.Information("Change of elapsed but not dismissed reminder was attempted. Running snoozed reminders now.");

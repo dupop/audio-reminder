@@ -1,4 +1,5 @@
-﻿using AudioReminderCore.ClientProxies;
+﻿using AudioReminderCore;
+using AudioReminderCore.ClientProxies;
 using AudioReminderCore.Model;
 using Serilog;
 using System;
@@ -18,6 +19,7 @@ namespace AudioReminderRinging
         protected virtual AudioReminderWebServiceClient Proxy { get; set; }
         protected virtual ReminderEntity Reminder { get; set; }
 
+        protected virtual bool IsTestMode { get; set; }
 
         #region Constructor and events
         public ReminderRingingForm()
@@ -31,23 +33,35 @@ namespace AudioReminderRinging
 
             //TODO: Should this be async?
             bool success = InitializeState();
-            if(!success)
+            if (!success)
             {
                 Close();
                 return;
             }
-            
+
             RingAsync();
         }
 
         private void snoozeButton_Click(object sender, EventArgs e)
         {
-            SnoozeRdminder();
+            if (!IsTestMode)
+            {
+                SnoozeReminder();
+            }
+
+            //TODO: why is not form automatically closed because we have dialog reuslt in both button properties? maybe because its not called with RunDialog?
+            Close();
         }
 
         private void dismissButton_Click(object sender, EventArgs e)
         {
-            DismissReminder();
+            if (!IsTestMode)
+            {
+                DismissReminder();
+            }
+
+            //TODO: why is not form automatically closed because we have dialog reuslt in both button properties? maybe because its not called with RunDialog?
+            Close();
         }
         #endregion
 
@@ -55,11 +69,18 @@ namespace AudioReminderRinging
         #region State initialization
         protected virtual bool InitializeState()
         {
-            
+
             string reminderName = GetReminderName();
             if (string.IsNullOrWhiteSpace(reminderName))
             {
                 return false;
+            }
+
+            if (reminderName == NamedPipeHelper.TestReminderName)
+            {
+                IsTestMode = true;
+                Log.Logger.Information($"Ringer started just as an ringing example. Snooze/dismiss will have no effect.");
+                return true;
             }
 
             SetProxy();
@@ -72,7 +93,7 @@ namespace AudioReminderRinging
 
             return true;
         }
-        
+
         protected virtual string GetReminderName()
         {
             List<string> args = Environment.GetCommandLineArgs().ToList();
@@ -88,7 +109,7 @@ namespace AudioReminderRinging
 
             return reminderNameArgument;
         }
-        
+
         protected virtual void SetProxy()
         {
             Proxy = new AudioReminderWebServiceClient();
@@ -100,7 +121,7 @@ namespace AudioReminderRinging
             Reminder = Proxy.Load(reminderName);
         }
 
-        
+
         #endregion
 
 
@@ -114,14 +135,11 @@ namespace AudioReminderRinging
             Log.Logger.Information($"Making noise done");
         }
 
-        protected virtual void SnoozeRdminder()
+        protected virtual void SnoozeReminder()
         {
             Log.Logger.Information($"Snoozing reminder [reminder name = {Reminder.Name}]");
 
             Proxy.SnoozeReminder(Reminder.Name);
-
-            //TODO: why is not form automatically closed because we have dialog reuslt in both button properties? maybe because its not called with RunDialog?
-            Close();
 
             Log.Logger.Information($"Snoozing reminder [reminder name = {Reminder.Name}] done");
         }
@@ -131,9 +149,6 @@ namespace AudioReminderRinging
             Log.Logger.Information($"Dismissing reminder [reminder name = {Reminder.Name}]");
 
             Proxy.DismissReminder(Reminder.Name);
-
-            //TODO: why is not form automatically closed because we have dialog reuslt in both button properties? maybe because its not called with RunDialog?
-            Close();
 
             Log.Logger.Information($"Dismissing reminder [reminder name = {Reminder.Name}] done");
         }

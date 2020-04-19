@@ -116,7 +116,7 @@
             this.snoozeIntervalNumbericBox.Location = new System.Drawing.Point(11, 44);
             this.snoozeIntervalNumbericBox.Margin = new System.Windows.Forms.Padding(2);
             this.snoozeIntervalNumbericBox.Maximum = new decimal(new int[] {
-            86400,
+            1440,
             0,
             0,
             0});
@@ -200,7 +200,7 @@
             this.beepIntervalNumbericBox.Location = new System.Drawing.Point(7, 46);
             this.beepIntervalNumbericBox.Margin = new System.Windows.Forms.Padding(2);
             this.beepIntervalNumbericBox.Maximum = new decimal(new int[] {
-            86400,
+            1440,
             0,
             0,
             0});
