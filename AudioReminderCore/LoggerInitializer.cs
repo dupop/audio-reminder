@@ -48,7 +48,7 @@ namespace AudioReminderCore
         protected virtual string GetDefaultLoggingPath()
         {
             const string LogsSubfolderName = @"logs";
-            string servicePath = FilePathHelper.FindDirectory();
+            string servicePath = FilePathHelper.FindProgramDirectory();
 
             string loggingPath = System.IO.Path.Combine(servicePath, LogsSubfolderName);
 

@@ -186,7 +186,7 @@ namespace AudioReminderService.Scheduler.TimerBased.BeeperScheduling
             DateTime now = DateTime.UtcNow;
             DateTime today = now.Date;
 
-            int minnutesElapsedToday = now.Hour * 24 + now.Minute;
+            int minnutesElapsedToday = now.Hour * 60 + now.Minute;
 
             //intentionally using divison of integers to get number of complete periods
             int beeperPeriodsElapsedToday = minnutesElapsedToday / intervalMinutes;
@@ -200,7 +200,7 @@ namespace AudioReminderService.Scheduler.TimerBased.BeeperScheduling
             TimeSpan timerInterval = nextBeep - now;
             double intervalMs = timerInterval.TotalMilliseconds;
 
-            Log.Logger.Information($"Next beep will be played in {timerInterval.TotalMilliseconds}ms");
+            Log.Logger.Information($"Next beep will be played in {intervalMs}ms");
             return intervalMs;
         }
 

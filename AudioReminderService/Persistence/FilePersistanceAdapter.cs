@@ -81,7 +81,7 @@ namespace AudioReminderService.Persistence
 
         protected string GetFilePath()
         {
-            string serviceDir = FilePathHelper.FindDirectory();
+            string serviceDir = FilePathHelper.FindProgramDirectory();
             string persistenceSubDir = "persistence";
             string peristenceDir = Path.Combine(serviceDir, persistenceSubDir);
 

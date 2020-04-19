@@ -14,9 +14,9 @@ namespace AudioReminderService.RingerCalling
 {
     class RingingClinetPipeHandler
     {
-        public void TriggerRinging(string reminderName)
+        public void TriggerRinging(string commandToSend)
         {
-            Log.Logger.Information($"Calling ReminderRinger app through a named pipe [arg = {reminderName}]");
+            Log.Logger.Information($"Calling ReminderRinger or Beeper app through a named pipe [arg = {commandToSend}]");
 
             //TODO: do I need this: , PipeOptions.None, TokenImpersonationLevel.Impersonation
             NamedPipeClientStream pipeClient = new NamedPipeClientStream(".", NamedPipeHelper.RingingPipeName, PipeDirection.InOut);
@@ -31,10 +31,10 @@ namespace AudioReminderService.RingerCalling
             //sr.ReadLine(); 
 
             Log.Logger.Information($"Connected. Wrinting line to pipe");
-            sw.WriteLine(reminderName);
+            sw.WriteLine(commandToSend);
 
             sw.Close();
-            Log.Logger.Information($"Calling ReminderRinger app through a named pipe done");
+            Log.Logger.Information($"Calling ReminderRinger or Beeper app through a named pipe done");
         }
 
     }
