@@ -13,23 +13,6 @@ namespace AudioReminderService.Scheduler.QuartzBased
 {
     class QuartzReminderScheduler : IReminderScheduler
     {
-        #region Singleton
-        //private static QuartzWrapper singleton;
-
-        //public static QuartzWrapper Singleton => singleton ?? InitializeSingleton();
-
-        ///// <summary>
-        ///// Provides eager singleton initialization
-        ///// </summary>
-        ///// <returns></returns>
-        //public static QuartzWrapper InitializeSingleton()
-        //{
-        //    singleton = new QuartzWrapper();
-
-        //    return singleton;
-        //}
-        #endregion
-
         public event Action<string> ReminderTimeUp;
         public event Action BeeperTimeUp;
 
@@ -40,7 +23,7 @@ namespace AudioReminderService.Scheduler.QuartzBased
 
             //Quartz.
             //Quartz.
-            //TODO: implement whole this class
+            //TODO: Check if we should remove Quartz dependency or it has something useful for this project?
             //ISchedulerFactory sf = new StdSchedulerFactory();
             //Task<IScheduler> sched = sf.getScheduler();
 

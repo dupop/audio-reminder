@@ -144,7 +144,7 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
                     break;
                 case UserInteractionState.SnoozeTime:
                     //ignoring next reminder until previous remidner is handled
-                    //TODO: force showing of both reminders in the same form window? (forcing showing them one by one would be confusing as we don't respect snooze interval, and user is not aware that behing this reminder is another (potentially with higher priority))
+                    //TODO: later add feature to force showing of both (or more) reminders in the same form window (forcing showing them one by one would be confusing as we don't respect snooze interval, and user is not aware that behing this reminder is another (potentially with higher priority))
                     break;
                 case UserInteractionState.Disabled:
                     Log.Logger.Information($"OnReminderElapsed event [name = {reminder.Name}] will be handled just by adding reminder to the list because UserInteractionManager is currently not enabled.");
@@ -173,13 +173,11 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
 
         //todo: all these return statements are risky, they prevent the only chance for the user the make next step and don't give him another chance. e.g. if snooze feautre is disabled while ringing form is open, and than user clicks snooze
         //todo: when component is disabled we skip all processing, not just going to next state, review this once more to bse sure that this is ok. Same for snooze, snooze elapsed, 
-        //todo: disable, even better hide snooze button if that feature is disabled, we will probably need to handle closing the form as dismiss, not snooze. We also need to prevent accidental closing of form on escape button.
+        //todo: hide snooze button if that feature is disabled(Ringer can call service via WCF webservice to check is snooze is enabled), we will probably need to handle closing the form as dismiss, not snooze. We also need to prevent accidental closing of form on escape button.
         //todo: validation if reminders as paramters to dismiss and snooze, are indeed excepted (or we first expect some other), or just remove them (less safe)
         public void DismissReminder(ReminderEntity reminderEntity)
         {
             DateTime now = DateTime.UtcNow;
-
-            //TODO: this is proably not expexted to happen during disabled state, but I assume it should make no harm to react on this bacause user can still have old ringing dialogs
 
             if (UserState != UserInteractionState.WaitingUserResponse)
             {

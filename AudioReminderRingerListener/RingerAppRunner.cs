@@ -13,36 +13,6 @@ namespace AudioReminderRingerListener
 {
     class RingerAppRunner
     {
-        protected virtual string GetBeeperFullFilePath()
-        {
-            string productDir = FilePathHelper.GetProductDir();
-
-            //TODO: extract harcoded part somwhere
-            string beeperAppplicationSubDir = @"AudioReminderBeeper\bin\Debug";
-            string beeperApplicationName = "AudioReminderBeeper.exe";
-
-            return CombinePaths(productDir, beeperAppplicationSubDir, beeperApplicationName);
-        }
-
-        protected virtual string GetRingerFullFilePath()
-        {
-            string productDir = FilePathHelper.GetProductDir();
-
-            //TODO: extract harcoded part somwhere
-            string ringingAppplicationSubDir = @"AudioReminderRinging\bin\Debug";
-            string ringingApplicationName = "AudioReminderRinging.exe";
-
-            return CombinePaths(productDir, ringingAppplicationSubDir, ringingApplicationName);
-        }
-
-        protected virtual string CombinePaths(string productDir, string ringingAppplicationSubDir, string ringingApplicationName)
-        {
-            string ringerDir = Path.Combine(productDir, ringingAppplicationSubDir);
-            string ringerApplicationFullPath = Path.Combine(ringerDir, ringingApplicationName);
-
-            return ringerApplicationFullPath;
-        }
-
         private void SimpleProcessStartApporach(string arguments, string applicationFullPath)
         {
             if(arguments != null)
@@ -59,14 +29,14 @@ namespace AudioReminderRingerListener
 
         public void RunRinger(string reminderName)
         {
-            string ringerPath = GetRingerFullFilePath();
+            string ringerPath = FilePathHelper.GetRingerFullFilePath();
 
             SimpleProcessStartApporach(reminderName, ringerPath);
         }
 
         public void RunBeeper()
         {
-            string beeperPath = GetBeeperFullFilePath();
+            string beeperPath = FilePathHelper.GetBeeperFullFilePath();
 
             SimpleProcessStartApporach(null, beeperPath);
         }

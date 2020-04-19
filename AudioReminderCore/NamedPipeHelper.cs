@@ -14,7 +14,7 @@ namespace AudioReminderCore
         
         //commands used over the pipe
         public const string StartReminderRingingCommand = "reminder";
-        public const string StartReminderRingingTestCommand = "remindertest ";
+        public const string StartReminderRingingTestCommand = "remindertest";
         public const string StartBeeperSoundCommand = "beeper";
 
         /// <summary>
