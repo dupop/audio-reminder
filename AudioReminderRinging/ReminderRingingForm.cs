@@ -31,7 +31,6 @@ namespace AudioReminderRinging
         {
             Log.Logger.Information($"ReminderRinger form loading");
 
-            //TODO: Should this be async?
             bool success = InitializeState();
             if (!success)
             {
@@ -48,8 +47,11 @@ namespace AudioReminderRinging
             {
                 SnoozeReminder();
             }
+            else
+            {
+                Log.Logger.Information($"Snooze request not sent because ringing is started in test mode");
+            }
 
-            //TODO: why is not form automatically closed because we have dialog reuslt in both button properties? maybe because its not called with RunDialog?
             Close();
         }
 
@@ -59,8 +61,11 @@ namespace AudioReminderRinging
             {
                 DismissReminder();
             }
+            else
+            {
+                Log.Logger.Information($"Dismiss request not sent because ringing is started in test mode");
+            }
 
-            //TODO: why is not form automatically closed because we have dialog reuslt in both button properties? maybe because its not called with RunDialog?
             Close();
         }
         #endregion
@@ -121,7 +126,6 @@ namespace AudioReminderRinging
             Reminder = Proxy.Load(reminderName);
         }
 
-
         #endregion
 
 
@@ -154,5 +158,9 @@ namespace AudioReminderRinging
         }
         #endregion
 
+        private void ReminderRingingForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //TODO: check if we should catch OnClosing event (excluding when dismiss is pressed or validation failed or we are in test mode). That may be dangerous if there are unhandled exceptions during sending of snooze request
+        }
     }
 }
