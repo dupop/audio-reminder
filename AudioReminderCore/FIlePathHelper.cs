@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace AudioReminderCore
 {
     /// <summary>
-    /// Path related helper methods
+    /// File path related utility methods
     /// </summary>
-    public class FilePathHelper
+    public static class FilePathHelper
     {
         //TODO: make this less hardcoded maybe?
         const string beeperAppplicationSubDir = @"AudioReminderBeeper\bin\Debug";
@@ -20,7 +20,7 @@ namespace AudioReminderCore
 
 
         /// <summary>
-        /// Finds current program directory.
+        /// Finds current application directory.
         /// </summary>
         public static string FindProgramDirectory()
         {
@@ -29,6 +29,10 @@ namespace AudioReminderCore
             return programDirectory;
         }
 
+        /// <summary>
+        /// Find the root directory of the whole product, containing directories of all the applications in the Audio Reminder product.
+        /// </summary>
+        /// <returns></returns>
         public static string GetProductDir()
         {
             string currentProgramDir = FindProgramDirectory();
@@ -51,7 +55,7 @@ namespace AudioReminderCore
             return CombinePaths(productDir, ringingAppplicationSubDir, ringingApplicationName);
         }
 
-        protected static string CombinePaths(string productDir, string ringingAppplicationSubDir, string ringingApplicationName)
+        private static string CombinePaths(string productDir, string ringingAppplicationSubDir, string ringingApplicationName)
         {
             string ringerDir = Path.Combine(productDir, ringingAppplicationSubDir);
             string ringerApplicationFullPath = Path.Combine(ringerDir, ringingApplicationName);
