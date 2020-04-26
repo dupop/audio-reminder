@@ -17,6 +17,8 @@ namespace AudioReminderRinging
 {
     public partial class ReminderRingingForm : Form
     {
+        //TODO: handle service unavilable + handle disable of snooze button when snooze is disabled (otherwise it will crash)
+
         protected virtual AudioReminderWebServiceClient Proxy { get; set; }
         protected virtual ReminderEntity Reminder { get; set; }
 
@@ -87,6 +89,7 @@ namespace AudioReminderRinging
             if (reminderName == NamedPipeHelper.TestReminderName)
             {
                 IsTestMode = true;
+                this.Text = "Reminder ringing: " + "test reminder";
                 Log.Logger.Information($"Ringer started just as an ringing example. Snooze/dismiss will have no effect.");
                 return true;
             }
@@ -98,7 +101,9 @@ namespace AudioReminderRinging
                 Log.Logger.Fatal($"Reminder with given name could not be found. Closing application. ");
                 return false;
             }
-
+            
+            this.Text = "Reminder ringing: " + Reminder.Name;
+            
             return true;
         }
 

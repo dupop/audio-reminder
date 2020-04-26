@@ -66,8 +66,9 @@ namespace AudioReminderService.WebService
         {
             Log.Logger.Information($"Executing webservice operation \"{MethodBase.GetCurrentMethod().Name}\" [reminderOldName = {reminderOldName}]");
 
-            if (!AudioReminderService.scheduler.IsOkToModifyReminder(reminder.Name)) //TODO put nullcheck somwhere
+            if (!AudioReminderService.scheduler.IsOkToModifyReminder(reminderOldName))
             {
+                Log.Logger.Information($"It's NOT OK to change reminder with name [reminderOldName = {reminderOldName}]");
                 return false;
             }
 
@@ -77,6 +78,7 @@ namespace AudioReminderService.WebService
 
             FilePersistenceAdapters.RemiderFilePersistence.OnEntitesChanged();
 
+            Log.Logger.Information($"It's OK to change reminder with name [reminderOldName = {reminderOldName}]");
             return true;
         }
 
