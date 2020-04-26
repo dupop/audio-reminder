@@ -17,7 +17,7 @@ namespace AudioReminderService.Scheduler.TimerBased.BeeperScheduling
     /// </summary>
     class BeeperScheduler
     {
-        //TODO: extract to advanced settings
+        //TODO: extract to advanced settings, also add reset settings button
         /// <summary>
         /// Maximimal allowed late firing of beeper sound. If event comes after this period,
         /// the last missed beep will be skipped. This can happen due to computer beeing in a suspended state.
@@ -220,7 +220,7 @@ namespace AudioReminderService.Scheduler.TimerBased.BeeperScheduling
         /// <returns>Returns timespan in miliseconds until next beep should be played.</returns>
         /// <remarks>
         /// Always calculating next timer interval based on current time and not just using the same already known interval
-        /// so that we compensate for time lost between timer starting (e.g. for synchornous triggering of the beeper).
+        /// so that we compensate for time lost between timer starting because of synchornous triggering of the beeper.
         /// </remarks>
         protected virtual double CalculateNextTimerInterval()
         {
@@ -230,10 +230,13 @@ namespace AudioReminderService.Scheduler.TimerBased.BeeperScheduling
             TimeSpan timerInterval = nextBeep - now;
             double intervalMs = timerInterval.TotalMilliseconds;
 
-            Log.Logger.Information($"Next beep will be played in {intervalMs}ms");
+            Log.Logger.Information($"Next beep will be played in {timerInterval} [i.e. at {nextBeep} (UTC)]");
             return intervalMs;
         }
 
+        /// <summary>
+        /// Calculates moment when next Beep should be played
+        /// </summary>
         protected virtual DateTime CalculateNextBeep(DateTime now)
         {
             DateTime today = now.Date;
