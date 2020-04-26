@@ -25,6 +25,8 @@ namespace AudioReminderRinging
         public ReminderRingingForm()
         {
             InitializeComponent();
+
+            Icon = AudioReminderCore.Properties.Resources.AudioReminderIcon;
         }
 
         private void ReminderRingForm_Load(object sender, EventArgs e)
