@@ -174,13 +174,18 @@ namespace AudioReminderService.Scheduler.TimerBased.BeeperScheduling
             {
                 OnBeeperTimeUp();
             }
+            else
+            {
+                Log.Logger.Information($"Skipping BeeperTimeup event because timer fired too late.");
+            }
+
             ScheduleNextBeep();
         }
 
         /// <summary>
         /// Check if timer fired a beep event too late due to e.g. computer beeing in a suspended state.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Returns true when event is not fired too late</returns>
         protected virtual bool ValidateAgainstLateEventFiring()
         {
             TimeSpan maxAllowedLateFiring = new TimeSpan(0, 0, MaxAllowedLateBeepSeconds);
@@ -203,9 +208,9 @@ namespace AudioReminderService.Scheduler.TimerBased.BeeperScheduling
 
             TimeSpan beeperDelay = now - previousBeep;
 
-            bool eventArrivedToLate = beeperDelay > maxAllowedLateFiring;
+            bool eventArrivedTooLate = beeperDelay > maxAllowedLateFiring;
 
-            return eventArrivedToLate;
+            return !eventArrivedTooLate;
         }
 
         protected virtual void ScheduleNextBeep()
