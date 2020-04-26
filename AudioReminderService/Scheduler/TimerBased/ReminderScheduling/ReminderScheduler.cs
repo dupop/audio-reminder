@@ -1,8 +1,6 @@
 ﻿using AudioReminderCore.Model;
 using AudioReminderService.Persistence;
 using AudioReminderService.Scheduler.TimerBased.DateTimeArithmetic;
-using Quartz;
-using Quartz.Impl;
 using Serilog;
 using System;
 using System.Collections.Generic;
