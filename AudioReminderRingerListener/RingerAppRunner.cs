@@ -1,4 +1,5 @@
-﻿using Serilog;
+﻿using AudioReminderCore;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,33 +13,32 @@ namespace AudioReminderRingerListener
 {
     class RingerAppRunner
     {
-        protected virtual string GetRingerFullFilePath()
+        private void SimpleProcessStartApporach(string arguments, string applicationFullPath)
         {
-            string serviceDir = AppDomain.CurrentDomain.BaseDirectory; //TODO: extract both occuranecs of this to PathHelper
-            string productDir = new DirectoryInfo(serviceDir).Parent.Parent.Parent.FullName; // TODO: possible no rights execption + null exceptions + etc
-
-            //TODO: extract harcoded part somwhere
-            //string threeForldersUp = @"\.\.\.\";
-            string ringingAppplicationSubDir = @"AudioReminderRinging\bin\Debug"; 
-            string ringingApplicationName = "AudioReminderRinging.exe";
-
-            //string productDir = Path.Combine(threeForldersUp, serviceDir);
-            string ringerDir = Path.Combine(productDir, ringingAppplicationSubDir);
-            string ringerApplicationFullPath = Path.Combine(ringerDir, ringingApplicationName);
-            return ringerApplicationFullPath;
+            if(arguments != null)
+            {
+                Log.Logger.Information($"Calling app as simple process [path = {applicationFullPath}, arg = {arguments}]");
+                Process.Start(applicationFullPath, arguments); //TODO: handle file not exist and other starting issues
+            }
+            else
+            {
+                Log.Logger.Information($"Calling app as simple process [path = {applicationFullPath}, no args]");
+                Process.Start(applicationFullPath); //TODO: handle file not exist and other starting issues
+            }
         }
 
-        private void SimpleProcessStartApporach(string reminderName, string ringerApplicationFullPath)
+        public void RunRinger(string reminderName)
         {
-            Log.Logger.Information($"Calling ReminderRinger app as simple process [path = {ringerApplicationFullPath}, arg = {reminderName}]");
-            Process.Start(ringerApplicationFullPath, reminderName); //TODO: handle file not exist and other starting issues
-        }
-
-        public void Run(string reminderName)
-        {
-            string ringerPath = GetRingerFullFilePath();
+            string ringerPath = FilePathHelper.GetRingerFullFilePath();
 
             SimpleProcessStartApporach(reminderName, ringerPath);
+        }
+
+        public void RunBeeper()
+        {
+            string beeperPath = FilePathHelper.GetBeeperFullFilePath();
+
+            SimpleProcessStartApporach(null, beeperPath);
         }
 
     }

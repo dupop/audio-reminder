@@ -15,21 +15,21 @@ namespace AudioReminderService.Persistence
         {
             new ReminderEntity()
             {
-                Name = "Some event on workdays",
+                Name = "Some_event_on_workdays",
                 ScheduledTime = DateTime.Now,
                 RepeatPeriod = RepeatPeriod.Weekly,
                 RepeatWeeklyDays = new bool[]{true, true, true, true, true, false, false }
             },
             new ReminderEntity()
             {
-                Name = "Some non-recuring once",
+                Name = "Some_non-recuring_once",
                 ScheduledTime = DateTime.Now + new TimeSpan(6,0,0),
                 RepeatPeriod = RepeatPeriod.NoRepeat,
                 RepeatWeeklyDays = new bool[] { false, false, false, false, false, false, false }
             },
             new ReminderEntity()
             {
-                Name = "Some non-recuring once2",
+                Name = "Some_non-recuring_once2",
                 ScheduledTime = DateTime.Now + new TimeSpan(7,0,0),
                 RepeatPeriod = RepeatPeriod.NoRepeat,
                 RepeatWeeklyDays = new bool[] { false, false, false, false, false, false, false }

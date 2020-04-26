@@ -5,7 +5,8 @@ using System.Collections.Generic;
 namespace AudioReminderService.Scheduler
 {
     /// <summary>
-    /// TODO descirption
+    /// Fires events for beeper and reminder time up.
+    /// Provides means to update service settings, update reminders list and handle feedback from ringing.
     /// </summary>
     public interface IReminderScheduler
     {

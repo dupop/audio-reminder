@@ -19,7 +19,9 @@ namespace AudioReminderUI
         public SettingsForm(PersistenceAdapter persistenceAdapter)
         {
             InitializeComponent();
+
             PersistenceAdapter = persistenceAdapter;
+            Icon = AudioReminderCore.Properties.Resources.AudioReminderIcon;
         }
 
         private void SettingsForm_Load(object sender, EventArgs e)

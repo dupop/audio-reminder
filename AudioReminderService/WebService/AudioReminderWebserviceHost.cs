@@ -50,9 +50,9 @@ namespace AudioReminderService.WebService
             ServiceMetadataBehavior behaveior = new ServiceMetadataBehavior();
 
             // Enable metadata publishing
-            behaveior.HttpGetEnabled = true; //TODO: remobe this
+            behaveior.HttpGetEnabled = true; //TODO: check if we should keep this feature?
 
-            //behaveior.ExternalMetadataLocation //todo:explore this
+            //behaveior.ExternalMetadataLocation //todo: explore this
 
             // ?
             behaveior.MetadataExporter.PolicyVersion = PolicyVersion.Policy15;

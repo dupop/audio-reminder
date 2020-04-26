@@ -1,4 +1,5 @@
-﻿using AudioReminderCore.ClientProxies;
+﻿using AudioReminderCore;
+using AudioReminderCore.ClientProxies;
 using AudioReminderCore.Model;
 using Serilog;
 using System;
@@ -8,6 +9,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -15,39 +17,61 @@ namespace AudioReminderRinging
 {
     public partial class ReminderRingingForm : Form
     {
+        //TODO: handle service unavilable + handle disable of snooze button when snooze is disabled (otherwise it will crash)
+
         protected virtual AudioReminderWebServiceClient Proxy { get; set; }
         protected virtual ReminderEntity Reminder { get; set; }
 
+        protected virtual bool IsTestMode { get; set; }
 
         #region Constructor and events
         public ReminderRingingForm()
         {
             InitializeComponent();
+
+            Icon = AudioReminderCore.Properties.Resources.AudioReminderIcon;
         }
 
         private void ReminderRingForm_Load(object sender, EventArgs e)
         {
             Log.Logger.Information($"ReminderRinger form loading");
 
-            //TODO: Should this be async?
             bool success = InitializeState();
-            if(!success)
+            if (!success)
             {
                 Close();
                 return;
             }
-            
+
             RingAsync();
         }
 
         private void snoozeButton_Click(object sender, EventArgs e)
         {
-            SnoozeRdminder();
+            if (!IsTestMode)
+            {
+                SnoozeReminder();
+            }
+            else
+            {
+                Log.Logger.Information($"Snooze request not sent because ringing is started in test mode");
+            }
+
+            Close();
         }
 
         private void dismissButton_Click(object sender, EventArgs e)
         {
-            DismissReminder();
+            if (!IsTestMode)
+            {
+                DismissReminder();
+            }
+            else
+            {
+                Log.Logger.Information($"Dismiss request not sent because ringing is started in test mode");
+            }
+
+            Close();
         }
         #endregion
 
@@ -55,11 +79,19 @@ namespace AudioReminderRinging
         #region State initialization
         protected virtual bool InitializeState()
         {
-            
+
             string reminderName = GetReminderName();
             if (string.IsNullOrWhiteSpace(reminderName))
             {
                 return false;
+            }
+
+            if (reminderName == NamedPipeHelper.TestReminderName)
+            {
+                IsTestMode = true;
+                this.Text = "Reminder ringing: " + "test reminder";
+                Log.Logger.Information($"Ringer started just as an ringing example. Snooze/dismiss will have no effect.");
+                return true;
             }
 
             SetProxy();
@@ -69,10 +101,12 @@ namespace AudioReminderRinging
                 Log.Logger.Fatal($"Reminder with given name could not be found. Closing application. ");
                 return false;
             }
-
+            
+            this.Text = "Reminder ringing: " + Reminder.Name;
+            
             return true;
         }
-        
+
         protected virtual string GetReminderName()
         {
             List<string> args = Environment.GetCommandLineArgs().ToList();
@@ -88,7 +122,7 @@ namespace AudioReminderRinging
 
             return reminderNameArgument;
         }
-        
+
         protected virtual void SetProxy()
         {
             Proxy = new AudioReminderWebServiceClient();
@@ -100,7 +134,6 @@ namespace AudioReminderRinging
             Reminder = Proxy.Load(reminderName);
         }
 
-        
         #endregion
 
 
@@ -109,19 +142,16 @@ namespace AudioReminderRinging
         {
             Log.Logger.Information($"Making noise");
 
-            Console.Beep();
+            ExecuteInNewThread(PlayRingingSound, false);
 
             Log.Logger.Information($"Making noise done");
         }
 
-        protected virtual void SnoozeRdminder()
+        protected virtual void SnoozeReminder()
         {
             Log.Logger.Information($"Snoozing reminder [reminder name = {Reminder.Name}]");
 
             Proxy.SnoozeReminder(Reminder.Name);
-
-            //TODO: why is not form automatically closed because we have dialog reuslt in both button properties? maybe because its not called with RunDialog?
-            Close();
 
             Log.Logger.Information($"Snoozing reminder [reminder name = {Reminder.Name}] done");
         }
@@ -132,12 +162,40 @@ namespace AudioReminderRinging
 
             Proxy.DismissReminder(Reminder.Name);
 
-            //TODO: why is not form automatically closed because we have dialog reuslt in both button properties? maybe because its not called with RunDialog?
-            Close();
-
             Log.Logger.Information($"Dismissing reminder [reminder name = {Reminder.Name}] done");
         }
         #endregion
 
+
+        #region Playing sound
+
+        /// <summary>
+        /// Provides background execution which doesn't block UI.
+        /// When keepProgramOpen is used, program is not closed until the task is finished.
+        /// </summary>
+        private static void ExecuteInNewThread(ThreadStart task, bool keepProgramOpen)
+        {
+            var newThread = new Thread(task);
+            newThread.IsBackground = !keepProgramOpen;
+
+            newThread.Start();
+        }
+
+        private static void PlayRingingSound()
+        {
+            var player = new System.Media.SoundPlayer();
+            player.Stream = Properties.Resources._18637_1464805961;
+            player.PlaySync();
+
+            //TODO: When configureable sounds are added validate file existance; Play this default sound if configured sound is not present
+        }
+
+        #endregion
+        
+        
+        private void ReminderRingingForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //TODO: check if we should catch OnClosing event (excluding when dismiss is pressed or validation failed or we are in test mode). That may be dangerous if there are unhandled exceptions during sending of snooze request
+        }
     }
 }

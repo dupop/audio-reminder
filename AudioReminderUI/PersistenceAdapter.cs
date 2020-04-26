@@ -14,8 +14,8 @@ using System.Windows.Forms;
 
 namespace AudioReminderUI
 {
-    //TODO: Is this proxying of proxy too much redudant? Where should validations be placed, and should we used AudioReminderWebServiceClient directly? Maybe handle this by some response value or code?
-    //TODO: how should provider work when service is not running?
+    //TODO: Is this proxying of proxy too much redudant? Move validations to webservice, check if we need any of them here. Should we used AudioReminderWebServiceClient directly? Maybe handle this by some response value or code?
+    //TODO: Handle no service present. Prevent UI starting without it. Same for ringer.
     public class PersistenceAdapter : IPersistenceAdapter
     {
         AudioReminderWebServiceClient Proxy { get; set; }

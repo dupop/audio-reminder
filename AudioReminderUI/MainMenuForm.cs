@@ -19,13 +19,12 @@ namespace AudioReminderUI
             InitializeComponent();
 
             PersistenceAdapter = new PersistenceAdapter();
-
-            
+            Icon = AudioReminderCore.Properties.Resources.AudioReminderIcon;
         }
 
         private void createReminderButton_Click(object sender, EventArgs e)
         {
-            CreateAndUpdateReminderForm createReminderForm = new CreateAndUpdateReminderForm(PersistenceAdapter);
+            var createReminderForm = new CreateAndUpdateReminderForm(PersistenceAdapter);
             createReminderForm.ShowDialog();
 
             if (createReminderForm.DialogResult != DialogResult.OK)
@@ -40,15 +39,27 @@ namespace AudioReminderUI
 
         private void remindersButton_Click(object sender, EventArgs e)
         {
-            ReminderListForm form = new ReminderListForm(PersistenceAdapter);
+            var form = new ReminderListForm(PersistenceAdapter);
             form.ShowDialog();
         }
 
         private void Settings_Click(object sender, EventArgs e)
         {
 
-            SettingsForm settingsForm = new SettingsForm(PersistenceAdapter);
+            var settingsForm = new SettingsForm(PersistenceAdapter);
             settingsForm.ShowDialog();
+        }
+
+        private void aboutButton_Click(object sender, EventArgs e)
+        {
+            var aboutForm = new AboutForm();
+            aboutForm.ShowDialog();
+        }
+
+        private void helpButton_Click(object sender, EventArgs e)
+        {
+            var aboutForm = new HelpForm();
+            aboutForm.ShowDialog();
         }
 
     }

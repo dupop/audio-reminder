@@ -30,13 +30,15 @@
         {
             this.createReminderButton = new System.Windows.Forms.Button();
             this.remindersButton = new System.Windows.Forms.Button();
-            this.Settings = new System.Windows.Forms.Button();
+            this.settingsButton = new System.Windows.Forms.Button();
+            this.aboutButton = new System.Windows.Forms.Button();
+            this.helpButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // createReminderButton
             // 
             this.createReminderButton.AutoSize = true;
-            this.createReminderButton.Location = new System.Drawing.Point(118, 99);
+            this.createReminderButton.Location = new System.Drawing.Point(119, 66);
             this.createReminderButton.Name = "createReminderButton";
             this.createReminderButton.Size = new System.Drawing.Size(91, 23);
             this.createReminderButton.TabIndex = 0;
@@ -46,7 +48,7 @@
             // 
             // remindersButton
             // 
-            this.remindersButton.Location = new System.Drawing.Point(118, 128);
+            this.remindersButton.Location = new System.Drawing.Point(119, 95);
             this.remindersButton.Name = "remindersButton";
             this.remindersButton.Size = new System.Drawing.Size(91, 23);
             this.remindersButton.TabIndex = 1;
@@ -54,22 +56,45 @@
             this.remindersButton.UseVisualStyleBackColor = true;
             this.remindersButton.Click += new System.EventHandler(this.remindersButton_Click);
             // 
-            // Settings
+            // settingsButton
             // 
-            this.Settings.Location = new System.Drawing.Point(118, 157);
-            this.Settings.Name = "Settings";
-            this.Settings.Size = new System.Drawing.Size(91, 23);
-            this.Settings.TabIndex = 2;
-            this.Settings.Text = "Settings";
-            this.Settings.UseVisualStyleBackColor = true;
-            this.Settings.Click += new System.EventHandler(this.Settings_Click);
+            this.settingsButton.Location = new System.Drawing.Point(119, 124);
+            this.settingsButton.Name = "settingsButton";
+            this.settingsButton.Size = new System.Drawing.Size(91, 23);
+            this.settingsButton.TabIndex = 2;
+            this.settingsButton.Text = "Settings";
+            this.settingsButton.UseVisualStyleBackColor = true;
+            this.settingsButton.Click += new System.EventHandler(this.Settings_Click);
+            // 
+            // aboutButton
+            // 
+            this.aboutButton.Location = new System.Drawing.Point(119, 182);
+            this.aboutButton.Name = "aboutButton";
+            this.aboutButton.Size = new System.Drawing.Size(91, 23);
+            this.aboutButton.TabIndex = 3;
+            this.aboutButton.Text = "About";
+            this.aboutButton.UseVisualStyleBackColor = true;
+            this.aboutButton.Click += new System.EventHandler(this.aboutButton_Click);
+            // 
+            // helpButton
+            // 
+            this.helpButton.Enabled = false;
+            this.helpButton.Location = new System.Drawing.Point(119, 153);
+            this.helpButton.Name = "helpButton";
+            this.helpButton.Size = new System.Drawing.Size(91, 23);
+            this.helpButton.TabIndex = 4;
+            this.helpButton.Text = "Help";
+            this.helpButton.UseVisualStyleBackColor = true;
+            this.helpButton.Click += new System.EventHandler(this.helpButton_Click);
             // 
             // MainMenuForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(335, 306);
-            this.Controls.Add(this.Settings);
+            this.Controls.Add(this.helpButton);
+            this.Controls.Add(this.aboutButton);
+            this.Controls.Add(this.settingsButton);
             this.Controls.Add(this.remindersButton);
             this.Controls.Add(this.createReminderButton);
             this.Name = "MainMenuForm";
@@ -83,6 +108,8 @@
 
         private System.Windows.Forms.Button createReminderButton;
         private System.Windows.Forms.Button remindersButton;
-        private System.Windows.Forms.Button Settings;
+        private System.Windows.Forms.Button settingsButton;
+        private System.Windows.Forms.Button aboutButton;
+        private System.Windows.Forms.Button helpButton;
     }
 }

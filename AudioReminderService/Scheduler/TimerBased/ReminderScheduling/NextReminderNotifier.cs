@@ -107,7 +107,8 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
                 return;
             }
 
-            Log.Logger.Information($"Firing OnReminderElapsed event for [name = {elapsedReminder.Name}] so that it can be added to elapsed reimnders list");
+            //UserInteraction manager already logs receival of this event
+            //Log.Logger.Information($"Firing OnReminderElapsed event for [name = {elapsedReminder.Name}] so that it can be added to elapsed reimnders list");
 
             //Add reminder to list of elapsed reminders
             OnReminderElapsed(elapsedReminder, now);
@@ -177,12 +178,13 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
 
         protected virtual List<ReminderEntity> CloneAndSortOnlyActiveReminders(IList<ReminderEntity> allReminders)
         {
-            List<ReminderEntity> onlyActiveReminders = ActiveSortedReminders = allReminders
+            List<ReminderEntity> onlyActiveReminders = allReminders
                             .Where(r => !r.Dismissed)
                             .Select(r => (ReminderEntity)r.Clone()) //TODO: check later how will this cloning be compatible with reminder ID, will we duplicate it also?
                             .OrderBy(r => r.ScheduledTime)
                             .ToList();
-
+            
+            Log.Logger.Information($"Updated list of active reminders in NextReminderScheduler contains {onlyActiveReminders.Count} reminder(s).");
             return onlyActiveReminders;
         }
 
@@ -213,7 +215,7 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
             
             int intervalMs = GetTimeInMsUntilNextRinging(nextReminder, now);
 
-            Log.Logger.Information($"Starting NextReminderNotifier timer [Reminder name = {nextReminder.Name}, Interval = {intervalMs} ms] ");
+            Log.Logger.Information($"Starting NextReminderNotifier timer [Reminder name = {nextReminder.Name}, Interval = {intervalMs} ms, Scheduled at {nextReminder.ScheduledTime} UTC] ");
             
             NextReminderTimer.Interval = intervalMs;
             NextReminderTimer.Start();

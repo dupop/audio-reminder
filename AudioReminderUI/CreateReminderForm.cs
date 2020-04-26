@@ -22,7 +22,9 @@ namespace AudioReminderUI
         public CreateAndUpdateReminderForm(PersistenceAdapter nameChecker)
         {
             InitializeComponent();
+
             this.nameChecker = nameChecker;
+            Icon = AudioReminderCore.Properties.Resources.AudioReminderIcon;
             Text = "Create reminder";
         }
         public CreateAndUpdateReminderForm(PersistenceAdapter nameChecker, ReminderEntity reminderToUpdate)
@@ -44,15 +46,13 @@ namespace AudioReminderUI
             hoursNumericBox.Value = scheduledLocalTime.Hour;
             minuteNumbericBox.Value = scheduledLocalTime.Minute;
 
-            repeatWeeklyCheckBox.Checked = reminderToUpdate.RepeatPeriod == RepeatPeriod.Weekly;
-
             for (int i = 0; i < 7; i++)
             {
                 repeatWeeklyCheckedListBox.SetItemCheckState(i, reminderToUpdate.RepeatWeeklyDays[i] ? CheckState.Checked : CheckState.Unchecked);
             }
 
             repeatMonthlyCheckBox.Checked = reminderToUpdate.RepeatPeriod == RepeatPeriod.Monthly;
-            
+
             repeatYearlyCheckBox.Checked = reminderToUpdate.RepeatPeriod == RepeatPeriod.Yearly;
         }
 
@@ -71,31 +71,24 @@ namespace AudioReminderUI
 
         protected virtual ReminderEntity CreateReminderEntity()
         {
-            DateTime scheduledDateTime = scheduledDatePicker.Value + new TimeSpan((int)hoursNumericBox.Value, (int)minuteNumbericBox.Value, 0);
+            DateTime scheduledDateTime = scheduledDatePicker.Value.Date + new TimeSpan((int)hoursNumericBox.Value, (int)minuteNumbericBox.Value, 0);
             DateTime scheduledDateTimeUtc = ConvertFromLocalToUtc(scheduledDateTime);
 
             //create bool array from the checkbox list
-            bool repeatWeekly = repeatWeeklyCheckBox.Checked;
             bool[] repeatWeeklyDays = new bool[7];
-            if (repeatWeekly)
+            foreach (int checkedIndex in repeatWeeklyCheckedListBox.CheckedIndices)
             {
-                foreach (int checkedIndex in repeatWeeklyCheckedListBox.CheckedIndices)
-                {
-                    repeatWeeklyDays[checkedIndex] = true;
-                }
+                repeatWeeklyDays[checkedIndex] = true;
             }
 
             //disable weekly flag if 0 days are selected
-            if (!repeatWeeklyDays.Any())
-            {
-                repeatWeekly = false;
-            }
+            bool repeatWeekly = AnyChecked(repeatWeeklyDays);
 
             RepeatPeriod repeatPeriod = GetRepeatPeriod(repeatWeekly);
 
             var reminderEntity = new ReminderEntity()
             {
-                Name = reminderNameStringBox.Text,
+                Name = SanitizeReminderName(reminderNameStringBox.Text),
                 ScheduledTime = scheduledDateTimeUtc,
                 RepeatPeriod = repeatPeriod,
                 RepeatWeeklyDays = repeatWeeklyDays
@@ -104,10 +97,52 @@ namespace AudioReminderUI
             return reminderEntity;
         }
 
+
+        //TODO: remove this temporary fix when Reminder IDs are used instead of name + test support for cyrilic and other unicode characters
+        #region Reminder name sanitization
+
+        private string SanitizeReminderName(string userInput)
+        {
+            return new string(userInput.Select(SanitizeLetter).ToArray());
+        }
+
+        private static char SanitizeLetter(char character)
+        {
+
+            //ASCII alpahnumeric chars are safe for program arguments
+            bool isLowerCaseAsciiLetter = character >= 'a' && character <= 'z';
+            bool isUpperCaseAsciiLetter = character >= 'A' && character <= 'Z';
+            bool isDigit = character >= '0' && character <= '9';
+            if (isLowerCaseAsciiLetter || isUpperCaseAsciiLetter || isDigit)
+            {
+                return character;
+            }
+
+            //space may be translated to underscore
+            if (character == ' ' || character == '_')
+            {
+                return '_';
+            }
+
+            //other character will become question mark
+            return '?';
+        }
+
+        #endregion
+
+
+        /// <summary>
+        /// Determines if any value in the array is true
+        /// </summary>
+        public static bool AnyChecked(bool[] repeatWeeklyDays)
+        {
+            return Array.Exists(repeatWeeklyDays, element => element == true);
+        }
+
         protected virtual RepeatPeriod GetRepeatPeriod(bool repeatWeekly)
         {
             RepeatPeriod repeatPeriod;
-            
+
             if (repeatYearlyCheckBox.Checked)
             {
                 repeatPeriod = RepeatPeriod.Yearly;
@@ -130,12 +165,14 @@ namespace AudioReminderUI
 
         protected virtual bool ValidateInput()
         {
-            //TODO: validation aginst reminder set in the past?
-            //TODO: validation or even better warning for multiple periods checked
-            //TODO: prohibit on UI possibility that user adds weekly recuring event, but sets first occurence in 3 years... or at least put warning
+            //TODO DP->SI: validation aginst reminder set in the past?
+            //TODO DP->SI: validation or even better warning for multiple periods checked
+            //TODO DP->SI: add warning if user attempts to create recuring event in future so that one or more occurence of reminder are skipped between now and the scheduled time.
+            //Such a reminder would in some way be a contradiction because user violates his own rules. No need to keep track of such an edge case for now.
+            //TODO: maybe add validation against special characters in reminder name that would interfere with xml persistence although CDATA elemtns should have some protection already
 
             string reminderName = reminderNameStringBox.Text;
-            bool reminderNameIsEmpty =  string.IsNullOrWhiteSpace(reminderName);
+            bool reminderNameIsEmpty = string.IsNullOrWhiteSpace(reminderName);
 
             if (reminderNameIsEmpty)
             {
@@ -144,7 +181,7 @@ namespace AudioReminderUI
             }
 
             bool nameSameAsBefore = oldValueOfReminderToBeUpdated?.Name == reminderName;
-            if(!nameSameAsBefore && !IsNameAvialable(reminderName))
+            if (!nameSameAsBefore && !IsNameAvialable(reminderName))
             {
                 ErrorDialogUtility.ErrorDialog("Reminder name already exists");
                 return false;
@@ -158,7 +195,7 @@ namespace AudioReminderUI
         {
 
             bool nameAvialable = nameChecker.Load(reminderName) == null;
-            
+
             Log.Logger.Information($"Checking if reminder name '{reminderName}' is avialable done. Result is {nameAvialable}");
             return nameAvialable;
         }
