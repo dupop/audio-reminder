@@ -183,7 +183,8 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
                             .Select(r => (ReminderEntity)r.Clone()) //TODO: check later how will this cloning be compatible with reminder ID, will we duplicate it also?
                             .OrderBy(r => r.ScheduledTime)
                             .ToList();
-
+            
+            Log.Logger.Information($"Updated list of active reminders in NextReminderScheduler contains {onlyActiveReminders.Count} reminder(s).");
             return onlyActiveReminders;
         }
 
