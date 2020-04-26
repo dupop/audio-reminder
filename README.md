@@ -1,5 +1,5 @@
 # audio-reminder
-![Project diagram](https://github.com/dupop/audio-reminder/blob/Documentation/develop/Project_component_diagram.png)
+![Project diagram](https://github.com/dupop/audio-reminder/blob/develop/Documentation/Project_component_diagram.png)
 
 Project main features status:
 - [x] Components (projects) created - win service, class lib and win forms apps
@@ -14,6 +14,6 @@ Project main features status:
 
 Screenshots:
 
-![Project diagram](https://github.com/dupop/audio-reminder/blob/Documentation/develop/CreateReminder_Screenshot.png)
-![Project diagram](https://github.com/dupop/audio-reminder/blob/Documentation/develop/Settings_Screenshot.png)
+![CreateReminder Screenshot](https://github.com/dupop/audio-reminder/blob/develop/Documentation/CreateReminder_Screenshot.png)
+![Settings Screenshot](https://github.com/dupop/audio-reminder/blob/develop/Documentation/Settings_Screenshot.png)
 
