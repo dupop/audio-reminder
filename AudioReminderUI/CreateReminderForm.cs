@@ -71,7 +71,7 @@ namespace AudioReminderUI
 
         protected virtual ReminderEntity CreateReminderEntity()
         {
-            DateTime scheduledDateTime = scheduledDatePicker.Value + new TimeSpan((int)hoursNumericBox.Value, (int)minuteNumbericBox.Value, 0);
+            DateTime scheduledDateTime = scheduledDatePicker.Value.Date + new TimeSpan((int)hoursNumericBox.Value, (int)minuteNumbericBox.Value, 0);
             DateTime scheduledDateTimeUtc = ConvertFromLocalToUtc(scheduledDateTime);
 
             //create bool array from the checkbox list
