@@ -117,8 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="_14746_1460059275" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\14746_1460059275.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Sound effects taken from https://www.freesfx.co.uk/
+
+Contributors:
+
+Development:
+https://github.com/dupop
+https://github.com/super-ivanka
+
+Dedication:
+The program is dedicated to dupop's friend Rale.</value>
   </data>
 </root>
