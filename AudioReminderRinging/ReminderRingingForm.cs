@@ -9,6 +9,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -136,7 +137,7 @@ namespace AudioReminderRinging
         {
             Log.Logger.Information($"Making noise");
 
-            Console.Beep();
+            ExecuteInNewThread(PlayRingingSound, false);
 
             Log.Logger.Information($"Making noise done");
         }
@@ -160,6 +161,33 @@ namespace AudioReminderRinging
         }
         #endregion
 
+
+        #region Playing sound
+
+        /// <summary>
+        /// Provides background execution which doesn't block UI.
+        /// When keepProgramOpen is used, program is not closed until the task is finished.
+        /// </summary>
+        private static void ExecuteInNewThread(ThreadStart task, bool keepProgramOpen)
+        {
+            var newThread = new Thread(task);
+            newThread.IsBackground = !keepProgramOpen;
+
+            newThread.Start();
+        }
+
+        private static void PlayRingingSound()
+        {
+            var player = new System.Media.SoundPlayer();
+            player.Stream = Properties.Resources._18637_1464805961;
+            player.PlaySync();
+
+            //TODO: When configureable sounds are added validate file existance; Play this default sound if configured sound is not present
+        }
+
+        #endregion
+        
+        
         private void ReminderRingingForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             //TODO: check if we should catch OnClosing event (excluding when dismiss is pressed or validation failed or we are in test mode). That may be dangerous if there are unhandled exceptions during sending of snooze request
