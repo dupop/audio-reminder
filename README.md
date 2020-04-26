@@ -1,5 +1,5 @@
 # audio-reminder
-![Project diagram](https://github.com/dupop/audio-reminder/blob/develop/Project%20component%20diagram.png)
+![Project diagram](https://github.com/dupop/audio-reminder/blob/Documentation/develop/Project_component_diagram.png)
 
 Project main features status:
 - [x] Components (projects) created - win service, class lib and win forms apps
@@ -11,3 +11,9 @@ Project main features status:
 - [x] Reminder scheduler - heart of the app, keeps track of next reminder to be fired
 - [ ] Installer, Uninstaller, Updater
 - [ ] Translation config system
+
+Screenshots:
+
+![Project diagram](https://github.com/dupop/audio-reminder/blob/Documentation/develop/CreateReminder_Screenshot.png)
+![Project diagram](https://github.com/dupop/audio-reminder/blob/Documentation/develop/Settings_Screenshot.png)
+
