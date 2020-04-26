@@ -29,7 +29,9 @@ namespace AudioReminderUI
         public ReminderListForm(PersistenceAdapter persistenceAdapter)
         {
             InitializeComponent();
-            this.PersistenceAdapter = persistenceAdapter;
+            
+            PersistenceAdapter = persistenceAdapter;
+            Icon = AudioReminderCore.Properties.Resources.AudioReminderIcon;
         }
 
         private void ReminderListForm_Load(object sender, EventArgs e)

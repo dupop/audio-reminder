@@ -22,7 +22,9 @@ namespace AudioReminderUI
         public CreateAndUpdateReminderForm(PersistenceAdapter nameChecker)
         {
             InitializeComponent();
+
             this.nameChecker = nameChecker;
+            Icon = AudioReminderCore.Properties.Resources.AudioReminderIcon;
             Text = "Create reminder";
         }
         public CreateAndUpdateReminderForm(PersistenceAdapter nameChecker, ReminderEntity reminderToUpdate)

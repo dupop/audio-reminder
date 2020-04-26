@@ -19,8 +19,7 @@ namespace AudioReminderUI
             InitializeComponent();
 
             PersistenceAdapter = new PersistenceAdapter();
-
-            
+            Icon = AudioReminderCore.Properties.Resources.AudioReminderIcon;
         }
 
         private void createReminderButton_Click(object sender, EventArgs e)
