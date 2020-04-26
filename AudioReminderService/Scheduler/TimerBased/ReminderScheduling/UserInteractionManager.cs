@@ -202,7 +202,7 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
                 reminderEntity.Dismissed = true;
             }
 
-            ElapsedActiveReminders.Remove(reminderEntity);
+            ElapsedActiveReminders.RemoveAll(r => r.Name == reminderEntity.Name);
 
             //TODO: test this - we are here potenitally calling ringer again before response for Dismissing is returned.
             GoToRingingOrIdleState(now);
@@ -231,7 +231,7 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
             else
             {
                 UserState = UserInteractionState.NoElapsedReminders;
-                Log.Logger.Information($"No more elapsed reminders in the list. GoToRingingOrIdleState method is setting state to NoElapsedReminders");
+                Log.Logger.Information($"No elapsed reminders in the list. GoToRingingOrIdleState method is setting state to NoElapsedReminders");
             }
         }
 
@@ -440,7 +440,6 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
                 else
                 {
                     remindersToBeRemoved.Add(elapsedReminder);
-                    //TODO: handle scenario wehere this is consequence of renaming elapsed remiinder, because would be able to bypass preventing of "deletion" of elapsed timers (whcih is in plan to be added)
                 }
             }
 
@@ -452,7 +451,7 @@ namespace AudioReminderService.Scheduler.TimerBased.ReminderScheduling
 
             foreach (ReminderEntity reminderToBeRemoved in remindersToBeRemoved)
             {
-                ElapsedActiveReminders.Remove(reminderToBeRemoved);
+                ElapsedActiveReminders.RemoveAll(r => r.Name == reminderToBeRemoved.Name);
             }
 
 

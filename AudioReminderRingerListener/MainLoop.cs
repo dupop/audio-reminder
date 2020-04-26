@@ -13,6 +13,7 @@ namespace AudioReminderRingerListener
 
     class MainLoop
     {
+        //TODO: change code to use different pipes or handle async issues in some other way because currently beep can't be played until ringing dialog is open - and after that it plays late! It could probably be played multiple times in that case.
         public static void RunLoop()
         {
             do
