@@ -4,7 +4,6 @@ using AudioReminderService.Persistence;
 using AudioReminderService.RingerCalling;
 using AudioReminderService.Scheduler;
 using AudioReminderService.WebService;
-using GlobalHotKey;
 using Serilog;
 using Serilog.Core;
 using System;
