@@ -80,7 +80,7 @@ namespace AudioReminderUI
             {
                 repeatWeeklyDays[checkedIndex] = true;
             }
-            
+
             //disable weekly flag if 0 days are selected
             bool repeatWeekly = AnyChecked(repeatWeeklyDays);
 
@@ -88,7 +88,7 @@ namespace AudioReminderUI
 
             var reminderEntity = new ReminderEntity()
             {
-                Name = reminderNameStringBox.Text,
+                Name = SanitizeReminderName(reminderNameStringBox.Text),
                 ScheduledTime = scheduledDateTimeUtc,
                 RepeatPeriod = repeatPeriod,
                 RepeatWeeklyDays = repeatWeeklyDays
@@ -96,6 +96,39 @@ namespace AudioReminderUI
 
             return reminderEntity;
         }
+
+
+        //TODO: remove this temporary fix when Reminder IDs are used instead of name + test support for cyrilic and other unicode characters
+        #region Reminder name sanitization
+
+        private string SanitizeReminderName(string userInput)
+        {
+            return new string(userInput.Select(SanitizeLetter).ToArray());
+        }
+
+        private static char SanitizeLetter(char character)
+        {
+
+            //ASCII alpahnumeric chars are safe for program arguments
+            bool isLowerCaseAsciiLetter = character >= 'a' && character <= 'z';
+            bool isUpperCaseAsciiLetter = character >= 'A' && character <= 'Z';
+            bool isDigit = character >= '0' && character <= '9';
+            if (isLowerCaseAsciiLetter || isUpperCaseAsciiLetter || isDigit)
+            {
+                return character;
+            }
+
+            //space may be translated to underscore
+            if (character == ' ' || character == '_')
+            {
+                return '_';
+            }
+
+            //other character will become question mark
+            return '?';
+        }
+
+        #endregion
 
 
         /// <summary>
