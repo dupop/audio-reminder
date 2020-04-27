@@ -71,7 +71,7 @@ namespace AudioReminderUI
 
         protected virtual ReminderEntity CreateReminderEntity()
         {
-            DateTime scheduledDateTime = scheduledDatePicker.Value.Date + new TimeSpan((int)hoursNumericBox.Value, (int)minuteNumbericBox.Value, 0);
+            DateTime scheduledDateTime = GetDateTimeFromUI();
             DateTime scheduledDateTimeUtc = ConvertFromLocalToUtc(scheduledDateTime);
 
             //create bool array from the checkbox list
@@ -95,6 +95,11 @@ namespace AudioReminderUI
             };
 
             return reminderEntity;
+        }
+
+        private DateTime GetDateTimeFromUI()
+        {
+            return scheduledDatePicker.Value.Date + new TimeSpan((int)hoursNumericBox.Value, (int)minuteNumbericBox.Value, 0);
         }
 
 
@@ -170,6 +175,13 @@ namespace AudioReminderUI
             //TODO DP->SI: add warning if user attempts to create recuring event in future so that one or more occurence of reminder are skipped between now and the scheduled time.
             //Such a reminder would in some way be a contradiction because user violates his own rules. No need to keep track of such an edge case for now.
             //TODO: maybe add validation against special characters in reminder name that would interfere with xml persistence although CDATA elemtns should have some protection already
+
+            DateTime scheduledDateTime = GetDateTimeFromUI();
+            if (scheduledDateTime < DateTime.Now)
+            {
+                ErrorDialogUtility.ErrorDialog("Reminder is already elapsed");
+                return false;
+            }    
 
             string reminderName = reminderNameStringBox.Text;
             bool reminderNameIsEmpty = string.IsNullOrWhiteSpace(reminderName);
