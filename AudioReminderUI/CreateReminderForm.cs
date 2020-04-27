@@ -170,7 +170,6 @@ namespace AudioReminderUI
 
         protected virtual bool ValidateInput()
         {
-            //TODO DP->SI: validation aginst reminder set in the past?
             //TODO DP->SI: validation or even better warning for multiple periods checked
             //TODO DP->SI: add warning if user attempts to create recuring event in future so that one or more occurence of reminder are skipped between now and the scheduled time.
             //Such a reminder would in some way be a contradiction because user violates his own rules. No need to keep track of such an edge case for now.
