@@ -184,8 +184,9 @@ namespace AudioReminderRinging
         private static void PlayRingingSound()
         {
             var player = new System.Media.SoundPlayer();
-            player.Stream = Properties.Resources._18637_1464805961;
-            player.PlaySync();
+            //player.Stream = Properties.Resources._18637_1464805961;
+            //player.PlaySync();
+            Console.Beep(); //TODO: enable the nice sounds effects as sone as licence terms are clarified
 
             //TODO: When configureable sounds are added validate file existance; Play this default sound if configured sound is not present
         }

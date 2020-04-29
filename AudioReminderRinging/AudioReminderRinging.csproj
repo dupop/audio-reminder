@@ -99,7 +99,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AudioReminderIcon.ico" />
-    <None Include="Resources\18637_1464805961.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
