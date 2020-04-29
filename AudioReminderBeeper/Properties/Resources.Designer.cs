@@ -59,14 +59,5 @@ namespace AudioReminderBeeper.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
-        /// </summary>
-        internal static System.IO.UnmanagedMemoryStream _14746_1460059275 {
-            get {
-                return ResourceManager.GetStream("_14746_1460059275", resourceCulture);
-            }
-        }
     }
 }

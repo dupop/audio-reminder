@@ -59,14 +59,5 @@ namespace AudioReminderRinging.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
-        /// </summary>
-        internal static System.IO.UnmanagedMemoryStream _18637_1464805961 {
-            get {
-                return ResourceManager.GetStream("_18637_1464805961", resourceCulture);
-            }
-        }
     }
 }
