@@ -170,7 +170,6 @@ namespace AudioReminderUI
 
         protected virtual bool ValidateInput()
         {
-            //TODO DP->SI: validation or even better warning for multiple periods checked
             //TODO DP->SI: add warning if user attempts to create recuring event in future so that one or more occurence of reminder are skipped between now and the scheduled time.
             //Such a reminder would in some way be a contradiction because user violates his own rules. No need to keep track of such an edge case for now.
             //TODO: maybe add validation against special characters in reminder name that would interfere with xml persistence although CDATA elemtns should have some protection already
@@ -198,8 +197,49 @@ namespace AudioReminderUI
                 return false;
             }
 
+            bool multiplePeriodsChecked = DetermineIfMultiplePeriodsChecked();
+            if (multiplePeriodsChecked)
+            {
+                ErrorDialogUtility.ErrorDialog("Multiple reminder periods selected");
+                return false;
+            }
+
             Log.Logger.Information($"Reminder '{reminderName}' valid.");
             return true;
+        }
+
+        protected virtual bool DetermineIfMultiplePeriodsChecked()
+        {
+            bool repeatWeekly = DetermineIfAtLeastOneDayInWeekIsChecked();
+
+            int numberOfPeriodsChecked = 0;
+            if (repeatWeekly)
+            {
+                numberOfPeriodsChecked++;
+            }
+            if (repeatMonthlyCheckBox.Checked)
+            {
+                numberOfPeriodsChecked++;
+            }
+            if (repeatYearlyCheckBox.Checked)
+            {
+                numberOfPeriodsChecked++;
+            }
+
+            bool multiplePeriodsChecked = numberOfPeriodsChecked > 1;
+            return multiplePeriodsChecked;
+        }
+
+        protected virtual bool DetermineIfAtLeastOneDayInWeekIsChecked()
+        {
+            bool[] repeatWeeklyDays = new bool[7];
+            foreach (int checkedIndex in repeatWeeklyCheckedListBox.CheckedIndices)
+            {
+                repeatWeeklyDays[checkedIndex] = true;
+            }
+
+            bool repeatWeekly = AnyChecked(repeatWeeklyDays);
+            return repeatWeekly;
         }
 
         protected virtual bool IsNameAvialable(string reminderName)
