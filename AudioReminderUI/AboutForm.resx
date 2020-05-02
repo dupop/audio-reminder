@@ -118,7 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="label1.Text" xml:space="preserve">
-    <value>Sound effects taken from https://www.freesfx.co.uk/
+    <value>Sound effects attribution:
+
+Sound effects taken from https://freesound.org/.
+Sound effects were created by the following users:
+https://freesound.org/people/iut_Paris8/
+https://freesound.org/people/LordFrodo10/
 
 Contributors:
 

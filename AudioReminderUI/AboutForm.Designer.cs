@@ -40,7 +40,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(258, 130);
+            this.label1.Size = new System.Drawing.Size(245, 195);
             this.label1.TabIndex = 0;
             this.label1.Text = resources.GetString("label1.Text");
             // 
@@ -48,11 +48,11 @@
             // 
             this.visitSoundsWebsiteButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.visitSoundsWebsiteButton.AutoSize = true;
-            this.visitSoundsWebsiteButton.Location = new System.Drawing.Point(279, 287);
+            this.visitSoundsWebsiteButton.Location = new System.Drawing.Point(252, 287);
             this.visitSoundsWebsiteButton.Name = "visitSoundsWebsiteButton";
-            this.visitSoundsWebsiteButton.Size = new System.Drawing.Size(116, 23);
+            this.visitSoundsWebsiteButton.Size = new System.Drawing.Size(143, 23);
             this.visitSoundsWebsiteButton.TabIndex = 1;
-            this.visitSoundsWebsiteButton.Text = "Visit freeSFX website";
+            this.visitSoundsWebsiteButton.Text = "Visit freesound.org website";
             this.visitSoundsWebsiteButton.UseVisualStyleBackColor = true;
             this.visitSoundsWebsiteButton.Click += new System.EventHandler(this.visitSoundsWebsiteButton_Click);
             // 
@@ -60,7 +60,7 @@
             // 
             this.visitProjectWebsiteButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.visitProjectWebsiteButton.AutoSize = true;
-            this.visitProjectWebsiteButton.Location = new System.Drawing.Point(137, 287);
+            this.visitProjectWebsiteButton.Location = new System.Drawing.Point(110, 287);
             this.visitProjectWebsiteButton.Name = "visitProjectWebsiteButton";
             this.visitProjectWebsiteButton.Size = new System.Drawing.Size(136, 23);
             this.visitProjectWebsiteButton.TabIndex = 2;
