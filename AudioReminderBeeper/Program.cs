@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -34,9 +35,13 @@ namespace AudioReminderBeeper
         private static void PlayBeepSound()
         {
             var player = new System.Media.SoundPlayer();
-            //player.Stream = Properties.Resources._14746_1460059275;
-            //player.PlaySync();
-            Console.Beep(); //TODO: enable the nice sounds effects as sone as licence terms are clarified
+            player.Stream = GetBeepSound();
+            player.PlaySync();
+        }
+
+        private static Stream GetBeepSound()
+        {
+            return Properties.Resources._491889__lordfrodo10__19_5_magia2;
 
             //TODO: When configureable sounds are added validate file existance; Play this default sound if configured sound is not present
         }

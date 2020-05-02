@@ -28,7 +28,7 @@ namespace AudioReminderUI
         private void visitSoundsWebsiteButton_Click(object sender, EventArgs e)
         {
             //TODO: extract somwhere this and the link in the contributors description
-            System.Diagnostics.Process.Start("https://www.freesfx.co.uk/"); 
+            System.Diagnostics.Process.Start("https://freesound.org/"); 
         }
 
     }

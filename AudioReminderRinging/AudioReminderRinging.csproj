@@ -99,9 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AudioReminderIcon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\" />
+    <None Include="Resources\262622__iut-paris8__leber-zoe-2014-2015-xylo PCM.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
