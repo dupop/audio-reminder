@@ -40,7 +40,7 @@
             this.visitSoundsWebsiteButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.visitSoundsWebsiteButton.AutoSize = true;
             this.visitSoundsWebsiteButton.Location = new System.Drawing.Point(336, 353);
-            this.visitSoundsWebsiteButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.visitSoundsWebsiteButton.Margin = new System.Windows.Forms.Padding(4);
             this.visitSoundsWebsiteButton.Name = "visitSoundsWebsiteButton";
             this.visitSoundsWebsiteButton.Size = new System.Drawing.Size(191, 28);
             this.visitSoundsWebsiteButton.TabIndex = 1;
@@ -53,7 +53,7 @@
             this.visitProjectWebsiteButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.visitProjectWebsiteButton.AutoSize = true;
             this.visitProjectWebsiteButton.Location = new System.Drawing.Point(147, 353);
-            this.visitProjectWebsiteButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.visitProjectWebsiteButton.Margin = new System.Windows.Forms.Padding(4);
             this.visitProjectWebsiteButton.Name = "visitProjectWebsiteButton";
             this.visitProjectWebsiteButton.Size = new System.Drawing.Size(181, 28);
             this.visitProjectWebsiteButton.TabIndex = 2;
@@ -77,6 +77,7 @@
             // 
             this.richTextBox1.Location = new System.Drawing.Point(12, 12);
             this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.ReadOnly = true;
             this.richTextBox1.Size = new System.Drawing.Size(515, 280);
             this.richTextBox1.TabIndex = 12;
             this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
@@ -91,7 +92,7 @@
             this.Controls.Add(this.backButton);
             this.Controls.Add(this.visitProjectWebsiteButton);
             this.Controls.Add(this.visitSoundsWebsiteButton);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "AboutForm";
             this.Text = "Credits";
             this.ResumeLayout(false);
