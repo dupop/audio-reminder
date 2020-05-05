@@ -22,6 +22,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioReminderUnitTests", "A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioReminderBeeper", "AudioReminderBeeper\AudioReminderBeeper.csproj", "{27C857C7-8470-4424-93FA-6683D4ADCBC0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioReminderInstaller", "AudioReminderInstaller\AudioReminderInstaller.csproj", "{0B4449C9-56EB-42BC-859C-F8364CE4A8F5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{041E9405-7C2B-4156-BDC8-586F5E8A044A} = {041E9405-7C2B-4156-BDC8-586F5E8A044A}
+		{28CD2815-61BE-4EB9-965F-1DD2385BF251} = {28CD2815-61BE-4EB9-965F-1DD2385BF251}
+		{07A4EF77-F8B4-47FB-8DE1-32071F757C4F} = {07A4EF77-F8B4-47FB-8DE1-32071F757C4F}
+		{27C857C7-8470-4424-93FA-6683D4ADCBC0} = {27C857C7-8470-4424-93FA-6683D4ADCBC0}
+		{3FBF2CE4-9963-4CA9-A40A-7A0F1ADAF7DF} = {3FBF2CE4-9963-4CA9-A40A-7A0F1ADAF7DF}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +65,10 @@ Global
 		{27C857C7-8470-4424-93FA-6683D4ADCBC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27C857C7-8470-4424-93FA-6683D4ADCBC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27C857C7-8470-4424-93FA-6683D4ADCBC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B4449C9-56EB-42BC-859C-F8364CE4A8F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B4449C9-56EB-42BC-859C-F8364CE4A8F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B4449C9-56EB-42BC-859C-F8364CE4A8F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B4449C9-56EB-42BC-859C-F8364CE4A8F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
