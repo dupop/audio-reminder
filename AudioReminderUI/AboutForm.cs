@@ -31,5 +31,9 @@ namespace AudioReminderUI
             System.Diagnostics.Process.Start("https://freesound.org/"); 
         }
 
+        private void creditsBox_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(e.LinkText); 
+        }
     }
 }
