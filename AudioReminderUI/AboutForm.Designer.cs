@@ -32,7 +32,7 @@
             this.visitSoundsWebsiteButton = new System.Windows.Forms.Button();
             this.visitProjectWebsiteButton = new System.Windows.Forms.Button();
             this.backButton = new System.Windows.Forms.Button();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.creditsBox = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // visitSoundsWebsiteButton
@@ -73,14 +73,18 @@
             this.backButton.Text = "Back";
             this.backButton.UseVisualStyleBackColor = true;
             // 
-            // richTextBox1
+            // creditsBox
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(12, 12);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.ReadOnly = true;
-            this.richTextBox1.Size = new System.Drawing.Size(515, 280);
-            this.richTextBox1.TabIndex = 12;
-            this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
+            this.creditsBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.creditsBox.Location = new System.Drawing.Point(12, 12);
+            this.creditsBox.Name = "creditsBox";
+            this.creditsBox.ReadOnly = true;
+            this.creditsBox.Size = new System.Drawing.Size(624, 334);
+            this.creditsBox.TabIndex = 12;
+            this.creditsBox.Text = resources.GetString("creditsBox.Text");
+            this.creditsBox.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.creditsBox_LinkClicked);
             // 
             // AboutForm
             // 
@@ -88,7 +92,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.backButton;
             this.ClientSize = new System.Drawing.Size(648, 395);
-            this.Controls.Add(this.richTextBox1);
+            this.Controls.Add(this.creditsBox);
             this.Controls.Add(this.backButton);
             this.Controls.Add(this.visitProjectWebsiteButton);
             this.Controls.Add(this.visitSoundsWebsiteButton);
@@ -104,6 +108,6 @@
         private System.Windows.Forms.Button visitSoundsWebsiteButton;
         private System.Windows.Forms.Button visitProjectWebsiteButton;
         private System.Windows.Forms.Button backButton;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox creditsBox;
     }
 }
