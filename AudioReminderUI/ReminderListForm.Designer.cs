@@ -75,7 +75,7 @@
             // remindersListBox
             // 
             this.remindersListBox.AccessibleDescription = "Press Delete key to remove selected reminder, Enter key to modify it, or space ke" +
-    "y to clone it. Press Exit key to go back. Press Exit key to go back.";
+    "y to clone it. Press Exit key to go back.";
             this.remindersListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
