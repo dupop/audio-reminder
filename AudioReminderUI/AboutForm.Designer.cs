@@ -29,28 +29,20 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutForm));
-            this.label1 = new System.Windows.Forms.Label();
             this.visitSoundsWebsiteButton = new System.Windows.Forms.Button();
             this.visitProjectWebsiteButton = new System.Windows.Forms.Button();
             this.backButton = new System.Windows.Forms.Button();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(303, 195);
-            this.label1.TabIndex = 0;
-            this.label1.Text = resources.GetString("label1.Text");
             // 
             // visitSoundsWebsiteButton
             // 
             this.visitSoundsWebsiteButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.visitSoundsWebsiteButton.AutoSize = true;
-            this.visitSoundsWebsiteButton.Location = new System.Drawing.Point(252, 287);
+            this.visitSoundsWebsiteButton.Location = new System.Drawing.Point(336, 353);
+            this.visitSoundsWebsiteButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.visitSoundsWebsiteButton.Name = "visitSoundsWebsiteButton";
-            this.visitSoundsWebsiteButton.Size = new System.Drawing.Size(143, 23);
+            this.visitSoundsWebsiteButton.Size = new System.Drawing.Size(191, 28);
             this.visitSoundsWebsiteButton.TabIndex = 1;
             this.visitSoundsWebsiteButton.Text = "Visit freesound.org website";
             this.visitSoundsWebsiteButton.UseVisualStyleBackColor = true;
@@ -60,9 +52,10 @@
             // 
             this.visitProjectWebsiteButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.visitProjectWebsiteButton.AutoSize = true;
-            this.visitProjectWebsiteButton.Location = new System.Drawing.Point(110, 287);
+            this.visitProjectWebsiteButton.Location = new System.Drawing.Point(147, 353);
+            this.visitProjectWebsiteButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.visitProjectWebsiteButton.Name = "visitProjectWebsiteButton";
-            this.visitProjectWebsiteButton.Size = new System.Drawing.Size(136, 23);
+            this.visitProjectWebsiteButton.Size = new System.Drawing.Size(181, 28);
             this.visitProjectWebsiteButton.TabIndex = 2;
             this.visitProjectWebsiteButton.Text = "Visit the project webpage";
             this.visitProjectWebsiteButton.UseVisualStyleBackColor = true;
@@ -72,24 +65,33 @@
             // 
             this.backButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.backButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.backButton.Location = new System.Drawing.Point(400, 287);
-            this.backButton.Margin = new System.Windows.Forms.Padding(2);
+            this.backButton.Location = new System.Drawing.Point(533, 353);
+            this.backButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.backButton.Name = "backButton";
-            this.backButton.Size = new System.Drawing.Size(75, 23);
+            this.backButton.Size = new System.Drawing.Size(100, 28);
             this.backButton.TabIndex = 10;
             this.backButton.Text = "Back";
             this.backButton.UseVisualStyleBackColor = true;
             // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Location = new System.Drawing.Point(12, 12);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(515, 280);
+            this.richTextBox1.TabIndex = 12;
+            this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
+            // 
             // AboutForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.backButton;
-            this.ClientSize = new System.Drawing.Size(486, 321);
+            this.ClientSize = new System.Drawing.Size(648, 395);
+            this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.backButton);
             this.Controls.Add(this.visitProjectWebsiteButton);
             this.Controls.Add(this.visitSoundsWebsiteButton);
-            this.Controls.Add(this.label1);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "AboutForm";
             this.Text = "Credits";
             this.ResumeLayout(false);
@@ -98,10 +100,9 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button visitSoundsWebsiteButton;
         private System.Windows.Forms.Button visitProjectWebsiteButton;
         private System.Windows.Forms.Button backButton;
+        private System.Windows.Forms.RichTextBox richTextBox1;
     }
 }

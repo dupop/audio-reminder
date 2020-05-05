@@ -49,7 +49,7 @@
             // 
             this.reminderNameStringBox.AccessibleName = "Reminder name";
             this.reminderNameStringBox.Location = new System.Drawing.Point(13, 39);
-            this.reminderNameStringBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.reminderNameStringBox.Margin = new System.Windows.Forms.Padding(4);
             this.reminderNameStringBox.Name = "reminderNameStringBox";
             this.reminderNameStringBox.Size = new System.Drawing.Size(421, 22);
             this.reminderNameStringBox.TabIndex = 0;
@@ -68,7 +68,7 @@
             // 
             this.repeatYearlyCheckBox.AutoSize = true;
             this.repeatYearlyCheckBox.Location = new System.Drawing.Point(235, 224);
-            this.repeatYearlyCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.repeatYearlyCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.repeatYearlyCheckBox.Name = "repeatYearlyCheckBox";
             this.repeatYearlyCheckBox.Size = new System.Drawing.Size(118, 21);
             this.repeatYearlyCheckBox.TabIndex = 6;
@@ -77,9 +77,10 @@
             // 
             // scheduledDatePicker
             // 
+            this.scheduledDatePicker.AccessibleDescription = "Use up/down and left/right arrows to change date";
             this.scheduledDatePicker.AccessibleName = "Date of first occurance";
             this.scheduledDatePicker.Location = new System.Drawing.Point(13, 95);
-            this.scheduledDatePicker.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.scheduledDatePicker.Margin = new System.Windows.Forms.Padding(4);
             this.scheduledDatePicker.Name = "scheduledDatePicker";
             this.scheduledDatePicker.Size = new System.Drawing.Size(265, 22);
             this.scheduledDatePicker.TabIndex = 1;
@@ -88,7 +89,7 @@
             // 
             this.repeatMonthlyCheckBox.AutoSize = true;
             this.repeatMonthlyCheckBox.Location = new System.Drawing.Point(235, 195);
-            this.repeatMonthlyCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.repeatMonthlyCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.repeatMonthlyCheckBox.Name = "repeatMonthlyCheckBox";
             this.repeatMonthlyCheckBox.Size = new System.Drawing.Size(129, 21);
             this.repeatMonthlyCheckBox.TabIndex = 5;
@@ -148,9 +149,10 @@
             // 
             // hoursNumericBox
             // 
+            this.hoursNumericBox.AccessibleDescription = "Use up/down arrows to change time ( hours )";
             this.hoursNumericBox.AccessibleName = "Hours";
             this.hoursNumericBox.Location = new System.Drawing.Point(297, 95);
-            this.hoursNumericBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.hoursNumericBox.Margin = new System.Windows.Forms.Padding(4);
             this.hoursNumericBox.Maximum = new decimal(new int[] {
             23,
             0,
@@ -167,9 +169,10 @@
             // 
             // minuteNumbericBox
             // 
+            this.minuteNumbericBox.AccessibleDescription = "Use up/down arrows to change time ( minutes )";
             this.minuteNumbericBox.AccessibleName = "Minutes";
             this.minuteNumbericBox.Location = new System.Drawing.Point(364, 95);
-            this.minuteNumbericBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.minuteNumbericBox.Margin = new System.Windows.Forms.Padding(4);
             this.minuteNumbericBox.Maximum = new decimal(new int[] {
             59,
             0,
@@ -216,7 +219,7 @@
             this.Controls.Add(this.repeatYearlyCheckBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.reminderNameStringBox);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "CreateAndUpdateReminderForm";
             this.Text = "CreateReminderForm";
             ((System.ComponentModel.ISupportInitialize)(this.hoursNumericBox)).EndInit();
