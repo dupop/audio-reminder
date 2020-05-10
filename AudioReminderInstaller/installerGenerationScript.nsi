@@ -5,13 +5,17 @@
 ; prompts the user asking them where to install, and drops a copy of example1.nsi
 ; there. 
 
+!define BUILD_CONFIG "Debug"
+!define OUT_DIR "bin\${BUILD_CONFIG}"
+!define INSTALLER_NAME "AudioReminderInstaller"
+!define ARTIFACTS_DIR "${OUT_DIR}\ToBePackaged"
 ;--------------------------------
 
 ; The name of the installer
-Name "Example1"
+Name "${INSTALLER_NAME} name"
 
 ; The file to write
-OutFile "example1.exe"
+OutFile "${OUT_DIR}\${INSTALLER_NAME}.exe"
 
 ; Request application privileges for Windows Vista
 RequestExecutionLevel user
@@ -38,6 +42,6 @@ Section "" ;No components page, name is not important
   SetOutPath $INSTDIR
   
   ; Put file there
-  File example1.nsi
+  File /r ${ARTIFACTS_DIR}\*"
   
 SectionEnd ; end the section

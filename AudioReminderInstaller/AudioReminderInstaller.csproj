@@ -40,10 +40,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="InstallerGenerationScript.nsi" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>rem "C:\Program Files (x86)\NSIS\makensis.exe" "$(ProjectDir)InstallerGenerationScript.nsi"
+del AudioReminderInstaller.dll
+del AudioReminderInstaller.dll.config
+del AudioReminderInstaller.pdb
+</PostBuildEvent>
   </PropertyGroup>
 </Project>
