@@ -25,13 +25,14 @@ namespace AudioReminderUI
 
             this.nameChecker = nameChecker;
             Icon = AudioReminderCore.Properties.Resources.AudioReminderIcon;
-            Text = "Create reminder";
+            Text = "Audio Reminder - Create reminder";
         }
         public CreateAndUpdateReminderForm(PersistenceAdapter nameChecker, ReminderEntity reminderToUpdate)
         {
             InitializeComponent();
             this.nameChecker = nameChecker;
-            Text = "Update reminder";
+            Icon = AudioReminderCore.Properties.Resources.AudioReminderIcon;
+            Text = "Audio Reminder - Update reminder";
             DisplayReminderToUpdate(reminderToUpdate);
             oldValueOfReminderToBeUpdated = reminderToUpdate;
         }

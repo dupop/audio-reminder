@@ -148,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AudioReminderIcon.ico" />
+    <None Include="Resources\AudioReminderImage512.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
