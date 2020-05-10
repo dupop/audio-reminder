@@ -72,4 +72,8 @@
     <Content Include="AudioReminderIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>rem Copy artifacts to folder for packiging to installer
+xcopy /e /y  /i "$(TargetDir)*" "$(SolutionDir)AudioReminderInstaller\$(OutDir)ToBePackaged\$(ProjectName)"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
