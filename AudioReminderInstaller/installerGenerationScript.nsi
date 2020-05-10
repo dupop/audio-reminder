@@ -5,17 +5,17 @@
 ; prompts the user asking them where to install, and drops a copy of example1.nsi
 ; there. 
 
-!define BUILD_CONFIG "Debug"
-!define OUT_DIR "bin\${BUILD_CONFIG}"
-!define INSTALLER_NAME "AudioReminderInstaller"
+; expected arg - BUILD_CONFIG_NAME_ARG
+
+!define OUT_DIR "bin\${BUILD_CONFIG_NAME_ARG}"
 !define ARTIFACTS_DIR "${OUT_DIR}\Artifacts"
 ;--------------------------------
 
 ; The name of the installer
-Name "${INSTALLER_NAME} name"
+Name "Audio Reminder"
 
 ; The file to write
-OutFile "${OUT_DIR}\${INSTALLER_NAME}.exe"
+OutFile "${OUT_DIR}\AudioReminderInstaller.exe"
 
 ; Request application privileges for Windows Vista
 RequestExecutionLevel user

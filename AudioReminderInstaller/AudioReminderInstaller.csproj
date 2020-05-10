@@ -41,13 +41,12 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="installerGenerationScript.nsi" />
+    <None Include="RemoveRedundatArtifacts.ps1" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>rem "C:\Program Files (x86)\NSIS\makensis.exe" "$(ProjectDir)InstallerGenerationScript.nsi"
-del AudioReminderInstaller.dll
-del AudioReminderInstaller.dll.config
-del AudioReminderInstaller.pdb
+    <PostBuildEvent>powershell.exe -noexit -file "$(ProjectDir)RemoveRedundatArtifacts.ps1" "$(ProjectDir)$(OutDir)Artifacts\\"
+"C:\Program Files (x86)\NSIS\makensis.exe" /DBUILD_CONFIG_NAME_ARG=$(ConfigurationName) "$(ProjectDir)installerGenerationScript.nsi"
 </PostBuildEvent>
   </PropertyGroup>
 </Project>
