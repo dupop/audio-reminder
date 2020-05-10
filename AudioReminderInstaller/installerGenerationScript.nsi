@@ -8,7 +8,7 @@
 !define BUILD_CONFIG "Debug"
 !define OUT_DIR "bin\${BUILD_CONFIG}"
 !define INSTALLER_NAME "AudioReminderInstaller"
-!define ARTIFACTS_DIR "${OUT_DIR}\ToBePackaged"
+!define ARTIFACTS_DIR "${OUT_DIR}\Artifacts"
 ;--------------------------------
 
 ; The name of the installer

@@ -86,6 +86,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>rmdir /s /q "$(SolutionDir)AudioReminderInstaller\$(OutDir)ToBePackaged"</PreBuildEvent>
+    <PreBuildEvent>rmdir /s /q "$(SolutionDir)AudioReminderInstaller\$(OutDir)Artifacts"</PreBuildEvent>
   </PropertyGroup>
 </Project>
