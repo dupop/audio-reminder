@@ -46,7 +46,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>powershell.exe -noexit -file "$(ProjectDir)RemoveRedundatArtifacts.ps1" "$(ProjectDir)$(OutDir)Artifacts\\"
-"C:\Program Files (x86)\NSIS\makensis.exe" /DBUILD_CONFIG_NAME_ARG=$(ConfigurationName) "$(ProjectDir)installerGenerationScript.nsi"
+rem "C:\Program Files (x86)\NSIS\makensis.exe" /DBUILD_CONFIG_NAME_ARG=$(ConfigurationName) "$(ProjectDir)installerGenerationScript.nsi"
 </PostBuildEvent>
   </PropertyGroup>
 </Project>
