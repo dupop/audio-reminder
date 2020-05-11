@@ -24,12 +24,10 @@ namespace AudioReminderUI
             //TODO: extract somwhere this and the link
             System.Diagnostics.Process.Start("https://github.com/dupop/audio-reminder");
         }
-
-        private void visitSoundsWebsiteButton_Click(object sender, EventArgs e)
+        
+        private void creditsBox_LinkClicked(object sender, LinkClickedEventArgs e)
         {
-            //TODO: extract somwhere this and the link in the contributors description
-            System.Diagnostics.Process.Start("https://www.freesfx.co.uk/"); 
+            System.Diagnostics.Process.Start(e.LinkText); 
         }
-
     }
 }

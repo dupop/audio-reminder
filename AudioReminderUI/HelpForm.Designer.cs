@@ -36,9 +36,10 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Location = new System.Drawing.Point(16, 11);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(148, 13);
+            this.label1.Size = new System.Drawing.Size(198, 17);
             this.label1.TabIndex = 0;
             this.label1.Text = "User manual is not yet written.";
             // 
@@ -46,9 +47,10 @@
             // 
             this.visitProjectWebsiteButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.visitProjectWebsiteButton.AutoSize = true;
-            this.visitProjectWebsiteButton.Location = new System.Drawing.Point(259, 287);
+            this.visitProjectWebsiteButton.Location = new System.Drawing.Point(319, 391);
+            this.visitProjectWebsiteButton.Margin = new System.Windows.Forms.Padding(4);
             this.visitProjectWebsiteButton.Name = "visitProjectWebsiteButton";
-            this.visitProjectWebsiteButton.Size = new System.Drawing.Size(136, 23);
+            this.visitProjectWebsiteButton.Size = new System.Drawing.Size(181, 28);
             this.visitProjectWebsiteButton.TabIndex = 2;
             this.visitProjectWebsiteButton.Text = "Visit the project webpage";
             this.visitProjectWebsiteButton.UseVisualStyleBackColor = true;
@@ -58,25 +60,27 @@
             // 
             this.backButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.backButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.backButton.Location = new System.Drawing.Point(400, 287);
-            this.backButton.Margin = new System.Windows.Forms.Padding(2);
+            this.backButton.Location = new System.Drawing.Point(507, 391);
+            this.backButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.backButton.Name = "backButton";
-            this.backButton.Size = new System.Drawing.Size(75, 23);
+            this.backButton.Size = new System.Drawing.Size(100, 28);
             this.backButton.TabIndex = 9;
             this.backButton.Text = "Back";
             this.backButton.UseVisualStyleBackColor = true;
             // 
             // HelpForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.backButton;
-            this.ClientSize = new System.Drawing.Size(486, 321);
+            this.ClientSize = new System.Drawing.Size(622, 433);
             this.Controls.Add(this.backButton);
             this.Controls.Add(this.visitProjectWebsiteButton);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "HelpForm";
-            this.Text = "User manual";
+            this.Text = "Audio Reminder - User manual";
             this.ResumeLayout(false);
             this.PerformLayout();
 

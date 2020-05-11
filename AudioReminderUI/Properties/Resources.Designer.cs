@@ -59,5 +59,15 @@ namespace AudioReminderUI.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap AudioReminderImage512 {
+            get {
+                object obj = ResourceManager.GetObject("AudioReminderImage512", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

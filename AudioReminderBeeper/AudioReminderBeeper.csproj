@@ -76,7 +76,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AudioReminderIcon.ico" />
-    <None Include="Resources\14746_1460059275.wav" />
+    <None Include="Resources\491889__lordfrodo10__19-5-magia2.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>rem Copy artifacts to folder for packiging to installer
+xcopy /e /y  /i "$(TargetDir)*" "$(SolutionDir)AudioReminderInstaller\$(OutDir)Artifacts\$(ProjectName)"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

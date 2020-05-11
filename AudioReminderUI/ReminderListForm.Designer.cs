@@ -38,10 +38,10 @@
             // 
             // deleteButton
             // 
-            this.deleteButton.Location = new System.Drawing.Point(11, 11);
-            this.deleteButton.Margin = new System.Windows.Forms.Padding(2);
+            this.deleteButton.Location = new System.Drawing.Point(15, 14);
+            this.deleteButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.deleteButton.Name = "deleteButton";
-            this.deleteButton.Size = new System.Drawing.Size(75, 23);
+            this.deleteButton.Size = new System.Drawing.Size(100, 28);
             this.deleteButton.TabIndex = 0;
             this.deleteButton.TabStop = false;
             this.deleteButton.Text = "Delete";
@@ -50,10 +50,10 @@
             // 
             // editButton
             // 
-            this.editButton.Location = new System.Drawing.Point(90, 11);
-            this.editButton.Margin = new System.Windows.Forms.Padding(2);
+            this.editButton.Location = new System.Drawing.Point(120, 14);
+            this.editButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.editButton.Name = "editButton";
-            this.editButton.Size = new System.Drawing.Size(75, 23);
+            this.editButton.Size = new System.Drawing.Size(100, 28);
             this.editButton.TabIndex = 1;
             this.editButton.TabStop = false;
             this.editButton.Text = "Edit";
@@ -62,10 +62,10 @@
             // 
             // cloneButton
             // 
-            this.cloneButton.Location = new System.Drawing.Point(169, 11);
-            this.cloneButton.Margin = new System.Windows.Forms.Padding(2);
+            this.cloneButton.Location = new System.Drawing.Point(225, 14);
+            this.cloneButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cloneButton.Name = "cloneButton";
-            this.cloneButton.Size = new System.Drawing.Size(75, 23);
+            this.cloneButton.Size = new System.Drawing.Size(100, 28);
             this.cloneButton.TabIndex = 2;
             this.cloneButton.TabStop = false;
             this.cloneButton.Text = "Clone";
@@ -74,14 +74,17 @@
             // 
             // remindersListBox
             // 
+            this.remindersListBox.AccessibleDescription = "Press Delete key to remove selected reminder, Enter key to modify it, or space ke" +
+    "y to clone it. Press Exit key to go back.";
             this.remindersListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.remindersListBox.FormattingEnabled = true;
-            this.remindersListBox.Location = new System.Drawing.Point(11, 64);
-            this.remindersListBox.Margin = new System.Windows.Forms.Padding(2);
+            this.remindersListBox.ItemHeight = 16;
+            this.remindersListBox.Location = new System.Drawing.Point(15, 79);
+            this.remindersListBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.remindersListBox.Name = "remindersListBox";
-            this.remindersListBox.Size = new System.Drawing.Size(778, 251);
+            this.remindersListBox.Size = new System.Drawing.Size(591, 292);
             this.remindersListBox.TabIndex = 3;
             this.remindersListBox.Leave += new System.EventHandler(this.remindersListBox_Leave);
             // 
@@ -89,10 +92,10 @@
             // 
             this.backButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.backButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.backButton.Location = new System.Drawing.Point(714, 324);
-            this.backButton.Margin = new System.Windows.Forms.Padding(2);
+            this.backButton.Location = new System.Drawing.Point(507, 391);
+            this.backButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.backButton.Name = "backButton";
-            this.backButton.Size = new System.Drawing.Size(75, 23);
+            this.backButton.Size = new System.Drawing.Size(100, 28);
             this.backButton.TabIndex = 4;
             this.backButton.TabStop = false;
             this.backButton.Text = "Back";
@@ -101,19 +104,20 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 36);
+            this.label1.Location = new System.Drawing.Point(11, 44);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(446, 26);
+            this.label1.Size = new System.Drawing.Size(597, 34);
             this.label1.TabIndex = 5;
             this.label1.Text = "Press Delete key to remove selected reminder, Enter key to modify it, or space ke" +
     "y to clone it.\r\nPress Exit key to go back.";
             // 
             // ReminderListForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.backButton;
-            this.ClientSize = new System.Drawing.Size(800, 358);
+            this.ClientSize = new System.Drawing.Size(622, 433);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.backButton);
             this.Controls.Add(this.remindersListBox);
@@ -121,8 +125,10 @@
             this.Controls.Add(this.editButton);
             this.Controls.Add(this.deleteButton);
             this.KeyPreview = true;
+            this.Margin = new System.Windows.Forms.Padding(4);
+            this.MinimumSize = new System.Drawing.Size(640, 480);
             this.Name = "ReminderListForm";
-            this.Text = "ReminderListForm";
+            this.Text = "Audio Reminder - List of reminders";
             this.Load += new System.EventHandler(this.ReminderListForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

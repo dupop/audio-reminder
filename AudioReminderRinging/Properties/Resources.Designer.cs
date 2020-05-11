@@ -63,9 +63,9 @@ namespace AudioReminderRinging.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
         /// </summary>
-        internal static System.IO.UnmanagedMemoryStream _18637_1464805961 {
+        internal static System.IO.UnmanagedMemoryStream _262622__iut_paris8__leber_zoe_2014_2015_xylo_PCM {
             get {
-                return ResourceManager.GetStream("_18637_1464805961", resourceCulture);
+                return ResourceManager.GetStream("_262622__iut_paris8__leber_zoe_2014_2015_xylo_PCM", resourceCulture);
             }
         }
     }

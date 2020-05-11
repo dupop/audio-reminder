@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -184,15 +185,20 @@ namespace AudioReminderRinging
         private static void PlayRingingSound()
         {
             var player = new System.Media.SoundPlayer();
-            player.Stream = Properties.Resources._18637_1464805961;
-            player.PlaySync();
+            player.Stream = GetRingingSound();
+            player.PlayLooping();
+        }
+
+        private static Stream GetRingingSound()
+        {
+            return Properties.Resources._262622__iut_paris8__leber_zoe_2014_2015_xylo_PCM;
 
             //TODO: When configureable sounds are added validate file existance; Play this default sound if configured sound is not present
         }
 
         #endregion
-        
-        
+
+
         private void ReminderRingingForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             //TODO: check if we should catch OnClosing event (excluding when dismiss is pressed or validation failed or we are in test mode). That may be dangerous if there are unhandled exceptions during sending of snooze request
