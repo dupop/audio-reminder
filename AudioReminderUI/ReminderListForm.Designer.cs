@@ -84,7 +84,7 @@
             this.remindersListBox.Location = new System.Drawing.Point(15, 79);
             this.remindersListBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.remindersListBox.Name = "remindersListBox";
-            this.remindersListBox.Size = new System.Drawing.Size(1036, 308);
+            this.remindersListBox.Size = new System.Drawing.Size(591, 292);
             this.remindersListBox.TabIndex = 3;
             this.remindersListBox.Leave += new System.EventHandler(this.remindersListBox_Leave);
             // 
@@ -92,7 +92,7 @@
             // 
             this.backButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.backButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.backButton.Location = new System.Drawing.Point(952, 399);
+            this.backButton.Location = new System.Drawing.Point(507, 391);
             this.backButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.backButton.Name = "backButton";
             this.backButton.Size = new System.Drawing.Size(100, 28);
@@ -117,7 +117,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.backButton;
-            this.ClientSize = new System.Drawing.Size(1067, 441);
+            this.ClientSize = new System.Drawing.Size(622, 433);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.backButton);
             this.Controls.Add(this.remindersListBox);
@@ -125,9 +125,10 @@
             this.Controls.Add(this.editButton);
             this.Controls.Add(this.deleteButton);
             this.KeyPreview = true;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
+            this.MinimumSize = new System.Drawing.Size(640, 480);
             this.Name = "ReminderListForm";
-            this.Text = "ReminderListForm";
+            this.Text = "Audio Reminder - List of reminders";
             this.Load += new System.EventHandler(this.ReminderListForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
