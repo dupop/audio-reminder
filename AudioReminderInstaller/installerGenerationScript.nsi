@@ -52,7 +52,7 @@ Section "Audio Reminder (required)"
   SectionIn RO
   
   ; Set output path to the installation directory.
-  SetOutPath "$INSTDIR\AR"
+  SetOutPath "$INSTDIR\bin"
   
   ; Put file there
   File /r "${ARTIFACTS_DIR}\*"
@@ -74,14 +74,14 @@ Section "Start Menu Shortcuts"
 
   CreateDirectory "$SMPROGRAMS\Audio Reminder"
   CreateShortcut "$SMPROGRAMS\Audio Reminder\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
-  CreateShortcut "$SMPROGRAMS\Audio Reminder\Audio Reminder.lnk" "$INSTDIR\AR\AudioReminderUI\AudioReminderUI.exe" "" "$INSTDIR\AR\AudioReminderUI\AudioReminderUI.exe" 0
+  CreateShortcut "$SMPROGRAMS\Audio Reminder\Audio Reminder.lnk" "$INSTDIR\bin\AudioReminderUI\AudioReminderUI.exe" "" "$INSTDIR\bin\AudioReminderUI\AudioReminderUI.exe" 0
   
 SectionEnd
 
 ; Optional section (can be disabled by the user)
 Section "Desktop Shortcut"
 
-  CreateShortcut "$DESKTOP\Audio Reminder.lnk" "$INSTDIR\AR\AudioReminderUI\AudioReminderUI.exe" "" "$INSTDIR\AR\AudioReminderUI\AudioReminderUI.exe" 0
+  CreateShortcut "$DESKTOP\Audio Reminder.lnk" "$INSTDIR\bin\AudioReminderUI\AudioReminderUI.exe" "" "$INSTDIR\bin\AudioReminderUI\AudioReminderUI.exe" 0
   
 SectionEnd
 
@@ -97,7 +97,7 @@ Section "Uninstall"
 
   ; Remove files and uninstaller
   Delete $INSTDIR\example2.nsi
-  RMDir /r "$INSTDIR\AR"
+  RMDir /r "$INSTDIR\bin"
 
   ; Remove shortcuts, if any
   Delete "$SMPROGRAMS\Audio Reminder\*.*"

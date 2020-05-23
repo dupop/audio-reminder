@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="creditsBox.Text" xml:space="preserve">
-    <value>Audio Reminder is a free and open source minimalistic event 
+    <value>Audio Reminder is a free and open source minimalistic personal reminder
 management system intended to be used through a narrator.
 
 Contributors:
@@ -128,7 +128,7 @@ https://github.com/dupop
 https://github.com/super-ivanka
 
 Logo design:
-
+NP
 
 Dedication:
 The program is dedicated to dupop's friend Rasim Redžepović.
