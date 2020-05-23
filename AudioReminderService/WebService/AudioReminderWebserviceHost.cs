@@ -31,9 +31,19 @@ namespace AudioReminderService.WebService
             ServiceMetadataBehavior behaveior = CreateServiceBehveior();
             serviceHost.Description.Behaviors.Add(behaveior);
 
+#if DEBUG
+            EnableExceptionDetails();
+#endif
+
             serviceHost.Open();
 
             Log.Logger.Information("Starting webservice done");
+        }
+
+        private void EnableExceptionDetails()
+        {
+            serviceHost.Description.Behaviors.Remove(typeof(ServiceDebugBehavior));
+            serviceHost.Description.Behaviors.Add(new ServiceDebugBehavior { IncludeExceptionDetailInFaults = true });
         }
 
         public void Stop()

@@ -75,15 +75,17 @@ namespace AudioReminderService.Persistence
             {
                 Entities = defaultValues;
             }
-            Entities = defaultValues;
+            
             //File.WriteAllText(storageFilePath, "");
         }
 
         protected string GetFilePath()
         {
-            string serviceDir = FilePathHelper.FindProgramDirectory();
+
+            //TODO: As service will be run under LocalService it will have its own Data dir. Try to merge them somehow.
+            string productDataDir = FilePathHelper.GetProductDataDir();
             string persistenceSubDir = "persistence";
-            string peristenceDir = Path.Combine(serviceDir, persistenceSubDir);
+            string peristenceDir = Path.Combine(productDataDir, persistenceSubDir);
 
             string fileExtension = ".xml";
             string fileName = typeof(TEntity).FullName; //Fully qulaifiled name of type. This approach prevents multiple lists of same type, but do we need that
