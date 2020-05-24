@@ -20,7 +20,7 @@ namespace AudioReminderUI
         [STAThread]
         static void Main()
         {
-            new LoggerInitializer().CreateLogger();
+            new LoggerInitializer("AudioReminderUI").CreateLogger();
 
             LoggingHelper.RunWithExceptionLogging(RunApplication);
         }

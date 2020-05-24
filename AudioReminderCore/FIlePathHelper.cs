@@ -13,16 +13,41 @@ namespace AudioReminderCore
     public static class FilePathHelper
     {
         //TODO: make this less hardcoded maybe?
+        //TODO: root paths could be chosed during install (exe EXEs in Program Files and data in AppData)
+
+        #region Directory and filename constants
+#if DEBUG
+        /// <summary>
+        /// Beeper application dir relative to the product dir - for DEBUG build configuration.
+        /// </summary>
         const string beeperAppplicationSubDir = @"AudioReminderBeeper\bin\Debug";
-        const string beeperApplicationName = "AudioReminderBeeper.exe";
+        /// <summary>
+        /// Ringing application dir relative to the product dir - for DEBUG build configuration.
+        /// </summary>
         const string ringingAppplicationSubDir = @"AudioReminderRinging\bin\Debug";
+#else
+        //Release configuration requires application to be installed before running.
+        //These paths would be incorrect if run directly
+        /// <summary>
+        /// Beeper application dir relative to the product dir.
+        /// This relative path for RELEASE build configuration is correct only after depoloyment to instal dir!
+        /// </summary>
+        const string beeperAppplicationSubDir = @"AudioReminderBeeper";
+        /// <summary>
+        /// Ringing application dir relative to the product dir.
+        /// This relative path for RELEASE build configuration is correct only after depoloyment to instal dir!
+        /// </summary>
+        const string ringingAppplicationSubDir = @"AudioReminderRinging";
+#endif
+        const string beeperApplicationName = "AudioReminderBeeper.exe";
         const string ringingApplicationName = "AudioReminderRinging.exe";
+        #endregion
 
 
         /// <summary>
         /// Finds current application directory.
         /// </summary>
-        public static string FindProgramDirectory()
+        public static string GetProgramDirectory()
         {
             string programDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
@@ -30,37 +55,56 @@ namespace AudioReminderCore
         }
 
         /// <summary>
-        /// Find the root directory of the whole product, containing directories of all the applications in the Audio Reminder product.
+        /// Finds the root directory where all executables in the product are placed.
+        /// This will by default be "...\Program Files\Audio Reminder\bin".
         /// </summary>
-        /// <returns></returns>
-        public static string GetProductDir()
+        public static string GetProductBinDir()
         {
-            string currentProgramDir = FindProgramDirectory();
-            string productDir = new DirectoryInfo(currentProgramDir).Parent.Parent.Parent.FullName; // TODO: possible no rights execption + null exceptions + etc
+            string currentProgramDir = GetProgramDirectory();
+            DirectoryInfo currentProgramDirInfo = new DirectoryInfo(currentProgramDir);
+
+            // TODO: possible no rights execption + null exceptions + etc
+#if DEBUG
+            //Product dir (Solution folder) is 3 folders up from executable in Visual Studio solution
+            string productDir = currentProgramDirInfo.Parent.Parent.Parent.FullName; 
+#else
+            //Product dir is just 1 folder up from executable when deployed to install folder
+            string productDir = currentProgramDirInfo.Parent.FullName;
+#endif
 
             return productDir;
         }
 
+        /// <summary>
+        /// Finds the root directory where all user data in the product are placed.
+        /// This will by default be "%OsDrive%\ProgramData".
+        /// </summary>
+        /// <remarks>
+        /// Data is not stored in AppData of current user but in user-agnostic ProgramData dir because
+        /// Audio Reminder service can't access this as it is a Windows service not running as currnet user.
+        /// </remarks>
+        public static string GetProductDataDir()
+        {
+            const string ProductName = "AudioReminder";
+            //TODO: add to uninstall options
+            string appDataLocal = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+
+            return Path.Combine(appDataLocal, ProductName);
+        }
+
         public static string GetBeeperFullFilePath()
         {
-            string productDir = GetProductDir();
+            string productDir = GetProductBinDir();
 
-            return CombinePaths(productDir, beeperAppplicationSubDir, beeperApplicationName);
+            return Path.Combine(productDir, beeperAppplicationSubDir, beeperApplicationName);
         }
 
         public static string GetRingerFullFilePath()
         {
-            string productDir = GetProductDir();
+            string productDir = GetProductBinDir();
 
-            return CombinePaths(productDir, ringingAppplicationSubDir, ringingApplicationName);
+            return Path.Combine(productDir, ringingAppplicationSubDir, ringingApplicationName);
         }
 
-        private static string CombinePaths(string productDir, string ringingAppplicationSubDir, string ringingApplicationName)
-        {
-            string ringerDir = Path.Combine(productDir, ringingAppplicationSubDir);
-            string ringerApplicationFullPath = Path.Combine(ringerDir, ringingApplicationName);
-
-            return ringerApplicationFullPath;
-        }
     }
 }

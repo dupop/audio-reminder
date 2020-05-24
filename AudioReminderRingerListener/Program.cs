@@ -11,7 +11,7 @@ namespace AudioReminderRingerListener
     {
         static void Main(string[] args)
         {
-            new LoggerInitializer().CreateLogger();
+            new LoggerInitializer("AudioReminderRingerListener").CreateLogger();
 
             LoggingHelper.RunWithExceptionLogging(MainLoop.RunLoop);
         }

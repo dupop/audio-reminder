@@ -81,7 +81,7 @@
             this.versionBox.ReadOnly = true;
             this.versionBox.Size = new System.Drawing.Size(100, 22);
             this.versionBox.TabIndex = 1;
-            this.versionBox.Text = "Version 0.2";
+            this.versionBox.Text = "Version 0.3";
             // 
             // AboutForm
             // 
