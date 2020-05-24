@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlTypes;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -26,7 +27,9 @@ namespace AudioReminderUI
             this.nameChecker = nameChecker;
             Icon = AudioReminderCore.Properties.Resources.AudioReminderIcon;
             Text = "Audio Reminder - Create reminder";
+            scheduledDatePicker.Value = GetTomorrowLocalDateTime();
         }
+
         public CreateAndUpdateReminderForm(PersistenceAdapter nameChecker, ReminderEntity reminderToUpdate)
         {
             InitializeComponent();
@@ -35,6 +38,14 @@ namespace AudioReminderUI
             Text = "Audio Reminder - Update reminder";
             DisplayReminderToUpdate(reminderToUpdate);
             oldValueOfReminderToBeUpdated = reminderToUpdate;
+        }
+
+        protected virtual DateTime GetTomorrowLocalDateTime()
+        {
+            TimeSpan oneDay = new TimeSpan(1, 0, 0, 0);
+            DateTime tomorrow = DateTime.Now.Date + oneDay;
+
+            return tomorrow;
         }
 
         protected virtual void DisplayReminderToUpdate(ReminderEntity reminderToUpdate)
