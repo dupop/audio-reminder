@@ -31,9 +31,8 @@ namespace AudioReminderService.WebService
             ServiceMetadataBehavior behaveior = CreateServiceBehveior();
             serviceHost.Description.Behaviors.Add(behaveior);
 
-#if DEBUG
+            //probably not an issue because we show all exception details anyway
             EnableExceptionDetails();
-#endif
 
             serviceHost.Open();
 

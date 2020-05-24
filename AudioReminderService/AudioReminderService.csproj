@@ -91,6 +91,12 @@
       <Link>.editorconfig</Link>
     </None>
     <None Include="App.config" />
+    <None Include="AudioReminderServiceUninstall.cmd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="AudioReminderServiceInstall.cmd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
