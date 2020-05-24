@@ -56,7 +56,10 @@ Section "Audio Reminder (required)"
   
   ; Put file there
   File /r "${ARTIFACTS_DIR}\*"
-  
+ 
+  ; Add Ringer Listener to startup folder 
+  CreateShortcut "$SMSTARTUP\Audio Reminder Ringer Listener.lnk" "$INSTDIR\bin\AudioReminderRingerListener\AudioReminderRingerListener.exe" "" "$INSTDIR\bin\AudioReminderRingerListener\AudioReminderRingerListener.exe" 0
+
   ; Write the installation path into the registry
   WriteRegStr HKLM SOFTWARE\AudioReminder "Install_Dir" "$INSTDIR"
   
@@ -102,6 +105,9 @@ Section "Uninstall"
   ; Remove shortcuts, if any
   Delete "$SMPROGRAMS\Audio Reminder\*.*"
   Delete "$DESKTOP\Audio Reminder.lnk"
+
+  ; Remove ringer Listener from startup folder 
+  Delete "$SMSTARTUP\Audio Reminder Ringer Listener.lnk"
 
   ; Remove directories used
   RMDir "$SMPROGRAMS\Audio Reminder"
