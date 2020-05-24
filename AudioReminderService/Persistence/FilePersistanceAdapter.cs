@@ -59,7 +59,19 @@ namespace AudioReminderService.Persistence
             }
             else
             {
+                EnsurePersitenceFolderExists();
                 CreateNewEntityList(defaultValues);
+            }
+        }
+
+        protected virtual void EnsurePersitenceFolderExists()
+        {
+            string persistenceFolder = GetFolderPath();
+
+            //TODO: hande various exceptions
+            if(!System.IO.Directory.Exists(persistenceFolder))
+            {
+                System.IO.Directory.CreateDirectory(persistenceFolder);
             }
         }
 
@@ -79,13 +91,9 @@ namespace AudioReminderService.Persistence
             //File.WriteAllText(storageFilePath, "");
         }
 
-        protected string GetFilePath()
+        protected virtual string GetFilePath()
         {
-
-            //TODO: As service will be run under LocalService it will have its own Data dir. Try to merge them somehow.
-            string productDataDir = FilePathHelper.GetProductDataDir();
-            string persistenceSubDir = "persistence";
-            string peristenceDir = Path.Combine(productDataDir, persistenceSubDir);
+            string peristenceDir = GetFolderPath();
 
             string fileExtension = ".xml";
             string fileName = typeof(TEntity).FullName; //Fully qulaifiled name of type. This approach prevents multiple lists of same type, but do we need that
@@ -96,6 +104,18 @@ namespace AudioReminderService.Persistence
 
             return fullPathNonRelative;
         }
+
+        /// <summary>
+        /// Determine path of persistence folder
+        /// </summary>
+        protected virtual string GetFolderPath()
+        {
+            string productDataDir = FilePathHelper.GetProductDataDir();
+            string persistenceSubDir = "persistence";
+            string peristenceDir = Path.Combine(productDataDir, persistenceSubDir);
+            return peristenceDir;
+        }
+
         private void LoadEntitiesFromFile()
         {
             string filePath = GetFilePath();

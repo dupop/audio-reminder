@@ -46,7 +46,6 @@ namespace AudioReminderCore
 
 
         #region Protected and private methods
-        //TODO: add to uninstal options
         protected virtual string GetDefaultLoggingPath(string applicationName)
         {
             string productDataDir = FilePathHelper.GetProductDataDir();

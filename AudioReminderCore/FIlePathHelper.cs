@@ -77,12 +77,17 @@ namespace AudioReminderCore
 
         /// <summary>
         /// Finds the root directory where all user data in the product are placed.
-        /// This will by default be "%USERNAME%\AppData\Local\AudioReminder".
+        /// This will by default be "%OsDrive%\ProgramData".
         /// </summary>
+        /// <remarks>
+        /// Data is not stored in AppData of current user but in user-agnostic ProgramData dir because
+        /// Audio Reminder service can't access this as it is a Windows service not running as currnet user.
+        /// </remarks>
         public static string GetProductDataDir()
         {
             const string ProductName = "AudioReminder";
-            string appDataLocal = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            //TODO: add to uninstall options
+            string appDataLocal = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
 
             return Path.Combine(appDataLocal, ProductName);
         }
