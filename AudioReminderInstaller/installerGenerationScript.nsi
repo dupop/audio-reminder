@@ -52,11 +52,14 @@ Section "Audio Reminder (required)"
   SectionIn RO
   
   ; Set output path to the installation directory.
-  SetOutPath "$INSTDIR\AR"
+  SetOutPath "$INSTDIR\bin"
   
   ; Put file there
   File /r "${ARTIFACTS_DIR}\*"
-  
+ 
+  ; Add Ringer Listener to startup folder 
+  CreateShortcut "$SMSTARTUP\Audio Reminder Ringer Listener.lnk" "$INSTDIR\bin\AudioReminderRingerListener\AudioReminderRingerListener.exe" "" "$INSTDIR\bin\AudioReminderRingerListener\AudioReminderRingerListener.exe" 0
+
   ; Write the installation path into the registry
   WriteRegStr HKLM SOFTWARE\AudioReminder "Install_Dir" "$INSTDIR"
   
@@ -67,6 +70,12 @@ Section "Audio Reminder (required)"
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\AudioReminder" "NoRepair" 1
   WriteUninstaller "$INSTDIR\uninstall.exe"
   
+  ; Start Ringer Listener
+  Exec '"$INSTDIR\bin\AudioReminderRingerListener\AudioReminderRingerListener.exe"'
+
+  ; Install and start the service (admin rights are needed for the batch)
+  ExecWait '"$INSTDIR\bin\AudioReminderService\AudioReminderServiceInstall.cmd"'
+  
 SectionEnd
 
 ; Optional section (can be disabled by the user)
@@ -74,14 +83,14 @@ Section "Start Menu Shortcuts"
 
   CreateDirectory "$SMPROGRAMS\Audio Reminder"
   CreateShortcut "$SMPROGRAMS\Audio Reminder\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
-  CreateShortcut "$SMPROGRAMS\Audio Reminder\Audio Reminder.lnk" "$INSTDIR\AR\AudioReminderUI\AudioReminderUI.exe" "" "$INSTDIR\AR\AudioReminderUI\AudioReminderUI.exe" 0
+  CreateShortcut "$SMPROGRAMS\Audio Reminder\Audio Reminder.lnk" "$INSTDIR\bin\AudioReminderUI\AudioReminderUI.exe" "" "$INSTDIR\bin\AudioReminderUI\AudioReminderUI.exe" 0
   
 SectionEnd
 
 ; Optional section (can be disabled by the user)
 Section "Desktop Shortcut"
 
-  CreateShortcut "$DESKTOP\Audio Reminder.lnk" "$INSTDIR\AR\AudioReminderUI\AudioReminderUI.exe" "" "$INSTDIR\AR\AudioReminderUI\AudioReminderUI.exe" 0
+  CreateShortcut "$DESKTOP\Audio Reminder.lnk" "$INSTDIR\bin\AudioReminderUI\AudioReminderUI.exe" "" "$INSTDIR\bin\AudioReminderUI\AudioReminderUI.exe" 0
   
 SectionEnd
 
@@ -91,17 +100,28 @@ SectionEnd
 
 Section "Uninstall"
   
+  ; Stop and uninstall the service (admin rights are needed for the batch)
+  ExecWait '"$INSTDIR\bin\AudioReminderService\AudioReminderServiceUninstall.cmd"'
+  
+  ; Stop Ringer Listener
+  ;TODO: Add install option to automatically start the program - maybe by default?
+  Exec 'TASKKILL /F /IM "AudioReminderRingerListener.exe"'
+  Exec 'TASKKILL /F /IM "AudioReminderUI.exe"'
+
   ; Remove registry keys
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\AudioReminder"
   DeleteRegKey HKLM SOFTWARE\AudioReminder
-
+  
   ; Remove files and uninstaller
   Delete $INSTDIR\example2.nsi
-  RMDir /r "$INSTDIR\AR"
+  RMDir /r "$INSTDIR\bin"
 
   ; Remove shortcuts, if any
   Delete "$SMPROGRAMS\Audio Reminder\*.*"
   Delete "$DESKTOP\Audio Reminder.lnk"
+
+  ; Remove ringer Listener from startup folder 
+  Delete "$SMSTARTUP\Audio Reminder Ringer Listener.lnk"
 
   ; Remove directories used
   RMDir "$SMPROGRAMS\Audio Reminder"

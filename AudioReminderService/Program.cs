@@ -21,7 +21,7 @@ namespace AudioReminderService
             //Thread.Sleep(5000);
 #endif
 
-            new LoggerInitializer().CreateLogger();
+            new LoggerInitializer("AudioReminderService").CreateLogger();
 
             Log.Logger.Information("Program started");
             

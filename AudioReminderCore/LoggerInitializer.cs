@@ -1,6 +1,7 @@
 ﻿using Serilog;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,10 +23,10 @@ namespace AudioReminderCore
 
 
         #region Public methods
-        public LoggerInitializer()
+        public LoggerInitializer(string applicationName)
         {
             LoggingFilenameFormat = GetDefaultLoggingFilenameFormat();
-            LoggingPath = GetDefaultLoggingPath();
+            LoggingPath = GetDefaultLoggingPath(applicationName);
         }
 
         /// <summary>
@@ -45,14 +46,11 @@ namespace AudioReminderCore
 
 
         #region Protected and private methods
-        protected virtual string GetDefaultLoggingPath()
+        protected virtual string GetDefaultLoggingPath(string applicationName)
         {
-            const string LogsSubfolderName = @"logs";
-            string servicePath = FilePathHelper.FindProgramDirectory();
+            string productDataDir = FilePathHelper.GetProductDataDir();
 
-            string loggingPath = System.IO.Path.Combine(servicePath, LogsSubfolderName);
-
-            return loggingPath;
+            return Path.Combine(productDataDir, "logs", applicationName);
         }
 
         protected virtual string GetDefaultLoggingFilenameFormat()

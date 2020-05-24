@@ -15,7 +15,7 @@ namespace AudioReminderRinging
         [STAThread]
         static void Main()
         {
-            new LoggerInitializer().CreateLogger();
+            new LoggerInitializer("AudioReminderRinging").CreateLogger();
 
             LoggingHelper.RunWithExceptionLogging(RunApplication);
         }
