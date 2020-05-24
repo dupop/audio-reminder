@@ -40,6 +40,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="AudioReminderServiceInstall.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="installerGenerationScript.nsi" />
     <None Include="RemoveRedundatArtifacts.ps1" />
   </ItemGroup>
