@@ -106,5 +106,12 @@ namespace AudioReminderCore
             return Path.Combine(productDir, ringingAppplicationSubDir, ringingApplicationName);
         }
 
+        public static string GetTranslationsDir()
+        {
+            string translationsDir = System.IO.Path.Combine(GetProductBinDir(), "Translations");
+
+            return translationsDir;
+        }
+        
     }
 }

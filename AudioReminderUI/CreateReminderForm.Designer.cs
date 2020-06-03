@@ -29,19 +29,19 @@
         private void InitializeComponent()
         {
             this.reminderNameStringBox = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.eventNameLabel = new System.Windows.Forms.Label();
             this.repeatYearlyCheckBox = new System.Windows.Forms.CheckBox();
             this.scheduledDatePicker = new System.Windows.Forms.DateTimePicker();
             this.repeatMonthlyCheckBox = new System.Windows.Forms.CheckBox();
             this.repeatWeeklyCheckedListBox = new System.Windows.Forms.CheckedListBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.dateLabel = new System.Windows.Forms.Label();
             this.okButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             this.hoursNumericBox = new System.Windows.Forms.NumericUpDown();
             this.minuteNumbericBox = new System.Windows.Forms.NumericUpDown();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.timeLabel = new System.Windows.Forms.Label();
+            this.repeatDaysLabel = new System.Windows.Forms.Label();
+            this.eventDescriptionLabel = new System.Windows.Forms.Label();
             this.reminderDescriptionTextbox = new System.Windows.Forms.TextBox();
             this.scheduledTimeGroupBox = new System.Windows.Forms.GroupBox();
             this.repeatPeriodGroupBox = new System.Windows.Forms.GroupBox();
@@ -62,15 +62,15 @@
             this.reminderNameStringBox.Size = new System.Drawing.Size(584, 22);
             this.reminderNameStringBox.TabIndex = 0;
             // 
-            // label1
+            // eventNameLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 18);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(83, 17);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Event name";
+            this.eventNameLabel.AutoSize = true;
+            this.eventNameLabel.Location = new System.Drawing.Point(7, 18);
+            this.eventNameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.eventNameLabel.Name = "eventNameLabel";
+            this.eventNameLabel.Size = new System.Drawing.Size(83, 17);
+            this.eventNameLabel.TabIndex = 1;
+            this.eventNameLabel.Text = "Event name";
             // 
             // repeatYearlyCheckBox
             // 
@@ -122,14 +122,14 @@
             this.repeatWeeklyCheckedListBox.Size = new System.Drawing.Size(107, 123);
             this.repeatWeeklyCheckedListBox.TabIndex = 0;
             // 
-            // label4
+            // dateLabel
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(7, 22);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(151, 17);
-            this.label4.TabIndex = 13;
-            this.label4.Text = "Date of first occurance\r\n";
+            this.dateLabel.AutoSize = true;
+            this.dateLabel.Location = new System.Drawing.Point(7, 22);
+            this.dateLabel.Name = "dateLabel";
+            this.dateLabel.Size = new System.Drawing.Size(151, 17);
+            this.dateLabel.TabIndex = 13;
+            this.dateLabel.Text = "Date of first occurance\r\n";
             // 
             // okButton
             // 
@@ -190,33 +190,33 @@
             this.minuteNumbericBox.Size = new System.Drawing.Size(59, 22);
             this.minuteNumbericBox.TabIndex = 2;
             // 
-            // label2
+            // timeLabel
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 70);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(39, 17);
-            this.label2.TabIndex = 17;
-            this.label2.Text = "Time";
+            this.timeLabel.AutoSize = true;
+            this.timeLabel.Location = new System.Drawing.Point(7, 70);
+            this.timeLabel.Name = "timeLabel";
+            this.timeLabel.Size = new System.Drawing.Size(39, 17);
+            this.timeLabel.TabIndex = 17;
+            this.timeLabel.Text = "Time";
             // 
-            // label3
+            // repeatDaysLabel
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(4, 30);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(100, 17);
-            this.label3.TabIndex = 18;
-            this.label3.Text = "Repeat weekly";
+            this.repeatDaysLabel.AutoSize = true;
+            this.repeatDaysLabel.Location = new System.Drawing.Point(4, 30);
+            this.repeatDaysLabel.Name = "repeatDaysLabel";
+            this.repeatDaysLabel.Size = new System.Drawing.Size(100, 17);
+            this.repeatDaysLabel.TabIndex = 18;
+            this.repeatDaysLabel.Text = "Repeat weekly";
             // 
-            // label5
+            // eventDescriptionLabel
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(7, 65);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(117, 17);
-            this.label5.TabIndex = 20;
-            this.label5.Text = "Event description";
+            this.eventDescriptionLabel.AutoSize = true;
+            this.eventDescriptionLabel.Location = new System.Drawing.Point(7, 65);
+            this.eventDescriptionLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.eventDescriptionLabel.Name = "eventDescriptionLabel";
+            this.eventDescriptionLabel.Size = new System.Drawing.Size(117, 17);
+            this.eventDescriptionLabel.TabIndex = 20;
+            this.eventDescriptionLabel.Text = "Event description";
             // 
             // reminderDescriptionTextbox
             // 
@@ -233,10 +233,10 @@
             // scheduledTimeGroupBox
             // 
             this.scheduledTimeGroupBox.Controls.Add(this.scheduledDatePicker);
-            this.scheduledTimeGroupBox.Controls.Add(this.label4);
+            this.scheduledTimeGroupBox.Controls.Add(this.dateLabel);
             this.scheduledTimeGroupBox.Controls.Add(this.hoursNumericBox);
             this.scheduledTimeGroupBox.Controls.Add(this.minuteNumbericBox);
-            this.scheduledTimeGroupBox.Controls.Add(this.label2);
+            this.scheduledTimeGroupBox.Controls.Add(this.timeLabel);
             this.scheduledTimeGroupBox.Location = new System.Drawing.Point(12, 184);
             this.scheduledTimeGroupBox.Name = "scheduledTimeGroupBox";
             this.scheduledTimeGroupBox.Size = new System.Drawing.Size(293, 202);
@@ -247,7 +247,7 @@
             // repeatPeriodGroupBox
             // 
             this.repeatPeriodGroupBox.Controls.Add(this.repeatWeeklyCheckedListBox);
-            this.repeatPeriodGroupBox.Controls.Add(this.label3);
+            this.repeatPeriodGroupBox.Controls.Add(this.repeatDaysLabel);
             this.repeatPeriodGroupBox.Controls.Add(this.repeatMonthlyCheckBox);
             this.repeatPeriodGroupBox.Controls.Add(this.repeatYearlyCheckBox);
             this.repeatPeriodGroupBox.Location = new System.Drawing.Point(311, 184);
@@ -259,10 +259,10 @@
             // 
             // eventDetailsGroupBox
             // 
-            this.eventDetailsGroupBox.Controls.Add(this.label1);
+            this.eventDetailsGroupBox.Controls.Add(this.eventNameLabel);
             this.eventDetailsGroupBox.Controls.Add(this.reminderNameStringBox);
             this.eventDetailsGroupBox.Controls.Add(this.reminderDescriptionTextbox);
-            this.eventDetailsGroupBox.Controls.Add(this.label5);
+            this.eventDetailsGroupBox.Controls.Add(this.eventDescriptionLabel);
             this.eventDetailsGroupBox.Location = new System.Drawing.Point(12, 12);
             this.eventDetailsGroupBox.Name = "eventDetailsGroupBox";
             this.eventDetailsGroupBox.Size = new System.Drawing.Size(596, 162);
@@ -300,19 +300,19 @@
         #endregion
 
         private System.Windows.Forms.TextBox reminderNameStringBox;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label eventNameLabel;
         private System.Windows.Forms.CheckBox repeatYearlyCheckBox;
         private System.Windows.Forms.DateTimePicker scheduledDatePicker;
         private System.Windows.Forms.CheckBox repeatMonthlyCheckBox;
         private System.Windows.Forms.CheckedListBox repeatWeeklyCheckedListBox;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label dateLabel;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.NumericUpDown hoursNumericBox;
         private System.Windows.Forms.NumericUpDown minuteNumbericBox;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label timeLabel;
+        private System.Windows.Forms.Label repeatDaysLabel;
+        private System.Windows.Forms.Label eventDescriptionLabel;
         private System.Windows.Forms.TextBox reminderDescriptionTextbox;
         private System.Windows.Forms.GroupBox scheduledTimeGroupBox;
         private System.Windows.Forms.GroupBox repeatPeriodGroupBox;

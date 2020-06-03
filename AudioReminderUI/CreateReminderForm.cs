@@ -1,4 +1,5 @@
-﻿using AudioReminderCore.Interfaces;
+﻿using AudioReminderCore;
+using AudioReminderCore.Interfaces;
 using AudioReminderCore.Model;
 using Serilog;
 using System;
@@ -28,6 +29,16 @@ namespace AudioReminderUI
             Icon = AudioReminderCore.Properties.Resources.AudioReminderIcon;
             Text = "Audio Reminder - Create reminder";
             scheduledDatePicker.Value = GetTomorrowLocalDateTime();
+
+            //Translate();
+        }
+
+        protected virtual void Translate()
+        {
+            eventNameLabel.Text = TranslProvider.Tr("reminderNameLabel");
+            dateLabel.Text = TranslProvider.Tr("dateOfFirstOccuranceLabelForDatetimePicker");
+            
+            //TODO: other controls, accessible descriptions and things from code like title, error dialogs,.. BUT NOT LOG LINES
         }
 
         public CreateAndUpdateReminderForm(PersistenceAdapter nameChecker, ReminderEntity reminderToUpdate)
