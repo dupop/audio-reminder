@@ -17,6 +17,12 @@ namespace AudioReminderUI
             InitializeComponent();
 
             Icon = AudioReminderCore.Properties.Resources.AudioReminderIcon;
+            Translate();
+        }
+
+        protected virtual void Translate()
+        {
+            //TODO: implement
         }
 
         private void visitProjectWebsiteButton_Click(object sender, EventArgs e)

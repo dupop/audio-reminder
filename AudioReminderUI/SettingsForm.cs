@@ -22,6 +22,12 @@ namespace AudioReminderUI
 
             PersistenceAdapter = persistenceAdapter;
             Icon = AudioReminderCore.Properties.Resources.AudioReminderIcon;
+            Translate();
+        }
+
+        protected virtual void Translate()
+        {
+            //TODO: implement
         }
 
         private void SettingsForm_Load(object sender, EventArgs e)

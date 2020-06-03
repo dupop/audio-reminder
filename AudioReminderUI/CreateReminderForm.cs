@@ -30,7 +30,7 @@ namespace AudioReminderUI
             Text = "Audio Reminder - Create reminder";
             scheduledDatePicker.Value = GetTomorrowLocalDateTime();
 
-            //Translate();
+            Translate();
         }
 
         protected virtual void Translate()
@@ -200,7 +200,7 @@ namespace AudioReminderUI
             DateTime scheduledDateTime = GetDateTimeFromUI();
             if (scheduledDateTime < DateTime.Now)
             {
-                ErrorDialogUtility.ErrorDialog("Reminder is already elapsed");
+                ErrorDialogUtility.ErrorDialog(TranslProvider.Tr("warningReminderElapsed"));
                 return false;
             }    
 

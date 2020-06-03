@@ -31,6 +31,12 @@ namespace AudioReminderRinging
             InitializeComponent();
 
             Icon = AudioReminderCore.Properties.Resources.AudioReminderIcon;
+            Translate();
+        }
+
+        protected virtual void Translate()
+        {
+            //TODO: implement
         }
 
         private void ReminderRingForm_Load(object sender, EventArgs e)

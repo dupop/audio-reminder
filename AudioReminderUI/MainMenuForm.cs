@@ -20,6 +20,12 @@ namespace AudioReminderUI
 
             PersistenceAdapter = new PersistenceAdapter();
             Icon = AudioReminderCore.Properties.Resources.AudioReminderIcon;
+            Translate();
+        }
+
+        protected virtual void Translate()
+        {
+            //TODO: implement
         }
 
         private void createReminderButton_Click(object sender, EventArgs e)
