@@ -37,8 +37,32 @@ namespace AudioReminderUI
         {
             eventNameLabel.Text = TranslProvider.Tr("reminderNameLabel");
             dateLabel.Text = TranslProvider.Tr("dateOfFirstOccuranceLabelForDatetimePicker");
-            
+            eventDetailsGroupBox.Text = TranslProvider.Tr("eventDetailsGroupBox");
+            eventDescriptionLabel.Text = TranslProvider.Tr("eventDescriptionLabel");
+            scheduledTimeGroupBox.Text = TranslProvider.Tr("scheduledTimeGroupBox");
+            timeLabel.Text = TranslProvider.Tr("timeLabelForNumericBox");
+            repeatPeriodGroupBox.Text = TranslProvider.Tr("repeatPeriodGroupBox");
+            repeatDaysLabel.Text = TranslProvider.Tr("repeatWeeklyLabelForCheckedListBox");
+            repeatMonthlyCheckBox.Text = TranslProvider.Tr("repeatMonthlyCheckBox");
+            repeatYearlyCheckBox.Text = TranslProvider.Tr("repeatYearlyCheckBox");
+            okButton.Text = TranslProvider.Tr("okButton");
+            cancelButton.Text = TranslProvider.Tr("cancelButton");
+            reminderNameStringBox.AccessibleName = TranslProvider.Tr("reminderNameLabel");
+            reminderDescriptionTextbox.AccessibleName = TranslProvider.Tr("reminderDescriptionTextbox");
+            scheduledDatePicker.AccessibleDescription = TranslProvider.Tr("scheduledDatePickerAccDes");
+            scheduledDatePicker.AccessibleName = TranslProvider.Tr("scheduledDatePickerAccName");
+            hoursNumericBox.AccessibleName = TranslProvider.Tr("hoursNumericBoxAccName");
+            hoursNumericBox.AccessibleDescription = TranslProvider.Tr("hoursNumericBoxAccDes");
+            minuteNumbericBox.AccessibleName = TranslProvider.Tr("minuteNumbericBoxAccName");
+            minuteNumbericBox.AccessibleDescription = TranslProvider.Tr("minuteNumbericBoxAccDes");
+            Text = TranslProvider.Tr("createReminderFormTitle");        
+
+
+
+
+
             //TODO: other controls, accessible descriptions and things from code like title, error dialogs,.. BUT NOT LOG LINES
+            //
         }
 
         public CreateAndUpdateReminderForm(PersistenceAdapter nameChecker, ReminderEntity reminderToUpdate)
@@ -305,5 +329,9 @@ namespace AudioReminderUI
             return scheduledLocalTime;
         }
 
+        private void scheduledDatePicker_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

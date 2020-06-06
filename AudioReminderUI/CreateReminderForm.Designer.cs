@@ -92,6 +92,7 @@
             this.scheduledDatePicker.Name = "scheduledDatePicker";
             this.scheduledDatePicker.Size = new System.Drawing.Size(265, 22);
             this.scheduledDatePicker.TabIndex = 0;
+            this.scheduledDatePicker.ValueChanged += new System.EventHandler(this.scheduledDatePicker_ValueChanged);
             // 
             // repeatMonthlyCheckBox
             // 
@@ -242,7 +243,7 @@
             this.scheduledTimeGroupBox.Size = new System.Drawing.Size(293, 202);
             this.scheduledTimeGroupBox.TabIndex = 1;
             this.scheduledTimeGroupBox.TabStop = false;
-            this.scheduledTimeGroupBox.Text = "Schduled time";
+            this.scheduledTimeGroupBox.Text = "Scheduled time";
             // 
             // repeatPeriodGroupBox
             // 
@@ -255,7 +256,7 @@
             this.repeatPeriodGroupBox.Size = new System.Drawing.Size(299, 202);
             this.repeatPeriodGroupBox.TabIndex = 2;
             this.repeatPeriodGroupBox.TabStop = false;
-            this.repeatPeriodGroupBox.Text = "Repet period";
+            this.repeatPeriodGroupBox.Text = "Repeat period";
             // 
             // eventDetailsGroupBox
             // 

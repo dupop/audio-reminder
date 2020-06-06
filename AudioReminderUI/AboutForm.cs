@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AudioReminderCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -22,6 +23,13 @@ namespace AudioReminderUI
 
         protected virtual void Translate()
         {
+            Text = TranslProvider.Tr("aboutFormTitle");
+            versionBox.Text = TranslProvider.Tr("versionBox");
+            visitProjectWebsiteButton.Text = TranslProvider.Tr("visitpageButton");
+            backButton.Text = TranslProvider.Tr("backButton");
+            creditsBox.Text = TranslProvider.Tr("creditsTextBoxDescription");
+
+
             //TODO: implement
         }
 

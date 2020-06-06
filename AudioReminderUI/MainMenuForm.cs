@@ -1,4 +1,5 @@
-﻿using Serilog;
+﻿using AudioReminderCore;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,6 +26,14 @@ namespace AudioReminderUI
 
         protected virtual void Translate()
         {
+            Text = TranslProvider.Tr("audioReminderMainMenuFormTitle");
+            createReminderButton.Text = TranslProvider.Tr("createReminderButton");
+            remindersButton.Text = TranslProvider.Tr("reminderButton");
+            settingsButton.Text = TranslProvider.Tr("settingsButton");
+            helpButton.Text = TranslProvider.Tr("helpButton");
+            aboutButton.Text = TranslProvider.Tr("aboutButton");
+
+
             //TODO: implement
         }
 

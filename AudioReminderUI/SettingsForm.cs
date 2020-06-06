@@ -1,4 +1,5 @@
-﻿using AudioReminderCore.Model;
+﻿using AudioReminderCore;
+using AudioReminderCore.Model;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,38 @@ namespace AudioReminderUI
 
         protected virtual void Translate()
         {
+            selectRingingSoundButton.Text = TranslProvider.Tr("selectRingingSoundButton");
+            serviceStatusGroupBox.Text = TranslProvider.Tr("serviceStatusGroupBox");
+            autostartEnabledCheckbox.Text = TranslProvider.Tr("autostartServiceCheckBox");
+            serviceEnabledcheckBox.Text = TranslProvider.Tr("serviceEnabledCheckBox");
+            ringingGroupBox.Text = TranslProvider.Tr("ringingGroupBox");
+            currentRingingSoundNameLabel.Text = TranslProvider.Tr("currentRingingSoundNameLabel");
+            testRinging.Text = TranslProvider.Tr("testRingingButton");
+            snoozeGroupBox.Text = TranslProvider.Tr("snoozeGroupBox");
+            snoozeEnabledcheckBox.Text = TranslProvider.Tr("snoozeEnabledCheckBox");
+            label3.Text = TranslProvider.Tr("snoozeIntervalLabelForNumericCheckBox");
+            snoozeIntervalNumbericBox.AccessibleName = TranslProvider.Tr("snoozeIntervalNumbericBoxAccName");
+            beeperGroupBox.Text = TranslProvider.Tr("beeperGroupBox");
+            beeperEnabledcheckBox.Text = TranslProvider.Tr("beeperEnabledCheckBox");
+            label1.Text = TranslProvider.Tr("beepIntervalLabelForNumericCheckBox");
+            beepIntervalNumbericBox.AccessibleName = TranslProvider.Tr("beepIntervalNumbericBoxAccName");
+            selectBeeperSoundButton.Text = TranslProvider.Tr("selectBeeperSoundButton");
+            currentBeeperSoundNameLabel.Text = TranslProvider.Tr("currentBeeperSoundNameLabel");
+            testBeeper.Text = TranslProvider.Tr("testBeeperButton");
+            dataMigrationGroupBox.Text = TranslProvider.Tr("dataMigrationGroupBox");
+            exportButton.Text = TranslProvider.Tr("exportButton");
+            importButton.Text = TranslProvider.Tr("importButton");
+            okButton.Text = TranslProvider.Tr("okButton");
+            cancelButton.Text = TranslProvider.Tr("cancelButton");
+            Text = TranslProvider.Tr("audioReminderSettingsFormTitle");
+
+
+
+
+
+
+
+
             //TODO: implement
         }
 

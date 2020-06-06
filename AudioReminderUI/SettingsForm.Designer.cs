@@ -39,7 +39,9 @@
             this.beeperEnabledcheckBox = new System.Windows.Forms.CheckBox();
             this.serviceStatusGroupBox = new System.Windows.Forms.GroupBox();
             this.beeperGroupBox = new System.Windows.Forms.GroupBox();
+            this.currentBeeperSoundNameLabel = new System.Windows.Forms.Label();
             this.selectBeeperSoundButton = new System.Windows.Forms.Button();
+            this.currentBeeperSoundNameBox = new System.Windows.Forms.TextBox();
             this.beepIntervalNumbericBox = new System.Windows.Forms.NumericUpDown();
             this.testBeeper = new System.Windows.Forms.Button();
             this.snoozeGroupBox = new System.Windows.Forms.GroupBox();
@@ -49,10 +51,8 @@
             this.selectRingingSoundButton = new System.Windows.Forms.Button();
             this.dataMigrationGroupBox = new System.Windows.Forms.GroupBox();
             this.ringingGroupBox = new System.Windows.Forms.GroupBox();
-            this.currentRingingSoundNameBox = new System.Windows.Forms.TextBox();
             this.currentRingingSoundNameLabel = new System.Windows.Forms.Label();
-            this.currentBeeperSoundNameLabel = new System.Windows.Forms.Label();
-            this.currentBeeperSoundNameBox = new System.Windows.Forms.TextBox();
+            this.currentRingingSoundNameBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.snoozeIntervalNumbericBox)).BeginInit();
             this.serviceStatusGroupBox.SuspendLayout();
             this.beeperGroupBox.SuspendLayout();
@@ -214,6 +214,15 @@
             this.beeperGroupBox.TabStop = false;
             this.beeperGroupBox.Text = "Beeper";
             // 
+            // currentBeeperSoundNameLabel
+            // 
+            this.currentBeeperSoundNameLabel.AutoSize = true;
+            this.currentBeeperSoundNameLabel.Location = new System.Drawing.Point(9, 117);
+            this.currentBeeperSoundNameLabel.Name = "currentBeeperSoundNameLabel";
+            this.currentBeeperSoundNameLabel.Size = new System.Drawing.Size(147, 17);
+            this.currentBeeperSoundNameLabel.TabIndex = 5;
+            this.currentBeeperSoundNameLabel.Text = "Current beeper sound";
+            // 
             // selectBeeperSoundButton
             // 
             this.selectBeeperSoundButton.AutoSize = true;
@@ -224,6 +233,16 @@
             this.selectBeeperSoundButton.TabIndex = 2;
             this.selectBeeperSoundButton.Text = "Select beeper sound...\r\n";
             this.selectBeeperSoundButton.UseVisualStyleBackColor = true;
+            // 
+            // currentBeeperSoundNameBox
+            // 
+            this.currentBeeperSoundNameBox.AccessibleName = "Current beeper sound";
+            this.currentBeeperSoundNameBox.Location = new System.Drawing.Point(9, 137);
+            this.currentBeeperSoundNameBox.Name = "currentBeeperSoundNameBox";
+            this.currentBeeperSoundNameBox.ReadOnly = true;
+            this.currentBeeperSoundNameBox.Size = new System.Drawing.Size(271, 22);
+            this.currentBeeperSoundNameBox.TabIndex = 3;
+            this.currentBeeperSoundNameBox.Text = "19.5-Magia2.wav";
             // 
             // beepIntervalNumbericBox
             // 
@@ -342,16 +361,6 @@
             this.ringingGroupBox.TabStop = false;
             this.ringingGroupBox.Text = "Ringing";
             // 
-            // currentRingingSoundNameBox
-            // 
-            this.currentRingingSoundNameBox.AccessibleName = "Current ringing sound";
-            this.currentRingingSoundNameBox.Location = new System.Drawing.Point(6, 71);
-            this.currentRingingSoundNameBox.Name = "currentRingingSoundNameBox";
-            this.currentRingingSoundNameBox.ReadOnly = true;
-            this.currentRingingSoundNameBox.Size = new System.Drawing.Size(283, 22);
-            this.currentRingingSoundNameBox.TabIndex = 1;
-            this.currentRingingSoundNameBox.Text = "LEBER_Zoé_2014_2015_Xylo.mp3\r\n";
-            // 
             // currentRingingSoundNameLabel
             // 
             this.currentRingingSoundNameLabel.AutoSize = true;
@@ -361,24 +370,15 @@
             this.currentRingingSoundNameLabel.TabIndex = 3;
             this.currentRingingSoundNameLabel.Text = "Current ringing sound";
             // 
-            // currentBeeperSoundNameLabel
+            // currentRingingSoundNameBox
             // 
-            this.currentBeeperSoundNameLabel.AutoSize = true;
-            this.currentBeeperSoundNameLabel.Location = new System.Drawing.Point(9, 117);
-            this.currentBeeperSoundNameLabel.Name = "currentBeeperSoundNameLabel";
-            this.currentBeeperSoundNameLabel.Size = new System.Drawing.Size(147, 17);
-            this.currentBeeperSoundNameLabel.TabIndex = 5;
-            this.currentBeeperSoundNameLabel.Text = "Current beeper sound";
-            // 
-            // currentBeeperSoundNameBox
-            // 
-            this.currentBeeperSoundNameBox.AccessibleName = "Current beeper sound";
-            this.currentBeeperSoundNameBox.Location = new System.Drawing.Point(9, 137);
-            this.currentBeeperSoundNameBox.Name = "currentBeeperSoundNameBox";
-            this.currentBeeperSoundNameBox.ReadOnly = true;
-            this.currentBeeperSoundNameBox.Size = new System.Drawing.Size(271, 22);
-            this.currentBeeperSoundNameBox.TabIndex = 3;
-            this.currentBeeperSoundNameBox.Text = "19.5-Magia2.wav";
+            this.currentRingingSoundNameBox.AccessibleName = "Current ringing sound";
+            this.currentRingingSoundNameBox.Location = new System.Drawing.Point(6, 71);
+            this.currentRingingSoundNameBox.Name = "currentRingingSoundNameBox";
+            this.currentRingingSoundNameBox.ReadOnly = true;
+            this.currentRingingSoundNameBox.Size = new System.Drawing.Size(283, 22);
+            this.currentRingingSoundNameBox.TabIndex = 1;
+            this.currentRingingSoundNameBox.Text = "LEBER_Zoé_2014_2015_Xylo.mp3\r\n";
             // 
             // SettingsForm
             // 
