@@ -48,14 +48,15 @@ namespace AudioReminderUI
             okButton.Text = TranslProvider.Tr("okButton");
             cancelButton.Text = TranslProvider.Tr("cancelButton");
             reminderNameStringBox.AccessibleName = TranslProvider.Tr("reminderNameLabel");
-            reminderDescriptionTextbox.AccessibleName = TranslProvider.Tr("reminderDescriptionTextbox");
+            reminderDescriptionTextbox.AccessibleName = TranslProvider.Tr("eventDescriptionLabel");
             scheduledDatePicker.AccessibleDescription = TranslProvider.Tr("scheduledDatePickerAccDes");
-            scheduledDatePicker.AccessibleName = TranslProvider.Tr("scheduledDatePickerAccName");
+            scheduledDatePicker.AccessibleName = TranslProvider.Tr("dateOfFirstOccuranceLabelForDatetimePicker");
             hoursNumericBox.AccessibleName = TranslProvider.Tr("hoursNumericBoxAccName");
             hoursNumericBox.AccessibleDescription = TranslProvider.Tr("hoursNumericBoxAccDes");
             minuteNumbericBox.AccessibleName = TranslProvider.Tr("minuteNumbericBoxAccName");
             minuteNumbericBox.AccessibleDescription = TranslProvider.Tr("minuteNumbericBoxAccDes");
-            Text = TranslProvider.Tr("createReminderFormTitle");        
+            Text = TranslProvider.Tr("createReminderFormTitle");
+            repeatWeeklyCheckedListBox.T = TranslProvider.Tr("createReminderFormTitle");
         }
 
         public CreateAndUpdateReminderForm(PersistenceAdapter nameChecker, ReminderEntity reminderToUpdate)

@@ -55,7 +55,7 @@
             // 
             // reminderNameStringBox
             // 
-            this.reminderNameStringBox.AccessibleName = "Reminder name";
+            this.reminderNameStringBox.AccessibleName = "Event name";
             this.reminderNameStringBox.Location = new System.Drawing.Point(5, 39);
             this.reminderNameStringBox.Margin = new System.Windows.Forms.Padding(4);
             this.reminderNameStringBox.Name = "reminderNameStringBox";
@@ -220,7 +220,7 @@
             // 
             // reminderDescriptionTextbox
             // 
-            this.reminderDescriptionTextbox.AccessibleName = "Reminder description";
+            this.reminderDescriptionTextbox.AccessibleName = "Event description";
             this.reminderDescriptionTextbox.Enabled = false;
             this.reminderDescriptionTextbox.Location = new System.Drawing.Point(5, 86);
             this.reminderDescriptionTextbox.Margin = new System.Windows.Forms.Padding(4);

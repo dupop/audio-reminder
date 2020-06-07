@@ -38,11 +38,11 @@ namespace AudioReminderUI
             snoozeGroupBox.Text = TranslProvider.Tr("snoozeGroupBox");
             snoozeEnabledcheckBox.Text = TranslProvider.Tr("snoozeEnabledCheckBox");
             label3.Text = TranslProvider.Tr("snoozeIntervalLabelForNumericCheckBox");
-            snoozeIntervalNumbericBox.AccessibleName = TranslProvider.Tr("snoozeIntervalNumbericBoxAccName");
+            snoozeIntervalNumbericBox.AccessibleName = TranslProvider.Tr("snoozeIntervalLabelForNumericCheckBox");
             beeperGroupBox.Text = TranslProvider.Tr("beeperGroupBox");
             beeperEnabledcheckBox.Text = TranslProvider.Tr("beeperEnabledCheckBox");
             label1.Text = TranslProvider.Tr("beepIntervalLabelForNumericCheckBox");
-            beepIntervalNumbericBox.AccessibleName = TranslProvider.Tr("beepIntervalNumbericBoxAccName");
+            beepIntervalNumbericBox.AccessibleName = TranslProvider.Tr("beepIntervalLabelForNumericCheckBox");
             selectBeeperSoundButton.Text = TranslProvider.Tr("selectBeeperSoundButton");
             currentBeeperSoundNameLabel.Text = TranslProvider.Tr("currentBeeperSoundNameLabel");
             testBeeper.Text = TranslProvider.Tr("testBeeperButton");
@@ -52,6 +52,8 @@ namespace AudioReminderUI
             okButton.Text = TranslProvider.Tr("okButton");
             cancelButton.Text = TranslProvider.Tr("cancelButton");
             Text = TranslProvider.Tr("audioReminderSettingsFormTitle");
+            currentRingingSoundNameBox.AccessibleName = TranslProvider.Tr("currentRingingSoundNameLabel");
+            currentBeeperSoundNameBox.AccessibleName = TranslProvider.Tr("currentBeeperSoundNameLabel");
         }
 
         private void SettingsForm_Load(object sender, EventArgs e)
