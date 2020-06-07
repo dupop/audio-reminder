@@ -56,13 +56,6 @@ namespace AudioReminderUI
             minuteNumbericBox.AccessibleName = TranslProvider.Tr("minuteNumbericBoxAccName");
             minuteNumbericBox.AccessibleDescription = TranslProvider.Tr("minuteNumbericBoxAccDes");
             Text = TranslProvider.Tr("createReminderFormTitle");        
-
-
-
-
-
-            //TODO: other controls, accessible descriptions and things from code like title, error dialogs,.. BUT NOT LOG LINES
-            //
         }
 
         public CreateAndUpdateReminderForm(PersistenceAdapter nameChecker, ReminderEntity reminderToUpdate)
@@ -233,21 +226,21 @@ namespace AudioReminderUI
 
             if (reminderNameIsEmpty)
             {
-                ErrorDialogUtility.ErrorDialog("Reminder name is missing");
+                ErrorDialogUtility.ErrorDialog(TranslProvider.Tr("warningMissingReminderName"));
                 return false;
             }
 
             bool nameSameAsBefore = oldValueOfReminderToBeUpdated?.Name == reminderName;
             if (!nameSameAsBefore && !IsNameAvialable(reminderName))
             {
-                ErrorDialogUtility.ErrorDialog("Reminder name already exists");
+                ErrorDialogUtility.ErrorDialog(TranslProvider.Tr("warningReminderNameAlreadyExists"));
                 return false;
             }
 
             bool multiplePeriodsChecked = DetermineIfMultiplePeriodsChecked();
             if (multiplePeriodsChecked)
             {
-                ErrorDialogUtility.ErrorDialog("Multiple reminder periods selected");
+                ErrorDialogUtility.ErrorDialog(TranslProvider.Tr("warningMultipleReminderPeriodsSelected"));
                 return false;
             }
 
@@ -327,11 +320,6 @@ namespace AudioReminderUI
             DateTime scheduledLocalTime = scheduledUtcTimeWithExplicitKind.ToLocalTime();
 
             return scheduledLocalTime;
-        }
-
-        private void scheduledDatePicker_ValueChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

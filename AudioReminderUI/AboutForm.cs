@@ -28,9 +28,6 @@ namespace AudioReminderUI
             visitProjectWebsiteButton.Text = TranslProvider.Tr("visitpageButton");
             backButton.Text = TranslProvider.Tr("backButton");
             creditsBox.Text = TranslProvider.Tr("creditsTextBoxDescription");
-
-
-            //TODO: implement
         }
 
         private void visitProjectWebsiteButton_Click(object sender, EventArgs e)

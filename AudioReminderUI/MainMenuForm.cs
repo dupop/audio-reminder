@@ -32,9 +32,6 @@ namespace AudioReminderUI
             settingsButton.Text = TranslProvider.Tr("settingsButton");
             helpButton.Text = TranslProvider.Tr("helpButton");
             aboutButton.Text = TranslProvider.Tr("aboutButton");
-
-
-            //TODO: implement
         }
 
         private void createReminderButton_Click(object sender, EventArgs e)

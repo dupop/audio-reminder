@@ -92,7 +92,6 @@
             this.scheduledDatePicker.Name = "scheduledDatePicker";
             this.scheduledDatePicker.Size = new System.Drawing.Size(265, 22);
             this.scheduledDatePicker.TabIndex = 0;
-            this.scheduledDatePicker.ValueChanged += new System.EventHandler(this.scheduledDatePicker_ValueChanged);
             // 
             // repeatMonthlyCheckBox
             // 

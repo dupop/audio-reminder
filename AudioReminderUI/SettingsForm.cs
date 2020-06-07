@@ -52,15 +52,6 @@ namespace AudioReminderUI
             okButton.Text = TranslProvider.Tr("okButton");
             cancelButton.Text = TranslProvider.Tr("cancelButton");
             Text = TranslProvider.Tr("audioReminderSettingsFormTitle");
-
-
-
-
-
-
-
-
-            //TODO: implement
         }
 
         private void SettingsForm_Load(object sender, EventArgs e)
