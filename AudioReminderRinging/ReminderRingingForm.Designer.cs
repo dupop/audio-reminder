@@ -1,6 +1,6 @@
 ﻿namespace AudioReminderRinging
 {
-    partial class ReminderRingingForm
+    partial class reminderRingingForm
     {
         /// <summary>
         /// Required designer variable.
@@ -56,7 +56,7 @@
             this.dismissButton.UseVisualStyleBackColor = true;
             this.dismissButton.Click += new System.EventHandler(this.dismissButton_Click);
             // 
-            // ReminderRingingForm
+            // reminderRingingForm
             // 
             this.AcceptButton = this.dismissButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -69,7 +69,7 @@
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "ReminderRingingForm";
+            this.Name = "reminderRingingForm";
             this.Text = "Reminder ringing";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ReminderRingingForm_FormClosing);
             this.Load += new System.EventHandler(this.ReminderRingForm_Load);

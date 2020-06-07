@@ -54,7 +54,7 @@ namespace AudioReminderUI
 
         private void remindersButton_Click(object sender, EventArgs e)
         {
-            var form = new ReminderListForm(PersistenceAdapter);
+            var form = new reminderListForm(PersistenceAdapter);
             form.ShowDialog();
         }
 
@@ -73,7 +73,7 @@ namespace AudioReminderUI
 
         private void helpButton_Click(object sender, EventArgs e)
         {
-            var aboutForm = new HelpForm();
+            var aboutForm = new helpForm();
             aboutForm.ShowDialog();
         }
 

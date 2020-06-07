@@ -1,4 +1,5 @@
-﻿using AudioReminderCore.Model;
+﻿using AudioReminderCore;
+using AudioReminderCore.Model;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ using System.Windows.Forms;
 
 namespace AudioReminderUI
 {
-    public partial class ReminderListForm : Form
+    public partial class reminderListForm : Form
     {
         #region Properties
         const Keys DeleteActionKey = Keys.Delete;
@@ -26,7 +27,7 @@ namespace AudioReminderUI
 
 
         #region Constructor and events
-        public ReminderListForm(PersistenceAdapter persistenceAdapter)
+        public reminderListForm(PersistenceAdapter persistenceAdapter)
         {
             InitializeComponent();
             
@@ -37,6 +38,15 @@ namespace AudioReminderUI
 
         protected virtual void Translate()
         {
+            Text = TranslProvider.Tr("reminderListFormTitle");
+            deleteButton.Text = TranslProvider.Tr("deleteButton");
+            editButton.Text = TranslProvider.Tr("editButton");
+            cloneButton.Text = TranslProvider.Tr("cloneButton");
+            label1.Text = TranslProvider.Tr("reminderListBoxDescription");
+            remindersListBox.AccessibleDescription = TranslProvider.Tr("reminderListBoxDescription");
+            backButton.Text = TranslProvider.Tr("backButton");
+
+
             //TODO: implement
         }
 

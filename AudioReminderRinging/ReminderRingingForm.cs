@@ -16,7 +16,7 @@ using System.Windows.Forms;
 
 namespace AudioReminderRinging
 {
-    public partial class ReminderRingingForm : Form
+    public partial class reminderRingingForm : Form
     {
         //TODO: handle service unavilable + handle disable of snooze button when snooze is disabled (otherwise it will crash)
 
@@ -26,7 +26,7 @@ namespace AudioReminderRinging
         protected virtual bool IsTestMode { get; set; }
 
         #region Constructor and events
-        public ReminderRingingForm()
+        public reminderRingingForm()
         {
             InitializeComponent();
 
@@ -36,6 +36,10 @@ namespace AudioReminderRinging
 
         protected virtual void Translate()
         {
+            Text = TranslProvider.Tr("reminderRingingFormTitle");
+            snoozeButton.Text = TranslProvider.Tr("snoozeButton");
+            dismissButton.Text = TranslProvider.Tr("dismissButton");
+
             //TODO: implement
         }
 
