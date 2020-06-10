@@ -88,6 +88,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>rmdir /s /q "$(SolutionDir)AudioReminderInstaller\$(OutDir)Artifacts"</PreBuildEvent>
+    <PreBuildEvent>echo Attemting to delete old Artifacts dir
+rmdir /s /q "$(SolutionDir)AudioReminderInstaller\$(OutDir)Artifacts"
+echo Artifacts dir should now be deleted</PreBuildEvent>
   </PropertyGroup>
 </Project>
