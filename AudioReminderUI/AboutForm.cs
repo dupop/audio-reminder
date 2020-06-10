@@ -13,6 +13,7 @@ namespace AudioReminderUI
 {
     public partial class AboutForm : Form
     {
+        const string version = "0.4";
         public AboutForm()
         {
             InitializeComponent();
@@ -24,7 +25,7 @@ namespace AudioReminderUI
         protected virtual void Translate()
         {
             Text = TranslationProvider.Tr("aboutFormTitle");
-            versionBox.Text = TranslationProvider.Tr("versionBox");
+            versionBox.Text = TranslationProvider.Tr("versionBox") + " " + version;
             visitProjectWebsiteButton.Text = TranslationProvider.Tr("visitpageButton");
             backButton.Text = TranslationProvider.Tr("backButton");
             creditsBox.Text = TranslationProvider.Tr("creditsTextBoxDescription");

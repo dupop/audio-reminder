@@ -11,7 +11,7 @@ Project main features status:
 - [x] Reminder scheduler - heart of the app, keeps track of next reminder to be fired
 - [x] Installer, Uninstaller
 - [ ] Updater
-- [ ] Translation config system
+- [x] Translation config system
 
 Screenshots:
 
