@@ -11,7 +11,7 @@ namespace AudioReminderCore
     /// <summary>
     /// Translations provider
     /// </summary>
-    public static class TranslProvider
+    public static class TranslationProvider
     {
         static  Dictionary<string, string> TranslationsForCurrentLanguage;
 
@@ -20,13 +20,13 @@ namespace AudioReminderCore
         /// </summary>
         public static string Language { get; private set; }
 
-        static TranslProvider()
+        static TranslationProvider()
         {
             Language = "english";
 
 
             //TODO: remove this from here, this is just for test
-            TranslProvider.LoadNewLanguage("serbian-latin");
+            TranslationProvider.LoadNewLanguage("serbian-latin");
         }
 
         /// <summary>

@@ -26,12 +26,12 @@ namespace AudioReminderUI
 
         public virtual void Translate()
         {
-            Text = TranslProvider.Tr("audioReminderMainMenuFormTitle");
-            createReminderButton.Text = TranslProvider.Tr("createReminderButton");
-            remindersButton.Text = TranslProvider.Tr("reminderButton");
-            settingsButton.Text = TranslProvider.Tr("settingsButton");
-            helpButton.Text = TranslProvider.Tr("helpButton");
-            aboutButton.Text = TranslProvider.Tr("aboutButton");
+            Text = TranslationProvider.Tr("audioReminderMainMenuFormTitle");
+            createReminderButton.Text = TranslationProvider.Tr("createReminderButton");
+            remindersButton.Text = TranslationProvider.Tr("reminderButton");
+            settingsButton.Text = TranslationProvider.Tr("settingsButton");
+            helpButton.Text = TranslationProvider.Tr("helpButton");
+            aboutButton.Text = TranslationProvider.Tr("aboutButton");
         }
 
         private void createReminderButton_Click(object sender, EventArgs e)

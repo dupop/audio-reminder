@@ -38,13 +38,13 @@ namespace AudioReminderUI
 
         protected virtual void Translate()
         {
-            Text = TranslProvider.Tr("reminderListFormTitle");
-            deleteButton.Text = TranslProvider.Tr("deleteButton");
-            editButton.Text = TranslProvider.Tr("editButton");
-            cloneButton.Text = TranslProvider.Tr("cloneButton");
-            label1.Text = TranslProvider.Tr("reminderListBoxDescription");
-            remindersListBox.AccessibleDescription = TranslProvider.Tr("reminderListBoxDescription");
-            backButton.Text = TranslProvider.Tr("backButton");
+            Text = TranslationProvider.Tr("reminderListFormTitle");
+            deleteButton.Text = TranslationProvider.Tr("deleteButton");
+            editButton.Text = TranslationProvider.Tr("editButton");
+            cloneButton.Text = TranslationProvider.Tr("cloneButton");
+            label1.Text = TranslationProvider.Tr("reminderListBoxDescription");
+            remindersListBox.AccessibleDescription = TranslationProvider.Tr("reminderListBoxDescription");
+            backButton.Text = TranslationProvider.Tr("backButton");
         }
 
         private void ReminderListForm_Load(object sender, EventArgs e)
@@ -112,7 +112,7 @@ namespace AudioReminderUI
             ReminderEntity reminderToUpdate = SelectedReminder;
             if (reminderToUpdate == null)
             {
-                ErrorDialogUtility.ErrorDialog(TranslProvider.Tr("warningReminderNotSelectedToEdit"));
+                ErrorDialogUtility.ErrorDialog(TranslationProvider.Tr("warningReminderNotSelectedToEdit"));
                 return;
             }
 
@@ -136,7 +136,7 @@ namespace AudioReminderUI
             }
             else
             {
-                ErrorDialogUtility.ErrorDialog(TranslProvider.Tr("warningSnoozedReminderCannotModify"));
+                ErrorDialogUtility.ErrorDialog(TranslationProvider.Tr("warningSnoozedReminderCannotModify"));
             }
             
         }
@@ -145,13 +145,13 @@ namespace AudioReminderUI
         {
             if (SelectedReminder == null)
             {
-                ErrorDialogUtility.ErrorDialog(TranslProvider.Tr("warningReminderNotSelectedToClone"));
+                ErrorDialogUtility.ErrorDialog(TranslationProvider.Tr("warningReminderNotSelectedToClone"));
                 return;
             }
 
 
             //TODO: add clone dialog
-            ErrorDialogUtility.ErrorDialog(TranslProvider.Tr("warningNotYetImplemented"));
+            ErrorDialogUtility.ErrorDialog(TranslationProvider.Tr("warningNotYetImplemented"));
             ReminderEntity clone = (ReminderEntity) SelectedReminder.Clone();
 
             //TODO: missing validation of backend causes creating duplicate name
@@ -164,11 +164,11 @@ namespace AudioReminderUI
             ReminderEntity reminderToDelete = SelectedReminder;
             if (reminderToDelete == null)
             {
-                ErrorDialogUtility.ErrorDialog(TranslProvider.Tr("warningReminderNotSelectedToDelete"));
+                ErrorDialogUtility.ErrorDialog(TranslationProvider.Tr("warningReminderNotSelectedToDelete"));
                 return;
             }
 
-            string confirmationText = TranslProvider.Tr("confirmDeletingDialog") + " " + reminderToDelete.Name + ".";
+            string confirmationText = TranslationProvider.Tr("confirmDeletingDialog") + " " + reminderToDelete.Name + ".";
             DialogResult confirmationResult = MessageBox.Show(confirmationText, "", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
             if (confirmationResult != DialogResult.OK)
             {
@@ -183,7 +183,7 @@ namespace AudioReminderUI
             }
             else
             {
-                ErrorDialogUtility.ErrorDialog(TranslProvider.Tr("warningSnoozedReminderCannotDelete"));
+                ErrorDialogUtility.ErrorDialog(TranslationProvider.Tr("warningSnoozedReminderCannotDelete"));
             }
         }
 

@@ -35,36 +35,36 @@ namespace AudioReminderUI
 
         protected virtual void Translate()
         {
-            eventNameLabel.Text = TranslProvider.Tr("reminderNameLabel");
-            dateLabel.Text = TranslProvider.Tr("dateOfFirstOccuranceLabelForDatetimePicker");
-            eventDetailsGroupBox.Text = TranslProvider.Tr("eventDetailsGroupBox");
-            eventDescriptionLabel.Text = TranslProvider.Tr("eventDescriptionLabel");
-            scheduledTimeGroupBox.Text = TranslProvider.Tr("scheduledTimeGroupBox");
-            timeLabel.Text = TranslProvider.Tr("timeLabelForNumericBox");
-            repeatPeriodGroupBox.Text = TranslProvider.Tr("repeatPeriodGroupBox");
-            repeatDaysLabel.Text = TranslProvider.Tr("repeatWeeklyLabelForCheckedListBox");
-            repeatMonthlyCheckBox.Text = TranslProvider.Tr("repeatMonthlyCheckBox");
-            repeatYearlyCheckBox.Text = TranslProvider.Tr("repeatYearlyCheckBox");
-            okButton.Text = TranslProvider.Tr("okButton");
-            cancelButton.Text = TranslProvider.Tr("cancelButton");
-            reminderNameStringBox.AccessibleName = TranslProvider.Tr("reminderNameLabel");
-            reminderDescriptionTextbox.AccessibleName = TranslProvider.Tr("eventDescriptionLabel");
-            scheduledDatePicker.AccessibleDescription = TranslProvider.Tr("scheduledDatePickerAccDes");
-            scheduledDatePicker.AccessibleName = TranslProvider.Tr("dateOfFirstOccuranceLabelForDatetimePicker");
-            hoursNumericBox.AccessibleName = TranslProvider.Tr("hoursNumericBoxAccName");
-            hoursNumericBox.AccessibleDescription = TranslProvider.Tr("hoursNumericBoxAccDes");
-            minuteNumbericBox.AccessibleName = TranslProvider.Tr("minuteNumbericBoxAccName");
-            minuteNumbericBox.AccessibleDescription = TranslProvider.Tr("minuteNumbericBoxAccDes");
-            Text = TranslProvider.Tr("createReminderFormTitle");
-            repeatWeeklyCheckedListBox.AccessibleName = TranslProvider.Tr("repeatWeeklyLabelForCheckedListBox");
+            eventNameLabel.Text = TranslationProvider.Tr("reminderNameLabel");
+            dateLabel.Text = TranslationProvider.Tr("dateOfFirstOccuranceLabelForDatetimePicker");
+            eventDetailsGroupBox.Text = TranslationProvider.Tr("eventDetailsGroupBox");
+            eventDescriptionLabel.Text = TranslationProvider.Tr("eventDescriptionLabel");
+            scheduledTimeGroupBox.Text = TranslationProvider.Tr("scheduledTimeGroupBox");
+            timeLabel.Text = TranslationProvider.Tr("timeLabelForNumericBox");
+            repeatPeriodGroupBox.Text = TranslationProvider.Tr("repeatPeriodGroupBox");
+            repeatDaysLabel.Text = TranslationProvider.Tr("repeatWeeklyLabelForCheckedListBox");
+            repeatMonthlyCheckBox.Text = TranslationProvider.Tr("repeatMonthlyCheckBox");
+            repeatYearlyCheckBox.Text = TranslationProvider.Tr("repeatYearlyCheckBox");
+            okButton.Text = TranslationProvider.Tr("okButton");
+            cancelButton.Text = TranslationProvider.Tr("cancelButton");
+            reminderNameStringBox.AccessibleName = TranslationProvider.Tr("reminderNameLabel");
+            reminderDescriptionTextbox.AccessibleName = TranslationProvider.Tr("eventDescriptionLabel");
+            scheduledDatePicker.AccessibleDescription = TranslationProvider.Tr("scheduledDatePickerAccDes");
+            scheduledDatePicker.AccessibleName = TranslationProvider.Tr("dateOfFirstOccuranceLabelForDatetimePicker");
+            hoursNumericBox.AccessibleName = TranslationProvider.Tr("hoursNumericBoxAccName");
+            hoursNumericBox.AccessibleDescription = TranslationProvider.Tr("hoursNumericBoxAccDes");
+            minuteNumbericBox.AccessibleName = TranslationProvider.Tr("minuteNumbericBoxAccName");
+            minuteNumbericBox.AccessibleDescription = TranslationProvider.Tr("minuteNumbericBoxAccDes");
+            Text = TranslationProvider.Tr("createReminderFormTitle");
+            repeatWeeklyCheckedListBox.AccessibleName = TranslationProvider.Tr("repeatWeeklyLabelForCheckedListBox");
 
-            repeatWeeklyCheckedListBox.Items[0] = TranslProvider.Tr("repeatWeeklyCheckedListBoxItemMonday");
-            repeatWeeklyCheckedListBox.Items[1] = TranslProvider.Tr("repeatWeeklyCheckedListBoxItemTuesday");
-            repeatWeeklyCheckedListBox.Items[2] = TranslProvider.Tr("repeatWeeklyCheckedListBoxItemWednesday");
-            repeatWeeklyCheckedListBox.Items[3] = TranslProvider.Tr("repeatWeeklyCheckedListBoxItemThursday");
-            repeatWeeklyCheckedListBox.Items[4] = TranslProvider.Tr("repeatWeeklyCheckedListBoxItemFriday");
-            repeatWeeklyCheckedListBox.Items[5] = TranslProvider.Tr("repeatWeeklyCheckedListBoxItemSaturday");
-            repeatWeeklyCheckedListBox.Items[6] = TranslProvider.Tr("repeatWeeklyCheckedListBoxItemSunday");
+            repeatWeeklyCheckedListBox.Items[0] = TranslationProvider.Tr("repeatWeeklyCheckedListBoxItemMonday");
+            repeatWeeklyCheckedListBox.Items[1] = TranslationProvider.Tr("repeatWeeklyCheckedListBoxItemTuesday");
+            repeatWeeklyCheckedListBox.Items[2] = TranslationProvider.Tr("repeatWeeklyCheckedListBoxItemWednesday");
+            repeatWeeklyCheckedListBox.Items[3] = TranslationProvider.Tr("repeatWeeklyCheckedListBoxItemThursday");
+            repeatWeeklyCheckedListBox.Items[4] = TranslationProvider.Tr("repeatWeeklyCheckedListBoxItemFriday");
+            repeatWeeklyCheckedListBox.Items[5] = TranslationProvider.Tr("repeatWeeklyCheckedListBoxItemSaturday");
+            repeatWeeklyCheckedListBox.Items[6] = TranslationProvider.Tr("repeatWeeklyCheckedListBoxItemSunday");
         }
 
         public CreateAndUpdateReminderForm(PersistenceAdapter nameChecker, ReminderEntity reminderToUpdate)
@@ -226,7 +226,7 @@ namespace AudioReminderUI
             DateTime scheduledDateTime = GetDateTimeFromUI();
             if (scheduledDateTime < DateTime.Now)
             {
-                ErrorDialogUtility.ErrorDialog(TranslProvider.Tr("warningReminderElapsed"));
+                ErrorDialogUtility.ErrorDialog(TranslationProvider.Tr("warningReminderElapsed"));
                 return false;
             }    
 
@@ -235,21 +235,21 @@ namespace AudioReminderUI
 
             if (reminderNameIsEmpty)
             {
-                ErrorDialogUtility.ErrorDialog(TranslProvider.Tr("warningMissingReminderName"));
+                ErrorDialogUtility.ErrorDialog(TranslationProvider.Tr("warningMissingReminderName"));
                 return false;
             }
 
             bool nameSameAsBefore = oldValueOfReminderToBeUpdated?.Name == reminderName;
             if (!nameSameAsBefore && !IsNameAvialable(reminderName))
             {
-                ErrorDialogUtility.ErrorDialog(TranslProvider.Tr("warningReminderNameAlreadyExists"));
+                ErrorDialogUtility.ErrorDialog(TranslationProvider.Tr("warningReminderNameAlreadyExists"));
                 return false;
             }
 
             bool multiplePeriodsChecked = DetermineIfMultiplePeriodsChecked();
             if (multiplePeriodsChecked)
             {
-                ErrorDialogUtility.ErrorDialog(TranslProvider.Tr("warningMultipleReminderPeriodsSelected"));
+                ErrorDialogUtility.ErrorDialog(TranslationProvider.Tr("warningMultipleReminderPeriodsSelected"));
                 return false;
             }
 

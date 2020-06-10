@@ -23,11 +23,11 @@ namespace AudioReminderUI
 
         protected virtual void Translate()
         {
-            Text = TranslProvider.Tr("aboutFormTitle");
-            versionBox.Text = TranslProvider.Tr("versionBox");
-            visitProjectWebsiteButton.Text = TranslProvider.Tr("visitpageButton");
-            backButton.Text = TranslProvider.Tr("backButton");
-            creditsBox.Text = TranslProvider.Tr("creditsTextBoxDescription");
+            Text = TranslationProvider.Tr("aboutFormTitle");
+            versionBox.Text = TranslationProvider.Tr("versionBox");
+            visitProjectWebsiteButton.Text = TranslationProvider.Tr("visitpageButton");
+            backButton.Text = TranslationProvider.Tr("backButton");
+            creditsBox.Text = TranslationProvider.Tr("creditsTextBoxDescription");
         }
 
         private void visitProjectWebsiteButton_Click(object sender, EventArgs e)

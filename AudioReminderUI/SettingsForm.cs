@@ -31,34 +31,34 @@ namespace AudioReminderUI
 
         protected virtual void Translate()
         {
-            selectRingingSoundButton.Text = TranslProvider.Tr("selectRingingSoundButton");
-            serviceStatusGroupBox.Text = TranslProvider.Tr("serviceStatusGroupBox");
-            autostartEnabledCheckbox.Text = TranslProvider.Tr("autostartServiceCheckBox");
-            serviceEnabledcheckBox.Text = TranslProvider.Tr("serviceEnabledCheckBox");
-            ringingGroupBox.Text = TranslProvider.Tr("ringingGroupBox");
-            currentRingingSoundNameLabel.Text = TranslProvider.Tr("currentRingingSoundNameLabel");
-            testRinging.Text = TranslProvider.Tr("testRingingButton");
-            snoozeGroupBox.Text = TranslProvider.Tr("snoozeGroupBox");
-            snoozeEnabledcheckBox.Text = TranslProvider.Tr("snoozeEnabledCheckBox");
-            label3.Text = TranslProvider.Tr("snoozeIntervalLabelForNumericCheckBox");
-            snoozeIntervalNumbericBox.AccessibleName = TranslProvider.Tr("snoozeIntervalLabelForNumericCheckBox");
-            beeperGroupBox.Text = TranslProvider.Tr("beeperGroupBox");
-            beeperEnabledcheckBox.Text = TranslProvider.Tr("beeperEnabledCheckBox");
-            label1.Text = TranslProvider.Tr("beepIntervalLabelForNumericCheckBox");
-            beepIntervalNumbericBox.AccessibleName = TranslProvider.Tr("beepIntervalLabelForNumericCheckBox");
-            selectBeeperSoundButton.Text = TranslProvider.Tr("selectBeeperSoundButton");
-            currentBeeperSoundNameLabel.Text = TranslProvider.Tr("currentBeeperSoundNameLabel");
-            testBeeper.Text = TranslProvider.Tr("testBeeperButton");
-            dataMigrationGroupBox.Text = TranslProvider.Tr("dataMigrationGroupBox");
-            exportButton.Text = TranslProvider.Tr("exportButton");
-            importButton.Text = TranslProvider.Tr("importButton");
-            okButton.Text = TranslProvider.Tr("okButton");
-            cancelButton.Text = TranslProvider.Tr("cancelButton");
-            Text = TranslProvider.Tr("audioReminderSettingsFormTitle");
-            currentRingingSoundNameBox.AccessibleName = TranslProvider.Tr("currentRingingSoundNameLabel");
-            currentBeeperSoundNameBox.AccessibleName = TranslProvider.Tr("currentBeeperSoundNameLabel");
-            languageGroupBox.Text = TranslProvider.Tr("languageGroupBox");
-            languageButton.Text = TranslProvider.Tr("languageButton");
+            selectRingingSoundButton.Text = TranslationProvider.Tr("selectRingingSoundButton");
+            serviceStatusGroupBox.Text = TranslationProvider.Tr("serviceStatusGroupBox");
+            autostartEnabledCheckbox.Text = TranslationProvider.Tr("autostartServiceCheckBox");
+            serviceEnabledcheckBox.Text = TranslationProvider.Tr("serviceEnabledCheckBox");
+            ringingGroupBox.Text = TranslationProvider.Tr("ringingGroupBox");
+            currentRingingSoundNameLabel.Text = TranslationProvider.Tr("currentRingingSoundNameLabel");
+            testRinging.Text = TranslationProvider.Tr("testRingingButton");
+            snoozeGroupBox.Text = TranslationProvider.Tr("snoozeGroupBox");
+            snoozeEnabledcheckBox.Text = TranslationProvider.Tr("snoozeEnabledCheckBox");
+            label3.Text = TranslationProvider.Tr("snoozeIntervalLabelForNumericCheckBox");
+            snoozeIntervalNumbericBox.AccessibleName = TranslationProvider.Tr("snoozeIntervalLabelForNumericCheckBox");
+            beeperGroupBox.Text = TranslationProvider.Tr("beeperGroupBox");
+            beeperEnabledcheckBox.Text = TranslationProvider.Tr("beeperEnabledCheckBox");
+            label1.Text = TranslationProvider.Tr("beepIntervalLabelForNumericCheckBox");
+            beepIntervalNumbericBox.AccessibleName = TranslationProvider.Tr("beepIntervalLabelForNumericCheckBox");
+            selectBeeperSoundButton.Text = TranslationProvider.Tr("selectBeeperSoundButton");
+            currentBeeperSoundNameLabel.Text = TranslationProvider.Tr("currentBeeperSoundNameLabel");
+            testBeeper.Text = TranslationProvider.Tr("testBeeperButton");
+            dataMigrationGroupBox.Text = TranslationProvider.Tr("dataMigrationGroupBox");
+            exportButton.Text = TranslationProvider.Tr("exportButton");
+            importButton.Text = TranslationProvider.Tr("importButton");
+            okButton.Text = TranslationProvider.Tr("okButton");
+            cancelButton.Text = TranslationProvider.Tr("cancelButton");
+            Text = TranslationProvider.Tr("audioReminderSettingsFormTitle");
+            currentRingingSoundNameBox.AccessibleName = TranslationProvider.Tr("currentRingingSoundNameLabel");
+            currentBeeperSoundNameBox.AccessibleName = TranslationProvider.Tr("currentBeeperSoundNameLabel");
+            languageGroupBox.Text = TranslationProvider.Tr("languageGroupBox");
+            languageButton.Text = TranslationProvider.Tr("languageButton");
 
         }
 
@@ -89,7 +89,7 @@ namespace AudioReminderUI
                 BeeperIntervalMinutes = (int)beepIntervalNumbericBox.Value,
                 SnoozeEnabled = snoozeEnabledcheckBox.Checked,
                 SnoozeIntervalMinutes = (int)snoozeIntervalNumbericBox.Value,
-                Language = TranslProvider.Language
+                Language = TranslationProvider.Language
             };
 
             return settings;
@@ -119,7 +119,7 @@ namespace AudioReminderUI
         {
             string nextLanguageName = GetNextLanguageName();
 
-            TranslProvider.LoadNewLanguage(nextLanguageName);
+            TranslationProvider.LoadNewLanguage(nextLanguageName);
             
             Translate(); //translate current form
             MainMenuForm.Translate();
@@ -133,7 +133,7 @@ namespace AudioReminderUI
             TranslationsLoader translationsLoader = new TranslationsLoader();
             List<string> listOfLanguages = translationsLoader.GetListOfLanguages();
 
-            int currentLanguageIndex = listOfLanguages.IndexOf(TranslProvider.Language);
+            int currentLanguageIndex = listOfLanguages.IndexOf(TranslationProvider.Language);
 
             int nextLanguageIndex = (currentLanguageIndex + 1) % listOfLanguages.Count; //TODO: handle 0 languages somewhere
             string nextLanguageName = listOfLanguages[nextLanguageIndex];
