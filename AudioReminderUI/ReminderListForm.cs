@@ -168,7 +168,8 @@ namespace AudioReminderUI
                 return;
             }
 
-            DialogResult confirmationResult = MessageBox.Show($"Confirm deleting: {reminderToDelete.Name}.", "", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+            string confirmationText = TranslProvider.Tr("confirmDeletingDialog") + " " + reminderToDelete.Name + ".";
+            DialogResult confirmationResult = MessageBox.Show(confirmationText, "", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
             if (confirmationResult != DialogResult.OK)
             {
                 Log.Logger.Information($"Confirmation not given for deleting {reminderToDelete.Name}");

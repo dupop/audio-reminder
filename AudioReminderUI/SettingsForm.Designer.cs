@@ -268,7 +268,7 @@
             this.testBeeper.Location = new System.Drawing.Point(8, 166);
             this.testBeeper.Margin = new System.Windows.Forms.Padding(4);
             this.testBeeper.Name = "testBeeper";
-            this.testBeeper.Size = new System.Drawing.Size(100, 28);
+            this.testBeeper.Size = new System.Drawing.Size(150, 28);
             this.testBeeper.TabIndex = 4;
             this.testBeeper.Text = "Test beeper";
             this.testBeeper.UseVisualStyleBackColor = true;
@@ -295,7 +295,7 @@
             this.testRinging.Location = new System.Drawing.Point(5, 100);
             this.testRinging.Margin = new System.Windows.Forms.Padding(4);
             this.testRinging.Name = "testRinging";
-            this.testRinging.Size = new System.Drawing.Size(100, 28);
+            this.testRinging.Size = new System.Drawing.Size(150, 28);
             this.testRinging.TabIndex = 2;
             this.testRinging.Text = "Test ringing";
             this.testRinging.UseVisualStyleBackColor = true;

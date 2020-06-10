@@ -18,11 +18,11 @@ namespace AudioReminderCore
 
         static TranslProvider()
         {
-            Language = "EN";
+            Language = "english";
 
 
             //TODO: remove this from here, this is just for test
-            TranslProvider.LoadNewLanguage("serbian-latinic");
+            TranslProvider.LoadNewLanguage("serbian-latin");
         }
 
         /// <summary>

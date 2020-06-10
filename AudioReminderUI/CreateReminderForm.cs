@@ -56,7 +56,15 @@ namespace AudioReminderUI
             minuteNumbericBox.AccessibleName = TranslProvider.Tr("minuteNumbericBoxAccName");
             minuteNumbericBox.AccessibleDescription = TranslProvider.Tr("minuteNumbericBoxAccDes");
             Text = TranslProvider.Tr("createReminderFormTitle");
-            repeatWeeklyCheckedListBox.T = TranslProvider.Tr("createReminderFormTitle");
+            repeatWeeklyCheckedListBox.AccessibleName = TranslProvider.Tr("repeatWeeklyLabelForCheckedListBox");
+
+            repeatWeeklyCheckedListBox.Items[0] = TranslProvider.Tr("repeatWeeklyCheckedListBoxItemMonday");
+            repeatWeeklyCheckedListBox.Items[1] = TranslProvider.Tr("repeatWeeklyCheckedListBoxItemTuesday");
+            repeatWeeklyCheckedListBox.Items[2] = TranslProvider.Tr("repeatWeeklyCheckedListBoxItemWednesday");
+            repeatWeeklyCheckedListBox.Items[3] = TranslProvider.Tr("repeatWeeklyCheckedListBoxItemThursday");
+            repeatWeeklyCheckedListBox.Items[4] = TranslProvider.Tr("repeatWeeklyCheckedListBoxItemFriday");
+            repeatWeeklyCheckedListBox.Items[5] = TranslProvider.Tr("repeatWeeklyCheckedListBoxItemSaturday");
+            repeatWeeklyCheckedListBox.Items[6] = TranslProvider.Tr("repeatWeeklyCheckedListBoxItemSunday");
         }
 
         public CreateAndUpdateReminderForm(PersistenceAdapter nameChecker, ReminderEntity reminderToUpdate)

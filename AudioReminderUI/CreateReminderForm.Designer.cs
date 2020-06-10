@@ -75,7 +75,7 @@
             // repeatYearlyCheckBox
             // 
             this.repeatYearlyCheckBox.AutoSize = true;
-            this.repeatYearlyCheckBox.Location = new System.Drawing.Point(120, 78);
+            this.repeatYearlyCheckBox.Location = new System.Drawing.Point(149, 77);
             this.repeatYearlyCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.repeatYearlyCheckBox.Name = "repeatYearlyCheckBox";
             this.repeatYearlyCheckBox.Size = new System.Drawing.Size(118, 21);
@@ -96,7 +96,7 @@
             // repeatMonthlyCheckBox
             // 
             this.repeatMonthlyCheckBox.AutoSize = true;
-            this.repeatMonthlyCheckBox.Location = new System.Drawing.Point(120, 49);
+            this.repeatMonthlyCheckBox.Location = new System.Drawing.Point(149, 48);
             this.repeatMonthlyCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.repeatMonthlyCheckBox.Name = "repeatMonthlyCheckBox";
             this.repeatMonthlyCheckBox.Size = new System.Drawing.Size(129, 21);
@@ -109,17 +109,17 @@
             this.repeatWeeklyCheckedListBox.AccessibleName = "Repeat weekly";
             this.repeatWeeklyCheckedListBox.FormattingEnabled = true;
             this.repeatWeeklyCheckedListBox.Items.AddRange(new object[] {
-            "Mon",
-            "Tue",
-            "Wed",
-            "Thr",
-            "Fri",
-            "Sat",
-            "Sun"});
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"});
             this.repeatWeeklyCheckedListBox.Location = new System.Drawing.Point(5, 49);
             this.repeatWeeklyCheckedListBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.repeatWeeklyCheckedListBox.Name = "repeatWeeklyCheckedListBox";
-            this.repeatWeeklyCheckedListBox.Size = new System.Drawing.Size(107, 123);
+            this.repeatWeeklyCheckedListBox.Size = new System.Drawing.Size(137, 140);
             this.repeatWeeklyCheckedListBox.TabIndex = 0;
             // 
             // dateLabel
@@ -127,9 +127,9 @@
             this.dateLabel.AutoSize = true;
             this.dateLabel.Location = new System.Drawing.Point(7, 22);
             this.dateLabel.Name = "dateLabel";
-            this.dateLabel.Size = new System.Drawing.Size(151, 17);
+            this.dateLabel.Size = new System.Drawing.Size(38, 17);
             this.dateLabel.TabIndex = 13;
-            this.dateLabel.Text = "Date of first occurance\r\n";
+            this.dateLabel.Text = "Date";
             // 
             // okButton
             // 
@@ -159,7 +159,7 @@
             // 
             this.hoursNumericBox.AccessibleDescription = "Use up/down arrows to change time ( hours )";
             this.hoursNumericBox.AccessibleName = "Hours";
-            this.hoursNumericBox.Location = new System.Drawing.Point(3, 92);
+            this.hoursNumericBox.Location = new System.Drawing.Point(5, 91);
             this.hoursNumericBox.Margin = new System.Windows.Forms.Padding(4);
             this.hoursNumericBox.Maximum = new decimal(new int[] {
             23,
@@ -179,7 +179,7 @@
             // 
             this.minuteNumbericBox.AccessibleDescription = "Use up/down arrows to change time ( minutes )";
             this.minuteNumbericBox.AccessibleName = "Minutes";
-            this.minuteNumbericBox.Location = new System.Drawing.Point(70, 92);
+            this.minuteNumbericBox.Location = new System.Drawing.Point(72, 91);
             this.minuteNumbericBox.Margin = new System.Windows.Forms.Padding(4);
             this.minuteNumbericBox.Maximum = new decimal(new int[] {
             59,
@@ -195,9 +195,9 @@
             this.timeLabel.AutoSize = true;
             this.timeLabel.Location = new System.Drawing.Point(7, 70);
             this.timeLabel.Name = "timeLabel";
-            this.timeLabel.Size = new System.Drawing.Size(39, 17);
+            this.timeLabel.Size = new System.Drawing.Size(93, 17);
             this.timeLabel.TabIndex = 17;
-            this.timeLabel.Text = "Time";
+            this.timeLabel.Text = "Time [hh:mm]";
             // 
             // repeatDaysLabel
             // 
@@ -228,7 +228,7 @@
             this.reminderDescriptionTextbox.Name = "reminderDescriptionTextbox";
             this.reminderDescriptionTextbox.Size = new System.Drawing.Size(584, 69);
             this.reminderDescriptionTextbox.TabIndex = 1;
-            this.reminderDescriptionTextbox.Text = "Addind reminder description will be implemented in next version.\r\n";
+            this.reminderDescriptionTextbox.Text = "Adding reminder description will be implemented in next version.\r\n";
             // 
             // scheduledTimeGroupBox
             // 
@@ -239,7 +239,7 @@
             this.scheduledTimeGroupBox.Controls.Add(this.timeLabel);
             this.scheduledTimeGroupBox.Location = new System.Drawing.Point(12, 184);
             this.scheduledTimeGroupBox.Name = "scheduledTimeGroupBox";
-            this.scheduledTimeGroupBox.Size = new System.Drawing.Size(293, 202);
+            this.scheduledTimeGroupBox.Size = new System.Drawing.Size(278, 202);
             this.scheduledTimeGroupBox.TabIndex = 1;
             this.scheduledTimeGroupBox.TabStop = false;
             this.scheduledTimeGroupBox.Text = "Scheduled time";
@@ -250,9 +250,9 @@
             this.repeatPeriodGroupBox.Controls.Add(this.repeatDaysLabel);
             this.repeatPeriodGroupBox.Controls.Add(this.repeatMonthlyCheckBox);
             this.repeatPeriodGroupBox.Controls.Add(this.repeatYearlyCheckBox);
-            this.repeatPeriodGroupBox.Location = new System.Drawing.Point(311, 184);
+            this.repeatPeriodGroupBox.Location = new System.Drawing.Point(296, 184);
             this.repeatPeriodGroupBox.Name = "repeatPeriodGroupBox";
-            this.repeatPeriodGroupBox.Size = new System.Drawing.Size(299, 202);
+            this.repeatPeriodGroupBox.Size = new System.Drawing.Size(314, 202);
             this.repeatPeriodGroupBox.TabIndex = 2;
             this.repeatPeriodGroupBox.TabStop = false;
             this.repeatPeriodGroupBox.Text = "Repeat period";
