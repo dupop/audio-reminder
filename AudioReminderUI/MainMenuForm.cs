@@ -21,7 +21,25 @@ namespace AudioReminderUI
 
             PersistenceAdapter = new PersistenceAdapter();
             Icon = AudioReminderCore.Properties.Resources.AudioReminderIcon;
+            
+            LoadLanguageFromSettings();
+
             Translate();
+        }
+
+        protected void LoadLanguageFromSettings()
+        {
+            //TODO: decide how to handle program crashing when there is no service or there are other issues during language loading
+            try
+            {
+                AudioReminderCore.Model.ServiceSettingsEntity settings = PersistenceAdapter.LoadSettings();
+
+                TranslationProvider.LoadNewLanguage(settings.Language);
+            }
+            catch (Exception)
+            {
+            }
+           
         }
 
         public virtual void Translate()

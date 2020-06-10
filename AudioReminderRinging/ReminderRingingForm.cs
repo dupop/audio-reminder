@@ -39,6 +39,9 @@ namespace AudioReminderRinging
             Text = TranslationProvider.Tr("reminderRingingFormTitle");
             snoozeButton.Text = TranslationProvider.Tr("snoozeButton");
             dismissButton.Text = TranslationProvider.Tr("dismissButton");
+
+            eventDescriptionLabel.Text = TranslationProvider.Tr("eventDescriptionLabel");
+            reminderDescriptionTextbox.AccessibleName = TranslationProvider.Tr("eventDescriptionLabel");
         }
 
         private void ReminderRingForm_Load(object sender, EventArgs e)
