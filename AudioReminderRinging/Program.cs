@@ -24,7 +24,7 @@ namespace AudioReminderRinging
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ReminderRingingForm());
+            Application.Run(new reminderRingingForm());
         }
     }
 }

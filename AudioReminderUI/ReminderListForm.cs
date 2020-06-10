@@ -1,4 +1,5 @@
-﻿using AudioReminderCore.Model;
+﻿using AudioReminderCore;
+using AudioReminderCore.Model;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ using System.Windows.Forms;
 
 namespace AudioReminderUI
 {
-    public partial class ReminderListForm : Form
+    public partial class reminderListForm : Form
     {
         #region Properties
         const Keys DeleteActionKey = Keys.Delete;
@@ -26,12 +27,24 @@ namespace AudioReminderUI
 
 
         #region Constructor and events
-        public ReminderListForm(PersistenceAdapter persistenceAdapter)
+        public reminderListForm(PersistenceAdapter persistenceAdapter)
         {
             InitializeComponent();
             
             PersistenceAdapter = persistenceAdapter;
             Icon = AudioReminderCore.Properties.Resources.AudioReminderIcon;
+            Translate();
+        }
+
+        protected virtual void Translate()
+        {
+            Text = TranslationProvider.Tr("reminderListFormTitle");
+            deleteButton.Text = TranslationProvider.Tr("deleteButton");
+            editButton.Text = TranslationProvider.Tr("editButton");
+            cloneButton.Text = TranslationProvider.Tr("cloneButton");
+            label1.Text = TranslationProvider.Tr("reminderListBoxDescription");
+            remindersListBox.AccessibleDescription = TranslationProvider.Tr("reminderListBoxDescription");
+            backButton.Text = TranslationProvider.Tr("backButton");
         }
 
         private void ReminderListForm_Load(object sender, EventArgs e)
@@ -99,7 +112,7 @@ namespace AudioReminderUI
             ReminderEntity reminderToUpdate = SelectedReminder;
             if (reminderToUpdate == null)
             {
-                ErrorDialogUtility.ErrorDialog("No reminder selected to edit");
+                ErrorDialogUtility.ErrorDialog(TranslationProvider.Tr("warningReminderNotSelectedToEdit"));
                 return;
             }
 
@@ -123,7 +136,7 @@ namespace AudioReminderUI
             }
             else
             {
-                ErrorDialogUtility.ErrorDialog("Can't modify snoozed reminders. Snoozed reminders will be started now.");
+                ErrorDialogUtility.ErrorDialog(TranslationProvider.Tr("warningSnoozedReminderCannotModify"));
             }
             
         }
@@ -132,13 +145,13 @@ namespace AudioReminderUI
         {
             if (SelectedReminder == null)
             {
-                ErrorDialogUtility.ErrorDialog("No reminder selected to clone");
+                ErrorDialogUtility.ErrorDialog(TranslationProvider.Tr("warningReminderNotSelectedToClone"));
                 return;
             }
 
 
             //TODO: add clone dialog
-            ErrorDialogUtility.ErrorDialog("Not yet implemented");
+            ErrorDialogUtility.ErrorDialog(TranslationProvider.Tr("warningNotYetImplemented"));
             ReminderEntity clone = (ReminderEntity) SelectedReminder.Clone();
 
             //TODO: missing validation of backend causes creating duplicate name
@@ -151,11 +164,12 @@ namespace AudioReminderUI
             ReminderEntity reminderToDelete = SelectedReminder;
             if (reminderToDelete == null)
             {
-                ErrorDialogUtility.ErrorDialog("No reminder selected to delete");
+                ErrorDialogUtility.ErrorDialog(TranslationProvider.Tr("warningReminderNotSelectedToDelete"));
                 return;
             }
 
-            DialogResult confirmationResult = MessageBox.Show($"Confirm deleting: {reminderToDelete.Name}.", "", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+            string confirmationText = TranslationProvider.Tr("confirmDeletingDialog") + " " + reminderToDelete.Name + ".";
+            DialogResult confirmationResult = MessageBox.Show(confirmationText, "", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
             if (confirmationResult != DialogResult.OK)
             {
                 Log.Logger.Information($"Confirmation not given for deleting {reminderToDelete.Name}");
@@ -169,7 +183,7 @@ namespace AudioReminderUI
             }
             else
             {
-                ErrorDialogUtility.ErrorDialog("Can't delete snoozed reminders. Snoozed reminders will be started now.");
+                ErrorDialogUtility.ErrorDialog(TranslationProvider.Tr("warningSnoozedReminderCannotDelete"));
             }
         }
 

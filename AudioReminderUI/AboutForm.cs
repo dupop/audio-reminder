@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AudioReminderCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,11 +13,22 @@ namespace AudioReminderUI
 {
     public partial class AboutForm : Form
     {
+        const string version = "0.4";
         public AboutForm()
         {
             InitializeComponent();
 
             Icon = AudioReminderCore.Properties.Resources.AudioReminderIcon;
+            Translate();
+        }
+
+        protected virtual void Translate()
+        {
+            Text = TranslationProvider.Tr("aboutFormTitle");
+            versionBox.Text = TranslationProvider.Tr("versionBox") + " " + version;
+            visitProjectWebsiteButton.Text = TranslationProvider.Tr("visitpageButton");
+            backButton.Text = TranslationProvider.Tr("backButton");
+            creditsBox.Text = TranslationProvider.Tr("creditsTextBoxDescription");
         }
 
         private void visitProjectWebsiteButton_Click(object sender, EventArgs e)

@@ -9,8 +9,9 @@ Project main features status:
 - [ ] UI specific details - calender view, sound choosing and custom sound playing
 - [x] Persistence of settings and reminders - data model, xml serialization and sotrage/retrival of entity lists from xml files
 - [x] Reminder scheduler - heart of the app, keeps track of next reminder to be fired
-- [ ] Installer, Uninstaller, Updater
-- [ ] Translation config system
+- [x] Installer, Uninstaller
+- [ ] Updater
+- [x] Translation config system
 
 Screenshots:
 

@@ -1,4 +1,5 @@
-﻿using Serilog;
+﻿using AudioReminderCore;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,6 +21,35 @@ namespace AudioReminderUI
 
             PersistenceAdapter = new PersistenceAdapter();
             Icon = AudioReminderCore.Properties.Resources.AudioReminderIcon;
+            
+            LoadLanguageFromSettings();
+
+            Translate();
+        }
+
+        protected void LoadLanguageFromSettings()
+        {
+            //TODO: decide how to handle program crashing when there is no service or there are other issues during language loading
+            try
+            {
+                AudioReminderCore.Model.ServiceSettingsEntity settings = PersistenceAdapter.LoadSettings();
+
+                TranslationProvider.LoadNewLanguage(settings.Language);
+            }
+            catch (Exception)
+            {
+            }
+           
+        }
+
+        public virtual void Translate()
+        {
+            Text = TranslationProvider.Tr("audioReminderMainMenuFormTitle");
+            createReminderButton.Text = TranslationProvider.Tr("createReminderButton");
+            remindersButton.Text = TranslationProvider.Tr("reminderButton");
+            settingsButton.Text = TranslationProvider.Tr("settingsButton");
+            helpButton.Text = TranslationProvider.Tr("helpButton");
+            aboutButton.Text = TranslationProvider.Tr("aboutButton");
         }
 
         private void createReminderButton_Click(object sender, EventArgs e)
@@ -39,14 +69,14 @@ namespace AudioReminderUI
 
         private void remindersButton_Click(object sender, EventArgs e)
         {
-            var form = new ReminderListForm(PersistenceAdapter);
+            var form = new reminderListForm(PersistenceAdapter);
             form.ShowDialog();
         }
 
         private void Settings_Click(object sender, EventArgs e)
         {
 
-            var settingsForm = new SettingsForm(PersistenceAdapter);
+            var settingsForm = new SettingsForm(PersistenceAdapter, this);
             settingsForm.ShowDialog();
         }
 
@@ -58,7 +88,7 @@ namespace AudioReminderUI
 
         private void helpButton_Click(object sender, EventArgs e)
         {
-            var aboutForm = new HelpForm();
+            var aboutForm = new helpForm();
             aboutForm.ShowDialog();
         }
 

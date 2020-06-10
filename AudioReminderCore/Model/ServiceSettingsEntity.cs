@@ -14,5 +14,6 @@ namespace AudioReminderCore.Model
         public int BeeperIntervalMinutes { get; set; }
         public bool SnoozeEnabled { get; set; }
         public int SnoozeIntervalMinutes { get; set; }
+        public string Language { get; set; }
     }
 }

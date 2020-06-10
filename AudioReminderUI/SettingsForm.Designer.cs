@@ -39,7 +39,9 @@
             this.beeperEnabledcheckBox = new System.Windows.Forms.CheckBox();
             this.serviceStatusGroupBox = new System.Windows.Forms.GroupBox();
             this.beeperGroupBox = new System.Windows.Forms.GroupBox();
+            this.currentBeeperSoundNameLabel = new System.Windows.Forms.Label();
             this.selectBeeperSoundButton = new System.Windows.Forms.Button();
+            this.currentBeeperSoundNameBox = new System.Windows.Forms.TextBox();
             this.beepIntervalNumbericBox = new System.Windows.Forms.NumericUpDown();
             this.testBeeper = new System.Windows.Forms.Button();
             this.snoozeGroupBox = new System.Windows.Forms.GroupBox();
@@ -49,10 +51,10 @@
             this.selectRingingSoundButton = new System.Windows.Forms.Button();
             this.dataMigrationGroupBox = new System.Windows.Forms.GroupBox();
             this.ringingGroupBox = new System.Windows.Forms.GroupBox();
-            this.currentRingingSoundNameBox = new System.Windows.Forms.TextBox();
             this.currentRingingSoundNameLabel = new System.Windows.Forms.Label();
-            this.currentBeeperSoundNameLabel = new System.Windows.Forms.Label();
-            this.currentBeeperSoundNameBox = new System.Windows.Forms.TextBox();
+            this.currentRingingSoundNameBox = new System.Windows.Forms.TextBox();
+            this.languageGroupBox = new System.Windows.Forms.GroupBox();
+            this.languageButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.snoozeIntervalNumbericBox)).BeginInit();
             this.serviceStatusGroupBox.SuspendLayout();
             this.beeperGroupBox.SuspendLayout();
@@ -60,6 +62,7 @@
             this.snoozeGroupBox.SuspendLayout();
             this.dataMigrationGroupBox.SuspendLayout();
             this.ringingGroupBox.SuspendLayout();
+            this.languageGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -214,6 +217,15 @@
             this.beeperGroupBox.TabStop = false;
             this.beeperGroupBox.Text = "Beeper";
             // 
+            // currentBeeperSoundNameLabel
+            // 
+            this.currentBeeperSoundNameLabel.AutoSize = true;
+            this.currentBeeperSoundNameLabel.Location = new System.Drawing.Point(9, 117);
+            this.currentBeeperSoundNameLabel.Name = "currentBeeperSoundNameLabel";
+            this.currentBeeperSoundNameLabel.Size = new System.Drawing.Size(147, 17);
+            this.currentBeeperSoundNameLabel.TabIndex = 5;
+            this.currentBeeperSoundNameLabel.Text = "Current beeper sound";
+            // 
             // selectBeeperSoundButton
             // 
             this.selectBeeperSoundButton.AutoSize = true;
@@ -224,6 +236,16 @@
             this.selectBeeperSoundButton.TabIndex = 2;
             this.selectBeeperSoundButton.Text = "Select beeper sound...\r\n";
             this.selectBeeperSoundButton.UseVisualStyleBackColor = true;
+            // 
+            // currentBeeperSoundNameBox
+            // 
+            this.currentBeeperSoundNameBox.AccessibleName = "Current beeper sound";
+            this.currentBeeperSoundNameBox.Location = new System.Drawing.Point(9, 137);
+            this.currentBeeperSoundNameBox.Name = "currentBeeperSoundNameBox";
+            this.currentBeeperSoundNameBox.ReadOnly = true;
+            this.currentBeeperSoundNameBox.Size = new System.Drawing.Size(271, 22);
+            this.currentBeeperSoundNameBox.TabIndex = 3;
+            this.currentBeeperSoundNameBox.Text = "19.5-Magia2.wav";
             // 
             // beepIntervalNumbericBox
             // 
@@ -249,7 +271,7 @@
             this.testBeeper.Location = new System.Drawing.Point(8, 166);
             this.testBeeper.Margin = new System.Windows.Forms.Padding(4);
             this.testBeeper.Name = "testBeeper";
-            this.testBeeper.Size = new System.Drawing.Size(100, 28);
+            this.testBeeper.Size = new System.Drawing.Size(150, 28);
             this.testBeeper.TabIndex = 4;
             this.testBeeper.Text = "Test beeper";
             this.testBeeper.UseVisualStyleBackColor = true;
@@ -276,7 +298,7 @@
             this.testRinging.Location = new System.Drawing.Point(5, 100);
             this.testRinging.Margin = new System.Windows.Forms.Padding(4);
             this.testRinging.Name = "testRinging";
-            this.testRinging.Size = new System.Drawing.Size(100, 28);
+            this.testRinging.Size = new System.Drawing.Size(150, 28);
             this.testRinging.TabIndex = 2;
             this.testRinging.Text = "Test ringing";
             this.testRinging.UseVisualStyleBackColor = true;
@@ -297,7 +319,7 @@
             // 
             this.importButton.AutoSize = true;
             this.importButton.Enabled = false;
-            this.importButton.Location = new System.Drawing.Point(6, 54);
+            this.importButton.Location = new System.Drawing.Point(144, 21);
             this.importButton.Name = "importButton";
             this.importButton.Size = new System.Drawing.Size(136, 27);
             this.importButton.TabIndex = 1;
@@ -317,14 +339,13 @@
             // 
             // dataMigrationGroupBox
             // 
-            this.dataMigrationGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.dataMigrationGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataMigrationGroupBox.Controls.Add(this.exportButton);
             this.dataMigrationGroupBox.Controls.Add(this.importButton);
             this.dataMigrationGroupBox.Location = new System.Drawing.Point(322, 220);
             this.dataMigrationGroupBox.Name = "dataMigrationGroupBox";
-            this.dataMigrationGroupBox.Size = new System.Drawing.Size(286, 159);
+            this.dataMigrationGroupBox.Size = new System.Drawing.Size(286, 60);
             this.dataMigrationGroupBox.TabIndex = 4;
             this.dataMigrationGroupBox.TabStop = false;
             this.dataMigrationGroupBox.Text = "Data migration";
@@ -342,6 +363,15 @@
             this.ringingGroupBox.TabStop = false;
             this.ringingGroupBox.Text = "Ringing";
             // 
+            // currentRingingSoundNameLabel
+            // 
+            this.currentRingingSoundNameLabel.AutoSize = true;
+            this.currentRingingSoundNameLabel.Location = new System.Drawing.Point(6, 51);
+            this.currentRingingSoundNameLabel.Name = "currentRingingSoundNameLabel";
+            this.currentRingingSoundNameLabel.Size = new System.Drawing.Size(145, 17);
+            this.currentRingingSoundNameLabel.TabIndex = 3;
+            this.currentRingingSoundNameLabel.Text = "Current ringing sound";
+            // 
             // currentRingingSoundNameBox
             // 
             this.currentRingingSoundNameBox.AccessibleName = "Current ringing sound";
@@ -352,33 +382,29 @@
             this.currentRingingSoundNameBox.TabIndex = 1;
             this.currentRingingSoundNameBox.Text = "LEBER_Zoé_2014_2015_Xylo.mp3\r\n";
             // 
-            // currentRingingSoundNameLabel
+            // languageGroupBox
             // 
-            this.currentRingingSoundNameLabel.AutoSize = true;
-            this.currentRingingSoundNameLabel.Location = new System.Drawing.Point(6, 51);
-            this.currentRingingSoundNameLabel.Name = "currentRingingSoundNameLabel";
-            this.currentRingingSoundNameLabel.Size = new System.Drawing.Size(145, 17);
-            this.currentRingingSoundNameLabel.TabIndex = 3;
-            this.currentRingingSoundNameLabel.Text = "Current ringing sound";
+            this.languageGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.languageGroupBox.Controls.Add(this.languageButton);
+            this.languageGroupBox.Location = new System.Drawing.Point(322, 286);
+            this.languageGroupBox.Name = "languageGroupBox";
+            this.languageGroupBox.Size = new System.Drawing.Size(286, 93);
+            this.languageGroupBox.TabIndex = 5;
+            this.languageGroupBox.TabStop = false;
+            this.languageGroupBox.Text = "Language";
             // 
-            // currentBeeperSoundNameLabel
+            // languageButton
             // 
-            this.currentBeeperSoundNameLabel.AutoSize = true;
-            this.currentBeeperSoundNameLabel.Location = new System.Drawing.Point(9, 117);
-            this.currentBeeperSoundNameLabel.Name = "currentBeeperSoundNameLabel";
-            this.currentBeeperSoundNameLabel.Size = new System.Drawing.Size(147, 17);
-            this.currentBeeperSoundNameLabel.TabIndex = 5;
-            this.currentBeeperSoundNameLabel.Text = "Current beeper sound";
-            // 
-            // currentBeeperSoundNameBox
-            // 
-            this.currentBeeperSoundNameBox.AccessibleName = "Current beeper sound";
-            this.currentBeeperSoundNameBox.Location = new System.Drawing.Point(9, 137);
-            this.currentBeeperSoundNameBox.Name = "currentBeeperSoundNameBox";
-            this.currentBeeperSoundNameBox.ReadOnly = true;
-            this.currentBeeperSoundNameBox.Size = new System.Drawing.Size(271, 22);
-            this.currentBeeperSoundNameBox.TabIndex = 3;
-            this.currentBeeperSoundNameBox.Text = "19.5-Magia2.wav";
+            this.languageButton.AutoSize = true;
+            this.languageButton.Location = new System.Drawing.Point(6, 21);
+            this.languageButton.Name = "languageButton";
+            this.languageButton.Size = new System.Drawing.Size(141, 27);
+            this.languageButton.TabIndex = 0;
+            this.languageButton.Text = "Choose language...";
+            this.languageButton.UseVisualStyleBackColor = true;
+            this.languageButton.Click += new System.EventHandler(this.languageButton_Click);
             // 
             // SettingsForm
             // 
@@ -386,6 +412,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
             this.ClientSize = new System.Drawing.Size(622, 433);
+            this.Controls.Add(this.languageGroupBox);
             this.Controls.Add(this.ringingGroupBox);
             this.Controls.Add(this.dataMigrationGroupBox);
             this.Controls.Add(this.beeperGroupBox);
@@ -410,6 +437,8 @@
             this.dataMigrationGroupBox.PerformLayout();
             this.ringingGroupBox.ResumeLayout(false);
             this.ringingGroupBox.PerformLayout();
+            this.languageGroupBox.ResumeLayout(false);
+            this.languageGroupBox.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -440,6 +469,8 @@
         private System.Windows.Forms.TextBox currentBeeperSoundNameBox;
         private System.Windows.Forms.Label currentRingingSoundNameLabel;
         private System.Windows.Forms.TextBox currentRingingSoundNameBox;
+        private System.Windows.Forms.GroupBox languageGroupBox;
+        private System.Windows.Forms.Button languageButton;
     }
 }
 
