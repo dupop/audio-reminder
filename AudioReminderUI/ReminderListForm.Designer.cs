@@ -1,6 +1,6 @@
 ﻿namespace AudioReminderUI
 {
-    partial class ReminderListForm
+    partial class reminderListForm
     {
         /// <summary>
         /// Required designer variable.
@@ -112,7 +112,7 @@
             this.label1.Text = "Press Delete key to remove selected reminder, Enter key to modify it, or space ke" +
     "y to clone it.\r\nPress Exit key to go back.";
             // 
-            // ReminderListForm
+            // reminderListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -127,7 +127,7 @@
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(640, 480);
-            this.Name = "ReminderListForm";
+            this.Name = "reminderListForm";
             this.Text = "Audio Reminder - List of reminders";
             this.Load += new System.EventHandler(this.ReminderListForm_Load);
             this.ResumeLayout(false);

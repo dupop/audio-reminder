@@ -1,6 +1,6 @@
 ﻿namespace AudioReminderUI
 {
-    partial class HelpForm
+    partial class helpForm
     {
         /// <summary>
         /// Required designer variable.
@@ -68,7 +68,7 @@
             this.backButton.Text = "Back";
             this.backButton.UseVisualStyleBackColor = true;
             // 
-            // HelpForm
+            // helpForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -79,7 +79,7 @@
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.Name = "HelpForm";
+            this.Name = "helpForm";
             this.Text = "Audio Reminder - User manual";
             this.ResumeLayout(false);
             this.PerformLayout();

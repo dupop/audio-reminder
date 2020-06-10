@@ -45,7 +45,12 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>powershell.exe -noexit -file "$(ProjectDir)RemoveRedundatArtifacts.ps1" "$(ProjectDir)$(OutDir)Artifacts\\"
+    <PostBuildEvent>echo Copying translations to folder for packiging to installer
+xcopy /e /y  /i "$(SolutionDir)Translations\*" "$(SolutionDir)AudioReminderInstaller\$(OutDir)Artifacts\Translations"
+
+echo Executing RemoveRedundatArtifacts PS script
+powershell.exe -noexit -file "$(ProjectDir)RemoveRedundatArtifacts.ps1" "$(ProjectDir)$(OutDir)Artifacts\\"
+
 echo Starting makensis:
 "C:\Program Files (x86)\NSIS\makensis.exe" /DBUILD_CONFIG_NAME_ARG=$(ConfigurationName) "$(ProjectDir)installerGenerationScript.nsi"
 </PostBuildEvent>
