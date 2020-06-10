@@ -17,10 +17,13 @@ namespace AudioReminderUI
     {
         protected PersistenceAdapter PersistenceAdapter;
 
-        public SettingsForm(PersistenceAdapter persistenceAdapter)
+        public MainMenuForm MainMenuForm { get; }
+
+        public SettingsForm(PersistenceAdapter persistenceAdapter, MainMenuForm mainMenuForm)
         {
             InitializeComponent();
 
+            MainMenuForm = mainMenuForm;
             PersistenceAdapter = persistenceAdapter;
             Icon = AudioReminderCore.Properties.Resources.AudioReminderIcon;
             Translate();
@@ -54,6 +57,9 @@ namespace AudioReminderUI
             Text = TranslProvider.Tr("audioReminderSettingsFormTitle");
             currentRingingSoundNameBox.AccessibleName = TranslProvider.Tr("currentRingingSoundNameLabel");
             currentBeeperSoundNameBox.AccessibleName = TranslProvider.Tr("currentBeeperSoundNameLabel");
+            languageGroupBox.Text = TranslProvider.Tr("languageGroupBox");
+            languageButton.Text = TranslProvider.Tr("languageButton");
+
         }
 
         private void SettingsForm_Load(object sender, EventArgs e)
@@ -82,7 +88,8 @@ namespace AudioReminderUI
                 BeeperEnabled = beeperEnabledcheckBox.Checked,
                 BeeperIntervalMinutes = (int)beepIntervalNumbericBox.Value,
                 SnoozeEnabled = snoozeEnabledcheckBox.Checked,
-                SnoozeIntervalMinutes = (int)snoozeIntervalNumbericBox.Value
+                SnoozeIntervalMinutes = (int)snoozeIntervalNumbericBox.Value,
+                Language = TranslProvider.Language
             };
 
             return settings;
@@ -108,5 +115,30 @@ namespace AudioReminderUI
             PersistenceAdapter.TestBeeper();
         }
 
+        private void languageButton_Click(object sender, EventArgs e)
+        {
+            string nextLanguageName = GetNextLanguageName();
+
+            TranslProvider.LoadNewLanguage(nextLanguageName);
+            
+            Translate(); //translate current form
+            MainMenuForm.Translate();
+        }
+
+        /// <summary>
+        /// Placeholder implementation to switch languages one by one until a list for selection is implemented
+        /// </summary>
+        private static string GetNextLanguageName()
+        {
+            TranslationsLoader translationsLoader = new TranslationsLoader();
+            List<string> listOfLanguages = translationsLoader.GetListOfLanguages();
+
+            int currentLanguageIndex = listOfLanguages.IndexOf(TranslProvider.Language);
+
+            int nextLanguageIndex = (currentLanguageIndex + 1) % listOfLanguages.Count; //TODO: handle 0 languages somewhere
+            string nextLanguageName = listOfLanguages[nextLanguageIndex];
+
+            return nextLanguageName;
+        }
     }
 }

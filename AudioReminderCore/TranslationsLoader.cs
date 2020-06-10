@@ -32,13 +32,67 @@ namespace AudioReminderCore
             return translations;
         }
 
+        public virtual List<string> GetListOfLanguages()
+        {
+            
+            DirectoryInfo translationsDir = new DirectoryInfo(FilePathHelper.GetTranslationsDir());
+            string translationsFileNamePattern = GetTranslationFileName("*");
+
+            FileInfo[] translationFiles = translationsDir.GetFiles(translationsFileNamePattern);
+            
+            List<string> languageNames = new List<string>();
+            foreach (FileInfo translationFile in translationFiles)
+            {
+                string languageName = ExtractLanguageNameFromFile(translationFile.Name);
+                if(languageName!= null)
+                {
+                    languageNames.Add(languageName);
+                }
+            }
+
+            Log.Logger.Information($"Found {languageNames.Count} translations");
+            return languageNames;
+        }
+
+        private static string ExtractLanguageNameFromFile(string translationFileName)
+        {
+            //valid example: translations-something.ini
+
+            //check if not too short
+            if(translationFileName.Length< TranslationPrefix.Length + TranslationExtension.Length + 1)
+            {
+                Log.Logger.Warning($"Ignoring translation file with invalid filename. No language name was present in filename: [fileName = {translationFileName}]");
+                return null;
+            }
+
+            //check if ok format
+            if (!translationFileName.StartsWith(TranslationPrefix) || !translationFileName.EndsWith(TranslationExtension))
+            {
+                Log.Logger.Warning($"Ignoring translation file with invalid filename. [fileName = {translationFileName}]");
+                return null;
+            }
+
+            int startIndex = TranslationPrefix.Length;
+            int length = translationFileName.Length - (TranslationPrefix.Length + TranslationExtension.Length);
+            string languageName = translationFileName.Substring(startIndex, length);
+
+            return languageName;
+        }
+
         protected virtual string GetFullFilePath(string languageName)
         {
             string translationsDir = FilePathHelper.GetTranslationsDir();
-            string translationsFileName = $"translations-{languageName}.ini";
+            string translationsFileName = GetTranslationFileName(languageName);
             string translationFullPath = System.IO.Path.Combine(translationsDir, translationsFileName);
 
             return translationFullPath;
+        }
+
+        protected const string TranslationPrefix = "translations-";
+        protected const string TranslationExtension = ".ini";
+        protected virtual string GetTranslationFileName(string languageName)
+        {
+            return TranslationPrefix + languageName + TranslationExtension;
         }
 
         /// <summary>

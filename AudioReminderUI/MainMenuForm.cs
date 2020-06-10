@@ -24,7 +24,7 @@ namespace AudioReminderUI
             Translate();
         }
 
-        protected virtual void Translate()
+        public virtual void Translate()
         {
             Text = TranslProvider.Tr("audioReminderMainMenuFormTitle");
             createReminderButton.Text = TranslProvider.Tr("createReminderButton");
@@ -58,7 +58,7 @@ namespace AudioReminderUI
         private void Settings_Click(object sender, EventArgs e)
         {
 
-            var settingsForm = new SettingsForm(PersistenceAdapter);
+            var settingsForm = new SettingsForm(PersistenceAdapter, this);
             settingsForm.ShowDialog();
         }
 

@@ -53,6 +53,8 @@
             this.ringingGroupBox = new System.Windows.Forms.GroupBox();
             this.currentRingingSoundNameLabel = new System.Windows.Forms.Label();
             this.currentRingingSoundNameBox = new System.Windows.Forms.TextBox();
+            this.languageGroupBox = new System.Windows.Forms.GroupBox();
+            this.languageButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.snoozeIntervalNumbericBox)).BeginInit();
             this.serviceStatusGroupBox.SuspendLayout();
             this.beeperGroupBox.SuspendLayout();
@@ -60,6 +62,7 @@
             this.snoozeGroupBox.SuspendLayout();
             this.dataMigrationGroupBox.SuspendLayout();
             this.ringingGroupBox.SuspendLayout();
+            this.languageGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -316,7 +319,7 @@
             // 
             this.importButton.AutoSize = true;
             this.importButton.Enabled = false;
-            this.importButton.Location = new System.Drawing.Point(6, 54);
+            this.importButton.Location = new System.Drawing.Point(144, 21);
             this.importButton.Name = "importButton";
             this.importButton.Size = new System.Drawing.Size(136, 27);
             this.importButton.TabIndex = 1;
@@ -336,14 +339,13 @@
             // 
             // dataMigrationGroupBox
             // 
-            this.dataMigrationGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.dataMigrationGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataMigrationGroupBox.Controls.Add(this.exportButton);
             this.dataMigrationGroupBox.Controls.Add(this.importButton);
             this.dataMigrationGroupBox.Location = new System.Drawing.Point(322, 220);
             this.dataMigrationGroupBox.Name = "dataMigrationGroupBox";
-            this.dataMigrationGroupBox.Size = new System.Drawing.Size(286, 159);
+            this.dataMigrationGroupBox.Size = new System.Drawing.Size(286, 60);
             this.dataMigrationGroupBox.TabIndex = 4;
             this.dataMigrationGroupBox.TabStop = false;
             this.dataMigrationGroupBox.Text = "Data migration";
@@ -380,12 +382,37 @@
             this.currentRingingSoundNameBox.TabIndex = 1;
             this.currentRingingSoundNameBox.Text = "LEBER_Zoé_2014_2015_Xylo.mp3\r\n";
             // 
+            // languageGroupBox
+            // 
+            this.languageGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.languageGroupBox.Controls.Add(this.languageButton);
+            this.languageGroupBox.Location = new System.Drawing.Point(322, 286);
+            this.languageGroupBox.Name = "languageGroupBox";
+            this.languageGroupBox.Size = new System.Drawing.Size(286, 93);
+            this.languageGroupBox.TabIndex = 5;
+            this.languageGroupBox.TabStop = false;
+            this.languageGroupBox.Text = "Language";
+            // 
+            // languageButton
+            // 
+            this.languageButton.AutoSize = true;
+            this.languageButton.Location = new System.Drawing.Point(6, 21);
+            this.languageButton.Name = "languageButton";
+            this.languageButton.Size = new System.Drawing.Size(141, 27);
+            this.languageButton.TabIndex = 0;
+            this.languageButton.Text = "Choose language...";
+            this.languageButton.UseVisualStyleBackColor = true;
+            this.languageButton.Click += new System.EventHandler(this.languageButton_Click);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
             this.ClientSize = new System.Drawing.Size(622, 433);
+            this.Controls.Add(this.languageGroupBox);
             this.Controls.Add(this.ringingGroupBox);
             this.Controls.Add(this.dataMigrationGroupBox);
             this.Controls.Add(this.beeperGroupBox);
@@ -410,6 +437,8 @@
             this.dataMigrationGroupBox.PerformLayout();
             this.ringingGroupBox.ResumeLayout(false);
             this.ringingGroupBox.PerformLayout();
+            this.languageGroupBox.ResumeLayout(false);
+            this.languageGroupBox.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -440,6 +469,8 @@
         private System.Windows.Forms.TextBox currentBeeperSoundNameBox;
         private System.Windows.Forms.Label currentRingingSoundNameLabel;
         private System.Windows.Forms.TextBox currentRingingSoundNameBox;
+        private System.Windows.Forms.GroupBox languageGroupBox;
+        private System.Windows.Forms.Button languageButton;
     }
 }
 

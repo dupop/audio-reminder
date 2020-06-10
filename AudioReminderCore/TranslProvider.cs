@@ -14,7 +14,11 @@ namespace AudioReminderCore
     public static class TranslProvider
     {
         static  Dictionary<string, string> TranslationsForCurrentLanguage;
-        static string Language;
+
+        /// <summary>
+        /// Currently selected and loaded language
+        /// </summary>
+        public static string Language { get; private set; }
 
         static TranslProvider()
         {
